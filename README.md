@@ -6,7 +6,7 @@ es un e-commerce de venta de videojuegos en formato digital y MERCH relacionada 
 
 ## Publico Objetivo
 
-Al publico que apuntamos es a los Adolescentes/Adultos interesados o apacionados en el mundo del gaiming.
+Al publico que apuntamos es a los adolescentes/ddultos interesados o apacionados en el mundo del gaiming.
 
 ## ¿Cómo ajustaremos nuestra oferta a ese público? 
 Nos ajustariamos buscando atraer la mayor cantidad de publico al tener una amplia variedad de juegos de distintos generos para todos los gustos y edades. Ademas de tratar de tener siempre actualizado nuestro catalogo con los ultimos juegos que han salido al mercado. Y creemos que una fortaleza es que ademas de ofrecer los videojuegos tambien ofrecemos merch de estos dandonos un toque distinto al de otras empresas.
@@ -15,7 +15,7 @@ Nos ajustariamos buscando atraer la mayor cantidad de publico al tener una ampli
 
 ### **Hugo Sanchez**
 
-Hey! Aquí Hugo reportándose! Apacionado en la programacion y en el mundo de los viedojuegos desde pequeño. Me encanta todo lo relacionado a la computacion y la solucion de problemas tecnologicos. Ingrese en ingenieria en sistamas pero despues de 1 año me di cuenta que lo que ami me gusta en realidad es el programar. me encanta el crear cosas e investigar.  
+Hey! Aquí Hugo reportándose! Apacionado en la programación y en el mundo de los videosjuegos desde pequeño. Me encanta todo lo relacionado a la computación y la solución de problemas tecnológicos. Ingresé en ingenieria en sistemas pero despues de 1 año me di cuenta que lo que a mi me gusta en realidad es el programar. Me encanta el crear cosas e investigar.  
 
 ### **Octavio Curadeli**
 
@@ -29,6 +29,10 @@ Hola, soy Octavio, ya desde muy chico empece a jugar videojuegos, a medida que f
 
 Estudiante de Programación de la UTN Mendoza, iniciando en el mundo del desarrollo web y de aplicaciones. Me apasiona el procesamiento y administración de datos e información y el desarrollo de videojuegos, aunque disfruto de todos los campos de la computación y los avances en la tecnología.
 Mi mayor aspiración siempre es aprender cosas nuevas constantemente a través de la práctica y la investigación.
+
+### **Herman Ithall**
+
+Que tal!. Soy Herman, tengo 21 años y soy muy curioso y apacionado por aprender cosas nuevas. Lo que mas me entusiasma es la programación y el UI/UX. Con este proyecto espero aprender mucho de backend y reforzar conocimientos de frontend.
 
 ## Lista de sitios para la referencia:
 1. Steam
