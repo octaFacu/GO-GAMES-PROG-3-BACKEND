@@ -15,11 +15,9 @@ import javax.validation.constraints.Size;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Estudio {
+public class Estudio extends Base{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+
 
     @NotEmpty(message = "Se necesita el nombre del estudio.")
     @Size(min=3,max=30, message="El nombre del estudio debe tener entre 5 y 30 caracteres.")

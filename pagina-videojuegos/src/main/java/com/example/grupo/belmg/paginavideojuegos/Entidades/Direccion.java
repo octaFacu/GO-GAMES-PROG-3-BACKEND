@@ -14,11 +14,8 @@ import javax.validation.constraints.NotEmpty;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Direccion {
+public class Direccion extends Base{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
 
     @NotEmpty(message = "Se requiere su calle")
     private String calle;

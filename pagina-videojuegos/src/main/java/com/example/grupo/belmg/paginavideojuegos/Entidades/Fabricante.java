@@ -16,11 +16,9 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Fabricante {
+public class Fabricante extends Base{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+
 
     @NotEmpty(message = "Se necesita el nombre del fabricante.")
     @Size(min=3,max=30, message="El nombre del fabricante debe tener entre 5 y 30 caracteres.")

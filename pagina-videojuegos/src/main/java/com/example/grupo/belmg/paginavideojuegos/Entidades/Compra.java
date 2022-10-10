@@ -15,11 +15,9 @@ import java.util.Date;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Compra {
+public class Compra extends Base{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+
 
     @NotEmpty(message = "Introduzca la fecha de la facturacion.")
     private Date fecha_de_compra;

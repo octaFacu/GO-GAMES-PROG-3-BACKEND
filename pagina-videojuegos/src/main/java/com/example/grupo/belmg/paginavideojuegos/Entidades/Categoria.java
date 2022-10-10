@@ -15,11 +15,9 @@ import javax.validation.constraints.Size;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Categoria {
+public class Categoria extends Base{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+
 
     @NotEmpty(message = "Se necesita el nombre de la categoria.")
     @Size(min=3,max=25, message="La categoria debe tener entre 5 y 25 caracteres.")

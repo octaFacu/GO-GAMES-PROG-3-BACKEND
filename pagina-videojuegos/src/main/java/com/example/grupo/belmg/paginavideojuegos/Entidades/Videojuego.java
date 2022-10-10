@@ -19,9 +19,6 @@ import java.util.Date;
 @NoArgsConstructor
 public class Videojuego extends Producto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "La fecha no puede ser nula")

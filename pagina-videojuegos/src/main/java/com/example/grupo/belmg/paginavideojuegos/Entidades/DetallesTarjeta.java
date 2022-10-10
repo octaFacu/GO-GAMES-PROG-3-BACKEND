@@ -16,11 +16,8 @@ import java.util.Date;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class DetallesTarjeta {
+public class DetallesTarjeta extends Base{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
 
     @NotEmpty(message = "Se necesita el nombre del titular.")
     @Size(min=3,max=25, message="El nombre debe tener entre 5 y 25 caracteres.")

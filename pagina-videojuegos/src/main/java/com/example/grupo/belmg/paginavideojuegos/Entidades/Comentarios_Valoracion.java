@@ -14,11 +14,9 @@ import javax.validation.constraints.Size;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Comentarios_Valoracion {
+public class Comentarios_Valoracion extends Base{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+
 
     @Size(min = 1,max = 500,message = "el mensaje debe contener almenos un carater y menos de 500")
     private String comentario;

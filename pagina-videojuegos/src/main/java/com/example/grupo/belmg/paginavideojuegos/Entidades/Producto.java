@@ -17,11 +17,8 @@ import javax.validation.constraints.Size;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Producto {
+public class Producto extends Base{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
 
     @Min(value = 5, message = "El valor tiene que ser superior a 5")
     @Max(value = 30000, message = "El valor tiene que ser inferior a 30000")

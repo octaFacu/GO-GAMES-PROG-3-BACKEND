@@ -22,12 +22,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "usuario")
-public class Usuario {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
+public class Usuario extends Base{
 
     @NotEmpty(message = "Se requiere su nombre")
     private String nombre;

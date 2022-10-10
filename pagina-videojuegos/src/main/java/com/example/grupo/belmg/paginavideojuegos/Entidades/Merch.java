@@ -17,9 +17,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class Merch extends Producto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+
 
     @NotEmpty(message = "Ingrese un numero para la cantidad de stock")
     private int stock;
