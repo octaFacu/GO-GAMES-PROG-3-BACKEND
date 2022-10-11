@@ -8,6 +8,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 @Table(name = "estudios")
@@ -23,5 +24,8 @@ public class Estudio extends Base{
     @Size(min=3,max=30, message="El nombre del estudio debe tener entre 5 y 30 caracteres.")
     private String nombre;
 
-    //private List<Videojuego> videojuegos;
+    //@OneToMany(mappedBy = "estudio")
+    private List<Videojuego> videojuegos;
+
+
 }

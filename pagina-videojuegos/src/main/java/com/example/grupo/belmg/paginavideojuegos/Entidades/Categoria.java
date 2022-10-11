@@ -8,6 +8,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 @Table(name = "categorias")
@@ -23,5 +24,13 @@ public class Categoria extends Base{
     @Size(min=3,max=25, message="La categoria debe tener entre 5 y 25 caracteres.")
     private String tipo;
 
-    //private List<Videojuego> videojuegos;
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
+    @JoinTable(name = "categorias_videojuegos",
+            joinColumns = { @JoinColumn(name = "categorias_id") },
+            inverseJoinColumns = { @JoinColumn(name = "videojuegos_id") })
+    private List<Videojuego> videojuegos;
 }
