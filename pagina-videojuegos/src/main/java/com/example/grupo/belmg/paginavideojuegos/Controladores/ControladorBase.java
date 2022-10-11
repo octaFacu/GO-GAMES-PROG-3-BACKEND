@@ -1,4 +1,4 @@
-package com.example.grupo.belmg.paginavideojuegos.Controllers;
+package com.example.grupo.belmg.paginavideojuegos.Controladores;
 
 
 import com.example.grupo.belmg.paginavideojuegos.Entidades.Base;
@@ -11,7 +11,7 @@ import java.io.Serializable;
 
 //Va a tener todas la operaciones basicas que tiene que realizar nuestro controlador
 
-public interface BaseController <E extends Base, ID extends Serializable>{
+public interface ControladorBase<E extends Base, ID extends Serializable>{
 
     // ? --> Recibe cualquier tipo que extienda de Object
     public ResponseEntity<?> getAll();

@@ -40,6 +40,7 @@ public class Usuario extends Base{
     private String nombre_usuario;
 
     @NotEmpty(message = "Se requiere su contraseña")
+    
     private String Contraseña;
 
     @NotEmpty(message = "Se requiere su email")

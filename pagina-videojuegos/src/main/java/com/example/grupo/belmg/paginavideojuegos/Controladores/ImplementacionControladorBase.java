@@ -1,4 +1,4 @@
-package com.example.grupo.belmg.paginavideojuegos.Controllers;
+package com.example.grupo.belmg.paginavideojuegos.Controladores;
 
 import com.example.grupo.belmg.paginavideojuegos.Entidades.Base;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,9 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.Serializable;
-
-public abstract class BaseControllerImplementation  <E extends Base, S extends BaseServiceImplementation<E, Long>> implements BaseController<E, Long>{
+public abstract class ImplementacionControladorBase<E extends Base, S extends BaseServiceImplementation<E, Long>> implements ControladorBase<E, Long> {
 
     @Autowired
     protected S service;
