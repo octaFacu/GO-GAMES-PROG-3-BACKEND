@@ -25,7 +25,6 @@ public class Comentarios_Valoracion extends Base{
     private int puntaje;
 
 
-
     //ver si relacion esta bien
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_usuario")

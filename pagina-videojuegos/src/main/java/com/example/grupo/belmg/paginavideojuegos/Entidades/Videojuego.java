@@ -38,14 +38,14 @@ public class Videojuego extends Producto {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "fk_categoria", nullable = false)
     private Categoria categoria;*/
-    @ManyToMany(mappedBy = "videojuegos")                       //<----------- PROBAR EN POSTMAN QUE APAREZCAN LOS DATOS TANTO EN VIDEOJUEGOS COMO EN CATEGARIAS
-    private Categoria categoria;
+    @ManyToMany(mappedBy = "videojuegos")                       //<----------- PROBAR EN POSTMAN QUE APAREZCAN LOS DATOS TANTO EN VIDEOJUEGOS COMO EN CATEGORIAS
+    private List<Categoria> categoria;
 
-    @OneToMany(cascade = CascadeType.ALL)             
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(
-            name = "videojuegos_comentarios-valoraciones",
+            name = "videojuegos_comentarios_valoraciones",
             joinColumns = @JoinColumn(name = "videojuego_id"),
-            inverseJoinColumns = @JoinColumn(name = "comentario-valoracion_id")
+            inverseJoinColumns = @JoinColumn(name = "comentario_valoracion_id")
     )
     private List<Comentarios_Valoracion> comentarios_valoracions = new ArrayList<Comentarios_Valoracion>();
 

@@ -33,6 +33,17 @@ public class Compra extends Base{
     @JoinColumn(name = "merch")
     private Merch merch;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    //Relacion con usuario
+
+    /*@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "compra_fk_usuario")
+    private Usuario usuario;*/
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "usuario_compra",
+            joinColumns = @JoinColumn(name = "compra_id"),
+            inverseJoinColumns = @JoinColumn(name = "usuario_id")
+    )
     private Usuario usuario;
 }

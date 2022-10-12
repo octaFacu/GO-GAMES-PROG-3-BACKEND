@@ -50,13 +50,6 @@ public class Usuario extends Base{
     private boolean admin;
 
 
-    //creo que persist para no borrar las compras si borro el usuariox
-    @OneToMany(
-            mappedBy = "usuario",
-            cascade = CascadeType.ALL
-    )
-    private List<Compra> compras;
-
     //o remove no lo se y ver relacion 1 - 1 o 1-*
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_direccion")
@@ -65,6 +58,12 @@ public class Usuario extends Base{
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_tarjeta")
     private DetallesTarjeta tarjeta;
+
+    //RELACION CON COMPRA
+
+    @OneToMany(mappedBy = "usuario")
+    private List<Compra> compras;
+
 
 
 }
