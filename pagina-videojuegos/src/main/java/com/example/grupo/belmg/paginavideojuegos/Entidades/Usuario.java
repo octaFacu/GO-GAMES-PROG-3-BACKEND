@@ -50,6 +50,8 @@ public class Usuario extends Base{
     private boolean admin;
 
 
+
+
     //o remove no lo se y ver relacion 1 - 1 o 1-*
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_direccion")
