@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.transaction.Transactional;
 
-/*public class ServicioUsuario  implements ServicioBaseImplementacion{
+public class ServicioUsuario   extends ImplementacionServicioBase<Usuario,Long> {
 
 
     @Autowired
@@ -24,8 +24,4 @@ import javax.transaction.Transactional;
         }
     }
 
-
-
-
-
-}*/
+}

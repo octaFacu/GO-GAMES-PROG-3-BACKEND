@@ -32,4 +32,7 @@ public class Compra extends Base{
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "merch")
     private Merch merch;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Usuario usuario;
 }

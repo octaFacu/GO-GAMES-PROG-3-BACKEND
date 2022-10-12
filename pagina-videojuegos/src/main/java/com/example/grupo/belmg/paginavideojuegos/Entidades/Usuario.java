@@ -51,8 +51,11 @@ public class Usuario extends Base{
 
 
     //creo que persist para no borrar las compras si borro el usuariox
-    @OneToMany(cascade = CascadeType.PERSIST)
-    private List<Compra> compra;
+    @OneToMany(
+            mappedBy = "usuario",
+            cascade = CascadeType.ALL
+    )
+    private List<Compra> compras;
 
     //o remove no lo se y ver relacion 1 - 1 o 1-*
     @OneToOne(cascade = CascadeType.ALL)
