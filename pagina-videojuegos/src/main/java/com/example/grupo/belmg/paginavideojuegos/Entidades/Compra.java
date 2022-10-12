@@ -25,7 +25,11 @@ public class Compra extends Base{
     @NotEmpty(message = "Introduzca el precio total de la compra.")
     private int precio_total;
 
-    @OneToOne
-    @JoinColumn(name = "producto")
-    private Producto producto;
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "videojuego")
+    private Videojuego videojuego;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "merch")
+    private Merch merch;
 }
