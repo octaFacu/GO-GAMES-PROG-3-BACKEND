@@ -9,7 +9,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "videojuegos")
@@ -36,5 +38,15 @@ public class Videojuego extends Producto {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "fk_categoria", nullable = false)
     private Categoria categoria;*/
+    @ManyToMany(mappedBy = "videojuegos")                       //<----------- PROBAR EN POSTMAN QUE APAREZCAN LOS DATOS TANTO EN VIDEOJUEGOS COMO EN CATEGARIAS
+    private Categoria categoria;
+
+    @OneToMany(cascade = CascadeType.ALL)             
+    @JoinTable(
+            name = "videojuegos_comentarios-valoraciones",
+            joinColumns = @JoinColumn(name = "videojuego_id"),
+            inverseJoinColumns = @JoinColumn(name = "comentario-valoracion_id")
+    )
+    private List<Comentarios_Valoracion> comentarios_valoracions = new ArrayList<Comentarios_Valoracion>();
 
 }
