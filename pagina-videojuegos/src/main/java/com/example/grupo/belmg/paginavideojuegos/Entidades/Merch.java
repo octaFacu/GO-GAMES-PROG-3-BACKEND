@@ -22,14 +22,11 @@ public class Merch extends Producto {
     @NotEmpty(message = "Ingrese un numero para la cantidad de stock")
     private int stock;
 
+    //-----relacion unidireccional uno a uno-----
 
-
-
-
-
-    /*@NotNull(message="Es requerido el fabricante")
+    @NotNull(message="Es requerido el fabricante")
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "fk_fabricante", nullable = false)
-    private Fabricante fabricante;*/
+    private Fabricante fabricante;
 
 }

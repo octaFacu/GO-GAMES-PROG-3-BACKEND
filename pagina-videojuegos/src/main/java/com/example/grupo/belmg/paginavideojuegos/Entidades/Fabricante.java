@@ -24,7 +24,9 @@ public class Fabricante extends Base{
     @Size(min=3,max=30, message="El nombre del fabricante debe tener entre 5 y 30 caracteres.")
     private String nombre;
 
-    /*@OneToOne(mappedBy = "fabricante")
-    private Merch merch;*/
+    //-----relacion unidireccional uno a uno-----
+
+    @OneToOne(mappedBy = "fabricante")
+    private Merch merch;
 
 }
