@@ -12,7 +12,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 //@Entity
-//@MappedSuperclass
+@MappedSuperclass
 //@Table(name = "productos")
 @Setter
 @Getter
