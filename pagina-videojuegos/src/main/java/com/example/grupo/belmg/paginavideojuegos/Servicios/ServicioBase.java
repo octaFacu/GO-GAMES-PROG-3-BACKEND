@@ -19,6 +19,6 @@ public interface ServicioBase<E extends Base, ID extends Serializable> {
 
     public boolean delete(ID id) throws Exception;
 
-    public Page<E> findAll(Pageable pageable) throws Exception;
+
 
 }

@@ -91,8 +91,5 @@ public class ImplementacionServicioBase<E extends Base, ID extends Serializable>
         }
     }
 
-    @Override
-    public Page<E> findAll(Pageable pageable) throws Exception {
-        return null;
-    }
+
 }

@@ -25,5 +25,5 @@ public interface ControladorBase<E extends Base, ID extends Serializable>{
 
     public ResponseEntity<?> delete(@PathVariable ID id);
 
-    public ResponseEntity<?> getAll(Pageable pageable);
+
 }
