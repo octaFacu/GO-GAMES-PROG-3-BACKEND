@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping(path = "gogames/v1/direccion")
+@RequestMapping(path = "gogames/v1/direcciones")
 public class ControladorDireccion extends ImplementacionControladorBase<Direccion, ImplementacionServicioDireccion>{
 
 }

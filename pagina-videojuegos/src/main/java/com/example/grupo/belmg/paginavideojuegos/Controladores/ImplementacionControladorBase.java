@@ -1,6 +1,7 @@
 package com.example.grupo.belmg.paginavideojuegos.Controladores;
 
 import com.example.grupo.belmg.paginavideojuegos.Entidades.Base;
+import com.example.grupo.belmg.paginavideojuegos.Servicios.ImplementacionServicioBase;
 import com.example.grupo.belmg.paginavideojuegos.Servicios.ServicioBase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -8,7 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-public abstract class ImplementacionControladorBase<E extends Base, S extends ServicioBase<E, Long>> implements ControladorBase<E, Long> {
+public abstract class ImplementacionControladorBase<E extends Base, S extends ImplementacionServicioBase<E, Long>> implements ControladorBase<E, Long> {
 
     @Autowired
     protected S service;
