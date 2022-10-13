@@ -34,11 +34,7 @@ public class Videojuego extends Producto {
     @JoinColumn(name = "fk_estudio", nullable = false)
     private Estudio estudio;
 
-    /*@NotNull(message="Es requerido la categoria")
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "fk_categoria", nullable = false)
-    private Categoria categoria;*/
-    @ManyToMany(mappedBy = "videojuegos")                       //<----------- PROBAR EN POSTMAN QUE APAREZCAN LOS DATOS TANTO EN VIDEOJUEGOS COMO EN CATEGORIAS
+    @ManyToMany(mappedBy = "videojuegos")
     private List<Categoria> categoria;
 
     @OneToMany(cascade = CascadeType.ALL)
