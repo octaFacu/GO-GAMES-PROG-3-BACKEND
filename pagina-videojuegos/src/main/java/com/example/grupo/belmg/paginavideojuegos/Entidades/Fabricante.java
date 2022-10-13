@@ -26,7 +26,7 @@ public class Fabricante extends Base{
 
     //-----relacion unidireccional uno a uno-----
 
-    @OneToOne(mappedBy = "fabricante")
-    private Merch merch;
+    /*@OneToOne(mappedBy = "fabricante")
+    private Merch merch;*/
 
 }
