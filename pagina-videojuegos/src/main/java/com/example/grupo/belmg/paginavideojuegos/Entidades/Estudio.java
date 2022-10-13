@@ -24,8 +24,8 @@ public class Estudio extends Base{
     @Size(min=3,max=30, message="El nombre del estudio debe tener entre 5 y 30 caracteres.")
     private String nombre;
 
-    @OneToMany(mappedBy = "estudio")
-    private List<Videojuego> videojuegos;
+    /*@OneToMany(mappedBy = "estudio")
+    private List<Videojuego> videojuegos;*/
 
 
 }

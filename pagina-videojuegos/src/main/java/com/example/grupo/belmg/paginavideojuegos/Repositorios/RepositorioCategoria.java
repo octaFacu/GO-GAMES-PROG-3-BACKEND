@@ -10,7 +10,7 @@ import java.util.List;
 public interface RepositorioCategoria extends RepositorioBase<Categoria, Long> {
     List<Categoria> findByTipo(String tipo);
 
-    @Query(value = "SELECT * FROM Categoria WHERE categoria.tipo LIKE %?1%",
+    @Query(value = "SELECT * FROM categorias WHERE categorias.tipo LIKE %?1%",
             nativeQuery = true
     )
     List<Categoria> search(String filtro);

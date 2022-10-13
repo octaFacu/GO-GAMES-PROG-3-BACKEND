@@ -1,5 +1,6 @@
 package com.example.grupo.belmg.paginavideojuegos.Entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,13 +30,17 @@ public class Videojuego extends Producto {
 
     private boolean PG;
 
+    //@JsonIgnore                                                 //<--- EVITA UN ERROR EN EL POSTMAN CON RELACIONES BIDIRECCIONALES MANYTOONE
+    //@ManyToOne(fetch = FetchType.EAGER)
     @NotNull(message="Es requerido el estudio")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "fk_estudio", nullable = false)
     private Estudio estudio;
 
+
     @ManyToMany(mappedBy = "videojuegos")
     private List<Categoria> categoria;
+
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(
