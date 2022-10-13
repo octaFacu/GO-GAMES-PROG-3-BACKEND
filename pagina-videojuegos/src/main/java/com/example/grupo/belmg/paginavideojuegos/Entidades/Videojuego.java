@@ -48,6 +48,6 @@ public class Videojuego extends Producto {
             joinColumns = @JoinColumn(name = "videojuego_id"),
             inverseJoinColumns = @JoinColumn(name = "comentario_valoracion_id")
     )
-    private List<Comentarios_Valoracion> comentarios_valoracions = new ArrayList<Comentarios_Valoracion>();
+    private List<Comentarios_Valoracion> comentarios_valoraciones = new ArrayList<Comentarios_Valoracion>();
 
 }
