@@ -12,7 +12,7 @@ public interface RepositorioUsuario extends RepositorioBase<Usuario, Long>{
 
     List<Usuario> findByNombre(String tipo);
 
-    @Query(value = "SELECT * FROM Usuario WHERE usuario.nombre = %?1%",
+    @Query(value = "SELECT * FROM usuario WHERE usuario.nombre LIKE %?1%",
             nativeQuery = true
     )
     List<Usuario> search(String filtro);

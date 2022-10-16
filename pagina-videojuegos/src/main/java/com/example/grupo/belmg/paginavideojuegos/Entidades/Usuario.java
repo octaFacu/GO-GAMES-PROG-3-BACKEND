@@ -8,10 +8,7 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Past;
+import javax.validation.constraints.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -31,17 +28,17 @@ public class Usuario extends Base{
     @NotEmpty(message = "Se requiere su apellido")
     private String apellido;
 
-    @Past
     @DateTimeFormat(pattern = "yyyy/MM/dd")
-    @NotEmpty(message = "Se requiere su fecha de cumpleaños")
-    private Date Cumpleaños;
+    @NotNull(message = "Se requiere su fecha de cumpleaños")
+    @PastOrPresent(message = "debe ser igual o menor a la fecha de hoy")
+    private Date cumplanios;
 
     @NotEmpty(message = "Se requiere su nombre de usuario")
     private String nombre_usuario;
 
-    @NotEmpty(message = "Se requiere su contraseña")
+    @NotNull(message = "Se requiere su contraseña")
     
-    private String Contraseña;
+    private String contrasenia;
 
     @NotEmpty(message = "Se requiere su email")
     @Email

@@ -4,7 +4,6 @@ import com.example.grupo.belmg.paginavideojuegos.Entidades.Categoria;
 import com.example.grupo.belmg.paginavideojuegos.Entidades.Usuario;
 import com.example.grupo.belmg.paginavideojuegos.Repositorios.RepositorioUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 
@@ -16,6 +15,7 @@ public class ImplementacionServicioUsuario extends ImplementacionServicioBase<Us
 
     @Autowired
     RepositorioUsuario repositorio;
+   /*
     @Override
     @Transactional
     public Usuario save(Usuario entity) throws Exception {
@@ -28,14 +28,14 @@ public class ImplementacionServicioUsuario extends ImplementacionServicioBase<Us
         }catch(Exception e){
             throw new Exception(e.getMessage());
         }
-    }
+    }*/
     @Override
     public List<Usuario> find(String filtro) throws Exception {
         try{
             //Query con los metodos
-            List<Usuario> usuarios = repositorio.search(filtro);
+            List<Usuario> usuario = repositorio.search(filtro);
 
-            return usuarios;
+            return usuario;
 
         }catch(Exception e){
             throw new Exception(e.getMessage());

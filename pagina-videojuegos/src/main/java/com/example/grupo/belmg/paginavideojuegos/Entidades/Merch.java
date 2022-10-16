@@ -19,7 +19,7 @@ public class Merch extends Producto {
 
 
 
-    @NotEmpty(message = "Ingrese un numero para la cantidad de stock")
+    @NotNull(message = "Ingrese un numero para la cantidad de stock")
     private int stock;
 
     //-----relacion unidireccional uno a uno-----
