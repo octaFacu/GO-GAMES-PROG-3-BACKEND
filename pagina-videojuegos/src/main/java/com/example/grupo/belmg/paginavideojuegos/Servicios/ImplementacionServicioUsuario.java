@@ -4,6 +4,10 @@ import com.example.grupo.belmg.paginavideojuegos.Entidades.Categoria;
 import com.example.grupo.belmg.paginavideojuegos.Entidades.Usuario;
 import com.example.grupo.belmg.paginavideojuegos.Repositorios.RepositorioUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
+<<<<<<< Updated upstream
+=======
+//import org.springframework.security.crypto.bcrypt.BCrypt;
+>>>>>>> Stashed changes
 import org.springframework.stereotype.Service;
 
 
@@ -15,8 +19,12 @@ public class ImplementacionServicioUsuario extends ImplementacionServicioBase<Us
 
     @Autowired
     RepositorioUsuario repositorio;
+<<<<<<< Updated upstream
    /*
     @Override
+=======
+    /*@Override
+>>>>>>> Stashed changes
     @Transactional
     public Usuario save(Usuario entity) throws Exception {
 
@@ -29,6 +37,10 @@ public class ImplementacionServicioUsuario extends ImplementacionServicioBase<Us
             throw new Exception(e.getMessage());
         }
     }*/
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
     @Override
     public List<Usuario> find(String filtro) throws Exception {
         try{

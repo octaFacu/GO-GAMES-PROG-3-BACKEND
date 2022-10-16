@@ -21,4 +21,38 @@ public class ControladorMerch extends ImplementacionControladorBase<Merch, Imple
         }
     }
 
+    //----------
+
+    @GetMapping("/searchActivo")
+    public ResponseEntity<?> getAllActivo(){
+
+        try{
+            return ResponseEntity.status(HttpStatus.OK).body(service.findAllByActivo());
+        }catch(Exception e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(("{\"error\": \"" + e.getMessage()+"\"}"));
+        }
+    }
+
+    @GetMapping("/searchOneActivo/{id}")
+    public ResponseEntity<?> getOneByIdAndActivo(@PathVariable Long id){
+
+        try{
+            return ResponseEntity.status(HttpStatus.OK).body(service.findByIdAndActivo(id));
+        }catch(Exception e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(("{\"error\": \"" + e.getMessage()+"\"}"));
+        }
+    }
+
+    /*@PostMapping("/deleteOneActivo/{id}")
+    public ResponseEntity<?> deleteActivoById(@PathVariable Long id){
+
+        try{
+            return ResponseEntity.status(HttpStatus.OK).body(service.deleteById(id));
+        }catch(Exception e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(("{\"error\": \"" + e.getMessage()+"\"}"));
+        }
+    }*/
+
+
+
 }
