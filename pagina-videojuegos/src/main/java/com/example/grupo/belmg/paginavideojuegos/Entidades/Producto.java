@@ -18,7 +18,7 @@ import javax.validation.constraints.Size;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Producto extends Base{
+public abstract class Producto extends Base{
 
 
     @Min(value = 5, message = "El valor tiene que ser superior a 5")
