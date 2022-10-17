@@ -37,7 +37,8 @@ public class Compra extends Base{
     @JoinColumn(name = "compra_fk_usuario")
     private Usuario usuario;*/
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.MERGE,
+                fetch = FetchType.LAZY)
     @JoinTable(
             name = "usuario_compra",
             joinColumns = @JoinColumn(name = "compra_id"),

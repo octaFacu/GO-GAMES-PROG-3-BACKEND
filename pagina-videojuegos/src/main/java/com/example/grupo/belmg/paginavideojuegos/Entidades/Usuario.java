@@ -1,6 +1,7 @@
 package com.example.grupo.belmg.paginavideojuegos.Entidades;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -60,8 +61,9 @@ public class Usuario extends Base{
 
     //RELACION CON COMPRA
 
+    /*@JsonIgnore
     @OneToMany(mappedBy = "usuario")
-    private List<Compra> compras;
+    private List<Compra> compras;*/
 
 
 

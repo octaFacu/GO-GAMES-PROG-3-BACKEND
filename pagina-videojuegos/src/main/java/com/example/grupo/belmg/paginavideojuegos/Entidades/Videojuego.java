@@ -41,7 +41,8 @@ public class Videojuego extends Producto {
     private List<Categoria> categoria;
 
 
-    @OneToMany(cascade = CascadeType.MERGE)
+    @OneToMany(cascade = CascadeType.MERGE,
+                fetch = FetchType.LAZY)
     @JoinTable(
             name = "videojuegos_comentarios_valoraciones",
             joinColumns = @JoinColumn(name = "videojuego_id"),
