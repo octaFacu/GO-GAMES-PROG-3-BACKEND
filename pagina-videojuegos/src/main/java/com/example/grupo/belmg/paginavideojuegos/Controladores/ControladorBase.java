@@ -13,17 +13,9 @@ import java.io.Serializable;
 
 public interface ControladorBase<E extends Base, ID extends Serializable>{
 
-    // ? --> Recibe cualquier tipo que extienda de Object
     public ResponseEntity<?> getAll();
-
     public ResponseEntity<?> getOne(@PathVariable ID id);
-
-    //Request Body es para decir que le vamos a pasar un objeto para ser guardado
     public ResponseEntity<?> save(@RequestBody E entity);
-
     public ResponseEntity<?> update(@PathVariable ID id, @RequestBody E entity);
-
     public ResponseEntity<?> delete(@PathVariable ID id);
-
-
 }

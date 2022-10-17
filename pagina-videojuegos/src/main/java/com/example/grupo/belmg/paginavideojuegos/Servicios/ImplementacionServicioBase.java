@@ -19,14 +19,10 @@ public class ImplementacionServicioBase<E extends Base, ID extends Serializable>
     @Override
     @Transactional
     public List<E> findAll() throws Exception {
-
         try {
-
             List<E> entidades = repositorio.findAll();
             return entidades;
-
         }catch(Exception e) {
-
             throw new Exception(e.getMessage());
         }
     }
@@ -34,11 +30,9 @@ public class ImplementacionServicioBase<E extends Base, ID extends Serializable>
     @Override
     @Transactional
     public E findById(ID id) throws Exception {
-
         try{
             Optional<E> entidad = repositorio.findById(id);
             return entidad.get();
-
         }catch(Exception e){
             throw new Exception(e.getMessage());
         }

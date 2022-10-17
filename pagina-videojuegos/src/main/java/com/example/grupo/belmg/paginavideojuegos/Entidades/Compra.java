@@ -1,5 +1,6 @@
 package com.example.grupo.belmg.paginavideojuegos.Entidades;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,6 +8,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
@@ -17,10 +19,10 @@ import java.util.Date;
 @NoArgsConstructor
 public class Compra extends Base{
 
-    @NotEmpty(message = "Introduzca la fecha de la facturacion.")
+    @NotNull(message = "Introduzca la fecha de la facturacion.")
     private Date fecha_de_compra;
 
-    @NotEmpty(message = "Introduzca el precio total de la compra.")
+    @NotNull(message = "Introduzca el precio total de la compra.")
     private int precio_total;
 
     @OneToOne(fetch = FetchType.EAGER)
@@ -33,16 +35,17 @@ public class Compra extends Base{
 
     //Relacion con usuario
 
-    /*@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "compra_fk_usuario")
-    private Usuario usuario;*/
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "fk_usuario")
+    private Usuario usuario;
 
-    @ManyToOne(cascade = CascadeType.MERGE,
+    /*@ManyToOne(cascade = CascadeType.MERGE,
                 fetch = FetchType.LAZY)
     @JoinTable(
             name = "usuario_compra",
             joinColumns = @JoinColumn(name = "compra_id"),
             inverseJoinColumns = @JoinColumn(name = "usuario_id")
     )
-    private Usuario usuario;
+    private Usuario usuario;*/
 }

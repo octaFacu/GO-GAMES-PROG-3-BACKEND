@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "direccion")
@@ -17,13 +18,13 @@ import javax.validation.constraints.NotEmpty;
 public class Direccion extends Base{
 
 
-    @NotEmpty(message = "Se requiere su calle")
+    @NotNull(message = "Se requiere su calle")
     private String calle;
 
-    @NotEmpty(message = "Se requiere su localidad")
+    @NotNull(message = "Se requiere su localidad")
     private String localidad;
 
-    @NotEmpty(message = "Se requiere su pais")
+    @NotNull(message = "Se requiere su pais")
     private String pais;
 
     private int piso;

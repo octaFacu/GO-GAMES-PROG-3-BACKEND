@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class Fabricante extends Base{
 
 
 
-    @NotEmpty(message = "Se necesita el nombre del fabricante.")
+    @NotNull(message = "Se necesita el nombre del fabricante.")
     @Size(min=3,max=30, message="El nombre del fabricante debe tener entre 5 y 30 caracteres.")
     private String nombre;
 

@@ -9,36 +9,28 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-public abstract class ImplementacionControladorBase<E extends Base, S extends ImplementacionServicioBase<E, Long>> implements ControladorBase<E, Long> {
+public abstract class ImplementacionControladorBase<E extends Base,
+        S extends ImplementacionServicioBase<E, Long>> implements ControladorBase<E, Long> {
 
     @Autowired
     protected S service;
 
-    //Hay que pasa la hora especifica en que se llamo a este
     @GetMapping("")
     public ResponseEntity<?> getAll(){
-
         try {
             return ResponseEntity.status(HttpStatus.OK).body(service.findAll());
-
         }catch(Exception e) {
-
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"error\":\"Error, intente mas tarde.\"}");
         }
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getOne(@PathVariable Long id){
-
         try {
-            //Devuelve un estado http si encuentra
             return ResponseEntity.status(HttpStatus.OK).body(service.findById(id));
-
         }catch(Exception e) {
-
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"error\":\"Error, intente mas tarde.\"}");
         }
-
     }
 
 

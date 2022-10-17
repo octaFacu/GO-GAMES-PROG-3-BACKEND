@@ -1,6 +1,7 @@
 package com.example.grupo.belmg.paginavideojuegos.Entidades;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,6 +9,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,11 +24,11 @@ public class Categoria extends Base{
 
 
 
-    @NotEmpty(message = "Se necesita el nombre de la categoria.")
+    @NotNull(message = "Se necesita el nombre de la categoria.")
     @Size(min=3,max=25, message="La categoria debe tener entre 5 y 25 caracteres.")
     private String tipo;
 
-
+    @JsonManagedReference
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
                     CascadeType.PERSIST,

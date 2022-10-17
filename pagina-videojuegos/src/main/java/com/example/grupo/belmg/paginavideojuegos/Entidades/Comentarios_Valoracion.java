@@ -18,7 +18,7 @@ public class Comentarios_Valoracion extends Base{
 
 
 
-    @Size(min = 1,max = 500,message = "el mensaje debe contener almenos un carater y menos de 500")
+    @Size(min = 1,max = 500,message = "el mensaje debe contener al menos un caracter y menos de 500")
     private String comentario;
 
     @Size(min = 1,max = 5)

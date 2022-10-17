@@ -2,6 +2,7 @@ package com.example.grupo.belmg.paginavideojuegos.Entidades;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,11 +23,11 @@ import java.util.List;
 @Table(name = "usuario")
 public class Usuario extends Base{
 
-    @NotEmpty(message = "Se requiere su nombre")
+    @NotNull(message = "Se requiere su nombre")
     private String nombre;
 
 
-    @NotEmpty(message = "Se requiere su apellido")
+    @NotNull(message = "Se requiere su apellido")
     private String apellido;
 
     @DateTimeFormat(pattern = "yyyy/MM/dd")
@@ -34,14 +35,14 @@ public class Usuario extends Base{
     @PastOrPresent(message = "debe ser igual o menor a la fecha de hoy")
     private Date cumplanios;
 
-    @NotEmpty(message = "Se requiere su nombre de usuario")
+    @NotNull(message = "Se requiere su nombre de usuario")
     private String nombre_usuario;
 
     @NotNull(message = "Se requiere su contraseña")
     
     private String contrasenia;
 
-    @NotEmpty(message = "Se requiere su email")
+    @NotNull(message = "Se requiere su email")
     @Email
     private String email;
 
@@ -61,9 +62,9 @@ public class Usuario extends Base{
 
     //RELACION CON COMPRA
 
-    /*@JsonIgnore
+    @JsonManagedReference
     @OneToMany(mappedBy = "usuario")
-    private List<Compra> compras;*/
+    private List<Compra> compras;
 
 
 
