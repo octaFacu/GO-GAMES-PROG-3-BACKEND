@@ -22,7 +22,6 @@ import java.util.List;
 @NoArgsConstructor
 public class Videojuego extends Producto {
 
-
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "La fecha no puede ser nula")
     @PastOrPresent(message = "debe ser igual o menor a la fecha de hoy")
@@ -42,7 +41,7 @@ public class Videojuego extends Producto {
     private List<Categoria> categoria;
 
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.MERGE)
     @JoinTable(
             name = "videojuegos_comentarios_valoraciones",
             joinColumns = @JoinColumn(name = "videojuego_id"),

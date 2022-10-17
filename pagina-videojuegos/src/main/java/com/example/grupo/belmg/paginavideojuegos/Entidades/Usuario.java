@@ -50,11 +50,11 @@ public class Usuario extends Base{
 
 
     //o remove no lo se y ver relacion 1 - 1 o 1-*
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "fk_direccion")
     private Direccion direccion;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "fk_tarjeta")
     private DetallesTarjeta tarjeta;
 

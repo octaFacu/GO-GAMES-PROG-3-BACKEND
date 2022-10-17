@@ -17,8 +17,6 @@ import java.util.Date;
 @NoArgsConstructor
 public class Compra extends Base{
 
-
-
     @NotEmpty(message = "Introduzca la fecha de la facturacion.")
     private Date fecha_de_compra;
 
@@ -39,7 +37,7 @@ public class Compra extends Base{
     @JoinColumn(name = "compra_fk_usuario")
     private Usuario usuario;*/
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinTable(
             name = "usuario_compra",
             joinColumns = @JoinColumn(name = "compra_id"),
