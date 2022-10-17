@@ -40,7 +40,7 @@ public class Videojuego extends Producto {
 
 
     @ManyToMany(mappedBy = "videojuegos")
-    @JsonBackReference
+    @JsonManagedReference
     private List<Categoria> categoria;
 
 
