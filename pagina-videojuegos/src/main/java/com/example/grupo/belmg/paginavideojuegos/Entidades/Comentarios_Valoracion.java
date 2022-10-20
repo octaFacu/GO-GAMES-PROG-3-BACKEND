@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -20,9 +21,11 @@ public class Comentarios_Valoracion extends Base{
 
 
     @Size(min = 1,max = 500,message = "el mensaje debe contener al menos un caracter y menos de 500")
+    @NotNull
     private String comentario;
 
-    @Size(min = 1,max = 5)
+    //@Size(min = 1,max = 5)
+    @NotNull
     private int puntaje;
 
 
