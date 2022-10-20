@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -28,14 +29,15 @@ public class DetallesTarjeta extends Base{
     @Size(min=3,max=30, message="El apellido debe tener entre 5 y 30 caracteres.")
     private String apellido_titular;
 
-    @NotEmpty(message = "Se necesita el numero de la tarjeta.")
-    @Size(min=12,max=19, message="Debe tener entre 5 y 30 numeros.")
-    private int nro_tarjeta;
+    @NotNull(message = "Se necesita el numero de la tarjeta.")
+    //@Size(min=12,max=19, message="Debe tener entre 5 y 30 numeros.")
+    private long nro_tarjeta;
 
     @NotNull(message = "Se necesita el cvv de la tarjeta.")
-    @Size(min=3,max=3, message="Debe tener 3 digitos.")
+    //@Size(min=3,max=3, message="Debe tener 3 digitos.")
     private int cvv;
 
+    @DateTimeFormat(pattern = "yyyy/MM/dd")
     @NotNull(message = "Se necesita la fecha de vencimiento de la tarjeta.")
     private Date fecha_vencimiento;
 
