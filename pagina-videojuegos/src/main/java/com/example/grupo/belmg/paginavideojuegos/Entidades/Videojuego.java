@@ -41,6 +41,7 @@ public class Videojuego extends Producto {
 
     @ManyToMany(mappedBy = "videojuegos")
     @JsonManagedReference
+    //@JsonIgnore
     private List<Categoria> categoria;
 
 

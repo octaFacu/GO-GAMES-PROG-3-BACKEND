@@ -1,6 +1,7 @@
 package com.example.grupo.belmg.paginavideojuegos.Entidades;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
@@ -25,7 +26,6 @@ public class Usuario extends Base{
 
     @NotNull(message = "Se requiere su nombre")
     private String nombre;
-
 
     @NotNull(message = "Se requiere su apellido")
     private String apellido;
@@ -62,8 +62,10 @@ public class Usuario extends Base{
 
     //RELACION CON COMPRA
 
-    @JsonManagedReference
+
     @OneToMany(mappedBy = "usuario")
+    //@JsonIgnore
+    //@JsonManagedReference
     private List<Compra> compras;
 
 

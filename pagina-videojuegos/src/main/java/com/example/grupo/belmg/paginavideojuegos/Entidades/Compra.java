@@ -1,6 +1,8 @@
 package com.example.grupo.belmg.paginavideojuegos.Entidades;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,8 +15,8 @@ import java.util.Date;
 
 @Entity
 @Table(name = "compras")
-@Setter
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Compra extends Base{
@@ -35,17 +37,12 @@ public class Compra extends Base{
 
     //Relacion con usuario
 
-    @JsonBackReference
-    @ManyToOne(fetch = FetchType.EAGER)
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_usuario")
+    @JsonIgnore
+    //@JsonBackReference
     private Usuario usuario;
 
-    /*@ManyToOne(cascade = CascadeType.MERGE,
-                fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "usuario_compra",
-            joinColumns = @JoinColumn(name = "compra_id"),
-            inverseJoinColumns = @JoinColumn(name = "usuario_id")
-    )
-    private Usuario usuario;*/
+
 }

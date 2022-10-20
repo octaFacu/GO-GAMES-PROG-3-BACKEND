@@ -1,5 +1,6 @@
 package com.example.grupo.belmg.paginavideojuegos.Entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,5 +29,6 @@ public class Comentarios_Valoracion extends Base{
     //ver si relacion esta bien
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_usuario")
+    @JsonIgnore
     private Usuario usuario;
 }
