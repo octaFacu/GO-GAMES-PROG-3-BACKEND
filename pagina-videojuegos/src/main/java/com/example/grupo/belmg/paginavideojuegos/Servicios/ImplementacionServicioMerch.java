@@ -4,6 +4,8 @@ import com.example.grupo.belmg.paginavideojuegos.Entidades.Merch;
 import com.example.grupo.belmg.paginavideojuegos.Entidades.Videojuego;
 import com.example.grupo.belmg.paginavideojuegos.Repositorios.RepositorioMerch;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -18,16 +20,33 @@ public class ImplementacionServicioMerch extends ImplementacionServicioBase<Merc
 
 
     @Override
-    public List<Merch> find(String filtro) throws Exception {
-        try{
-            //Query con los metodos
-            List<Merch> merchs = repositorio.search(filtro);
+    @Transactional
+    public List<Merch> search(String filtro) throws Exception {
 
+        try{
+
+            List<Merch> merchs = repositorio.searchNativo(filtro);
             return merchs;
 
         }catch(Exception e){
             throw new Exception(e.getMessage());
         }
+
+    }
+
+    @Override
+    @Transactional
+    public Page<Merch> search(String filtro, Pageable pageable) throws Exception {
+
+        try{
+
+            Page<Merch> merchs = repositorio.searchNativo(filtro, pageable);
+            return merchs;
+
+        }catch(Exception e){
+            throw new Exception(e.getMessage());
+        }
+
     }
 
 

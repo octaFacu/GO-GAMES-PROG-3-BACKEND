@@ -4,6 +4,8 @@ import com.example.grupo.belmg.paginavideojuegos.Entidades.Categoria;
 import com.example.grupo.belmg.paginavideojuegos.Entidades.Videojuego;
 import com.example.grupo.belmg.paginavideojuegos.Repositorios.RepositorioVideojuego;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -18,16 +20,32 @@ public class ImplementacionServicioVideojuego extends ImplementacionServicioBase
 
     @Override
     @Transactional
-    public List<Videojuego> find(String filtro) throws Exception {
-        try{
-            //Query con los metodos
-            List<Videojuego> videojuegos = repositorio.search(filtro);
+    public List<Videojuego> search(String filtro) throws Exception {
 
+        try{
+
+            List<Videojuego> videojuegos = repositorio.searchNativo(filtro);
             return videojuegos;
 
         }catch(Exception e){
             throw new Exception(e.getMessage());
         }
+
+    }
+
+    @Override
+    @Transactional
+    public Page<Videojuego> search(String filtro, Pageable pageable) throws Exception {
+
+        try{
+
+            Page<Videojuego> videojuegos = repositorio.searchNativo(filtro, pageable);
+            return videojuegos;
+
+        }catch(Exception e){
+            throw new Exception(e.getMessage());
+        }
+
     }
 
     /*@Transactional

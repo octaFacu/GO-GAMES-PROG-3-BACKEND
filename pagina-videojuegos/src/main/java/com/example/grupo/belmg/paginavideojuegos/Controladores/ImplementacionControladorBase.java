@@ -79,6 +79,18 @@ public abstract class ImplementacionControladorBase<E extends Base,
 
     }
 
+    @GetMapping("/paged")
+    public ResponseEntity<?> getAll(Pageable pageable){
+
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(service.findAll(pageable));
+        }catch(Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"error\":\"Error por favor intente mas tarde.\"}");
+        }
+    }
+
+
+
 
 
 }

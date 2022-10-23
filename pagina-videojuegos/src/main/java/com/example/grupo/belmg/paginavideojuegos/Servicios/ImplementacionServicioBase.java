@@ -85,5 +85,23 @@ public class ImplementacionServicioBase<E extends Base, ID extends Serializable>
         }
     }
 
+    @Override
+    @Transactional
+    public Page<E> findAll(Pageable pageable) throws Exception {
+
+        try {
+
+            Page<E> entities = repositorio.findAll(pageable);
+            return entities;
+
+        }catch(Exception e) {
+
+            throw new Exception(e.getMessage());
+        }
+
+    }
+
+
+
 
 }
