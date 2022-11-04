@@ -1,9 +1,6 @@
 package com.example.grupo.belmg.paginavideojuegos.Entidades;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +9,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -21,34 +18,43 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "usuario")
+@Table(name = "usuarios")
 public class Usuario extends Base{
 
-    @NotNull(message = "Se requiere su nombre")
+    @NotEmpty(message = "Se requiere su nombre")
     private String nombre;
 
-    @NotNull(message = "Se requiere su apellido")
+
+    @NotEmpty(message = "Se requiere su apellido")
     private String apellido;
 
-    @DateTimeFormat(pattern = "yyyy/MM/dd")
-    @NotNull(message = "Se requiere su fecha de cumpleaños")
-    @PastOrPresent(message = "debe ser igual o menor a la fecha de hoy")
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message="No puede ser nulo la fecha")
+    @PastOrPresent(message="La fecha no puede ser mayor a la actual")
     private Date cumplanios;
 
-    @NotNull(message = "Se requiere su nombre de usuario")
+    @NotEmpty(message = "Se requiere su nombre de usuario")
     private String nombre_usuario;
 
-    @NotNull(message = "Se requiere su contraseña")
-    
+    @NotEmpty(message = "Se requiere su contraseña")
+
     private String contrasenia;
 
-    @NotNull(message = "Se requiere su email")
+    @NotEmpty(message = "Se requiere su email")
     @Email
     private String email;
 
     private boolean admin;
 
 
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "usuarios_roles",
+            joinColumns = @JoinColumn(name = "usuario_id",referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "rol_id",referencedColumnName = "id")
+    )
+    private Collection<Rol> rol;
 
 
     //o remove no lo se y ver relacion 1 - 1 o 1-*

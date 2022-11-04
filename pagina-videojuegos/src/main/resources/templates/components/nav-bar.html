@@ -1,0 +1,30 @@
+<nav th:fragment="nav_bar" class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" th:href="@{/inicio}">GO Games</a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/inicio}">Inicio</a>
+                </li>
+                <li class="nav-item" sec:authorize="!isAuthenticated()">
+                    <a class="nav-link" th:href="@{/registro}">Registro</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+        <div class="dropdown" sec:authorize="isAuthenticated()">
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <span  sec:authentication="name"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><button class="dropdown-item" type="button" sec:authorize="hasRole('ROLE_SUPERADMIN')"><a
+                        th:href="@{/rgtAdmins}">Crear Admin</a></button></li>
+
+                <li><button class="dropdown-item" type="button" sec:authorize="hasRole('ROLE_SUPERADMIN')">
+                    <a th:href="@{/eliminarAdmin}">Eliminar Admin</a></button></li>
+
+                <li><button class="dropdown-item btn btn-danger" type="button"> <a th:href="@{/logout}">Cerrar sesion</a></button></li>
+            </ul>
+        </div>
+</nav>
