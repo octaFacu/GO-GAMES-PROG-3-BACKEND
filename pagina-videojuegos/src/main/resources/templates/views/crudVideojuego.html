@@ -44,11 +44,30 @@
                         <td>
                             <a th:href="@{/videojuego/formulario/videojuego/{id}(id=${videojuegos.id})}" class="btn btn-warning">Editar</a>
                             <a th:if="${videojuegos.activo}" th:href="@{/videojuego/eliminar/videojuego/{id}(id=${videojuegos.id})}" class="btn btn-danger">Desactivar</a>
-                            <a th:unless="${videojuegos.activo}" th:href="@{/videojuego/activar/videojuego/{id}(id=${videojuegos.id})}" class="btn btn-success">Activar</a>
+                            <a th:unless="${videojuegos.activo}" th:href="@{/videojuego/eliminar/videojuego/{id}(id=${videojuegos.id})}" class="btn btn-success">Activar</a>
                         </td>
                     </tr>
                     </tbody>
                 </table>
+                <div class="row">
+                    <div class="col-md-2" id="atras"></div>
+                    <div class="col-md-8">
+                        <nav aria-label="Pagination">
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item" th:classappend="${prev == 0 ? 'disabled' : ''}">
+                                    <a class="page-link" th:href="@{|/videojuego/crudVideojuego?page=${prev}|}">Anterior</a>
+                                </li>
+                                <li class="page-item" th:each="page : ${pages}" th:classappend="${current == page ? 'active' : ''}">
+                                    <a class="page-link" th:href="@{|/videojuego/crudVideojuego?page=${page}|}" th:text="${page}"></a>
+                                </li>
+                                <li class="page-item" th:classappend="${current == last ? 'disabled' : ''}">
+                                    <a class="page-link" th:href="@{|/videojuego/crudVideojuego?page=${next}|}">Siguiente</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
             </div>
         </div>
     </div>

@@ -5,6 +5,8 @@ import com.example.grupo.belmg.paginavideojuegos.Servicios.ImplementacionServici
 import com.example.grupo.belmg.paginavideojuegos.Servicios.ImplementacionServicioEstudio;
 import com.example.grupo.belmg.paginavideojuegos.Servicios.ImplementacionServicioVideojuego;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 //@RestController
 //@CrossOrigin(origins = "*")
@@ -37,8 +42,8 @@ public class ControladorVideojuego extends ImplementacionControladorBase<Videoju
     @Autowired
     private ImplementacionServicioEstudio servicioEstudio;
 
-    //CRUD
-    @GetMapping("/crudVideojuego")
+    //----------CRUD------------
+    /*@GetMapping("/crudVideojuego")
     public String crudVideojuego(Model model){
 
         try{
@@ -50,7 +55,7 @@ public class ControladorVideojuego extends ImplementacionControladorBase<Videoju
             model.addAttribute("error", e.getMessage());
             return "error";
         }
-    }
+    }*/
 
     @GetMapping("/formulario/videojuego/{id}")
     public String formularioVideojuego(Model model, @PathVariable("id") long id){
@@ -126,36 +131,33 @@ public class ControladorVideojuego extends ImplementacionControladorBase<Videoju
         }
     }
 
+    @GetMapping("/crudVideojuego")
+    public String findAll(@RequestParam Map<String, Object> params, Model model){
 
-    @GetMapping("/activar/videojuego/{id}")
-    public String ponerVideojuego(Model model, @PathVariable("id") long id){
+        int page = params.get("page") != null ? (Integer.valueOf(params.get("page").toString()) - 1) : 0;
 
-        try{
+        PageRequest pageRequest = PageRequest.of(page,2);
 
-            model.addAttribute("videojuego", this.servicioVideojuego.findById(id));
-            return "views/formulario/eliminar";
+        Page<Videojuego> pageVideojuego = servicioVideojuego.getAll(pageRequest);
 
-        }catch(Exception e){
-            model.addAttribute("error", e.getMessage());
-            return "error";
+        int totalPage = pageVideojuego.getTotalPages();                                                     //Total de paginas que tienen los datos de la base de datos(cuantos links se muestran)
+        if(totalPage > 0){
+            List<Integer> pages = IntStream.rangeClosed(1, totalPage).boxed().collect(Collectors.toList());   //Se crea un listado de numeros desde el 1 al numero final
+            model.addAttribute("pages", pages);
         }
-    }
 
-    @PostMapping("/activar/videojuego/{id}")
-    public String activarVideojuego(Model model, @PathVariable("id") long id){
+        model.addAttribute("videojuegos", pageVideojuego.getContent());
+        model.addAttribute("current", page + 1);                                        //Parametro para identificar la pagina actual
+        model.addAttribute("next", page + 2);
+        model.addAttribute("prev", page);
+        model.addAttribute("last", totalPage);
 
-        try{
-            this.servicioVideojuego.deleteActivoById(id);
-            return "redirect:/videojuego/crudVideojuego";
+        return "views/crudVideojuego";
 
-        }catch(Exception e){
-            model.addAttribute("error", e.getMessage());
-            return "error";
-        }
     }
 
 
-    //FIN CRUD
+    //-------------FIN CRUD------------------
 
 
 

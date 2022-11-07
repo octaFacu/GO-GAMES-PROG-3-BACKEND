@@ -17,7 +17,8 @@
           <form th:action="@{/videojuego/eliminar/videojuego/{id}(id=${videojuego.id})}" method="post" enctype="multipart/form-data">
             <div class="row g-3 text-center">
               <div class="form-group col-md-12">
-                <h4>Esta seguro de desactivar este producto?</h4>
+                <h4 th:if="${videojuego.activo}">Esta seguro de desactivar este producto?</h4>
+                <h4 th:unless="${videojuego.activo}">Esta seguro de activar este producto?</h4>
               </div>
             </div>
             <div class="row m-3">

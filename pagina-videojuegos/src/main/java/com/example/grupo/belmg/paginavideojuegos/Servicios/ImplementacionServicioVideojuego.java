@@ -48,6 +48,14 @@ public class ImplementacionServicioVideojuego extends ImplementacionServicioBase
 
     }
 
+    @Override
+    @Transactional
+    public Page<Videojuego> getAll(Pageable pageable){
+
+        return repositorio.findAll(pageable);
+
+    }
+
     @Transactional
     public boolean deleteActivoById(long id) throws Exception {
         try{
@@ -66,23 +74,7 @@ public class ImplementacionServicioVideojuego extends ImplementacionServicioBase
         }
     }
 
-    @Transactional
-    public boolean activateActivoById(long id) throws Exception {
-        try{
-            Optional<Videojuego> opt = this.repositorio.findById(id);
-            if(!opt.isEmpty()){
-                Videojuego videojuego = opt.get();
-                videojuego.setActivo(videojuego.isActivo());
-                this.repositorio.save(videojuego);
-            }else{
-                throw new Exception();
-            }
-            return true;
 
-        }catch(Exception e){
-            throw new Exception(e.getMessage());
-        }
-    }
 
     //---
 
@@ -107,5 +99,7 @@ public class ImplementacionServicioVideojuego extends ImplementacionServicioBase
             throw new Exception(e.getMessage());
         }
     }
+
+
 
 }

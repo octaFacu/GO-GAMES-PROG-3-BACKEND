@@ -29,15 +29,5 @@ public class Categoria extends Base{
     @Size(min=3,max=25, message="La categoria debe tener entre 5 y 25 caracteres.")
     private String tipo;
 
-    @JsonBackReference
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            })
-    @JoinTable(name = "categorias_videojuegos",
-            joinColumns = { @JoinColumn(name = "categorias_id") },
-            inverseJoinColumns = { @JoinColumn(name = "videojuegos_id") })
-    //@JsonIgnore
-    private List<Videojuego> videojuegos = new ArrayList<Videojuego>();
+
 }

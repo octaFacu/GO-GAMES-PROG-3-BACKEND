@@ -15,4 +15,7 @@ public interface ServicioVideojuego extends ServicioBase<Videojuego, Long>{
 
     public Page<Videojuego> search(String filtro, Pageable pageable) throws Exception;
 
+
+    public Page<Videojuego> getAll(Pageable pageable);
+
 }
