@@ -38,10 +38,8 @@ public class Compra extends Base{
     //Relacion con usuario
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "fk_usuario")
-    @JsonIgnore
-    //@JsonBackReference
     private Usuario usuario;
 
 

@@ -119,12 +119,5 @@ public class ControladorUsuario extends ImplementacionControladorBase<Usuario, I
             return "error/404";
         }
     }
-    @GetMapping("crud")
-    public String prueba(Model modelo){
-        try {
-            return  "views/formulario/crud";
-        }catch (Exception e){
-            return "error/404";
-        }
-    }
+
 }

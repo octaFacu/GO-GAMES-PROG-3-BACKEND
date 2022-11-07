@@ -69,10 +69,7 @@ public class Usuario extends Base{
     //RELACION CON COMPRA
 
 
-    @OneToMany(mappedBy = "usuario")
-    //@JsonIgnore
-    //@JsonManagedReference
-    private List<Compra> compras;
+
 
 
 

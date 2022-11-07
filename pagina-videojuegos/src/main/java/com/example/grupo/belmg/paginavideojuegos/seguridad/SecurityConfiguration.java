@@ -53,7 +53,7 @@ public class SecurityConfiguration {
                 "/registro**", "/css/**", "/img/**").permitAll()
                 .antMatchers("/rgtAdmins").hasRole("SUPERADMIN")
                 .antMatchers("/eliminarAdmin").hasRole("SUPERADMIN")
-                .antMatchers("/crud").hasAnyRole("ADMIN","SUPERADMIN")
+                .antMatchers("/crudVideojuego").hasAnyRole("ADMIN","SUPERADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

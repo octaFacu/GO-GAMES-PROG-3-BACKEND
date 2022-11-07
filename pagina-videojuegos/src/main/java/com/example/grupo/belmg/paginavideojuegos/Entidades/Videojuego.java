@@ -39,10 +39,10 @@ public class Videojuego extends Producto {
     private Estudio estudio;
 
 
-    @ManyToMany(mappedBy = "videojuegos")
-    @JsonManagedReference
-    //@JsonIgnore
-    private List<Categoria> categoria;
+    @NotNull(message="Es requerida la categoria")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "fk_categoria", nullable = false)
+    private Categoria categoria;
 
 
     @OneToMany(cascade = CascadeType.MERGE,
