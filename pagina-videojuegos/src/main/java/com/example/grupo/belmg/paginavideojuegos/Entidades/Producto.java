@@ -8,7 +8,6 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
-//@Entity
 @MappedSuperclass
 //@Table(name = "productos")
 @Setter
@@ -33,6 +32,9 @@ public abstract class Producto extends Base{
 
     private String img_portada;
 
-    private String[] imagenes;
+
 
 }
+
+
+

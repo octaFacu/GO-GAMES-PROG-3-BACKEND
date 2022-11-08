@@ -35,4 +35,15 @@ public interface RepositorioVideojuego extends RepositorioBase<Videojuego, Long>
             nativeQuery = true
     )
     Page<Videojuego> searchNativo(@Param("filtro") String filtro, Pageable pageable);
+
+    @Query(value = "SELECT * FROM videojuegos WHERE videojuegos.activo = true",
+            nativeQuery = true,
+            countQuery = "SELECT count(5) FROM videojuegos")
+    Page<Videojuego> findAllByActivoPageable(Pageable pageable);
+
+    @Query(value = "SELECT * FROM videojuegos WHERE videojuegos.activo = true AND videojuegos.fk_categoria = :idCategoria",
+            nativeQuery = true,
+            countQuery = "SELECT count(3) FROM videojuegos")
+    Page<Videojuego> findByActivoAndCategoriaPageable(Pageable pageable, @Param("idCategoria") Long idCategoria);
+
 }

@@ -5,6 +5,7 @@ import com.example.grupo.belmg.paginavideojuegos.Entidades.Videojuego;
 import com.example.grupo.belmg.paginavideojuegos.Repositorios.RepositorioVideojuego;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -89,17 +90,40 @@ public class ImplementacionServicioVideojuego extends ImplementacionServicioBase
         }
 
     }
-    @Transactional
-    public Videojuego findByIdAndActivo(Long id) throws Exception{
 
-        try{
-            Optional<Videojuego> opt = this.repositorio.findByIdAndActivo(id);
-            return opt.get();
-        }catch(Exception e){
+
+    @Transactional
+    public Page<Videojuego> findAllByActivoPageable(Pageable pageable) throws Exception {
+
+        try {
+            Page<Videojuego> videojuegos = this.repositorio.findAllByActivoPageable(pageable);
+            return videojuegos;
+        } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
+
     }
 
+    @Transactional
+    public Page<Videojuego> findByActivoAndCategoriaPageable(Pageable pageable, Long idCategoria) throws Exception {
+        int pageSize = pageable.getPageSize();
+        int currentPage = pageable.getPageNumber();
+        int startItem = currentPage * pageSize;
+
+        try {
+            Page<Videojuego> videojuegos = this.repositorio.findByActivoAndCategoriaPageable(pageable, idCategoria);
+            return videojuegos;
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+
+    }
+    //PRUEBAAAAAAAAS
+    @Override
+    public Page<Videojuego> findPaginated(int pageNo, int pageSize, Long idCategoria) {
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        return this.repositorio.findByActivoAndCategoriaPageable(pageable, idCategoria);
+    }
 
 
 }

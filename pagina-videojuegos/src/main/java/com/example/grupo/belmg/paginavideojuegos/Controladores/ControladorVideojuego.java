@@ -1,8 +1,12 @@
 package com.example.grupo.belmg.paginavideojuegos.Controladores;
 
+import com.example.grupo.belmg.paginavideojuegos.Entidades.Categoria;
+import com.example.grupo.belmg.paginavideojuegos.Entidades.Estudio;
+import com.example.grupo.belmg.paginavideojuegos.Entidades.Imagen;
 import com.example.grupo.belmg.paginavideojuegos.Entidades.Videojuego;
 import com.example.grupo.belmg.paginavideojuegos.Servicios.ImplementacionServicioCategoria;
 import com.example.grupo.belmg.paginavideojuegos.Servicios.ImplementacionServicioEstudio;
+import com.example.grupo.belmg.paginavideojuegos.Servicios.ImplementacionServicioImagen;
 import com.example.grupo.belmg.paginavideojuegos.Servicios.ImplementacionServicioVideojuego;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -41,6 +45,9 @@ public class ControladorVideojuego extends ImplementacionControladorBase<Videoju
 
     @Autowired
     private ImplementacionServicioEstudio servicioEstudio;
+
+    @Autowired
+    private ImplementacionServicioImagen servicioImagen;
 
     //----------CRUD------------
     /*@GetMapping("/crudVideojuego")
@@ -219,5 +226,81 @@ public class ControladorVideojuego extends ImplementacionControladorBase<Videoju
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(("{\"error\": \"" + e.getMessage()+"\"}"));
         }
     }*/
+
+
+    public String busqueda(Model modelo, Pageable pageable){
+        try{
+            //Page<Videojuego> videojuegos = this.service.findAllByActivoPageable(pageable);
+
+            //modelo.addAttribute("videojuegos", videojuegos);
+
+            return "views/busqueda"; //CAMBIAR A UNA VISTA DE BUSQUEDA
+        }catch(Exception e){
+            return "";
+        }
+    }
+
+    @GetMapping("/inicio/A")
+    public String inicio(@ModelAttribute Videojuego videojuego, Model model, Pageable pageable){
+        try{
+            Long idCategoria = Long.valueOf(1);
+            //Me trae los juegos de la categoria 0
+            //Page<Videojuego> videojuegos = this.service.findByActivoAndCategoriaPageable(pageable, idCategoria);
+            List<Videojuego> videojuegos = this.servicioVideojuego.findAllByActivo();
+
+
+            model.addAttribute("videojuegos", videojuegos);
+
+            return "views/inicio";
+        }catch(Exception e){
+            return "error";
+        }
+    }
+
+
+
+    //PRUEBAAAAAAAAAS
+    @GetMapping("/inicio/page/{pageNo}")
+    public String findPaginated(@PathVariable(value = "pageNo") int pageNo, Model model) {
+        int pageSize = 2;
+        Long idCat = 1L;
+        Page <Videojuego> page = servicioVideojuego.findPaginated(pageNo, pageSize, idCat);
+        List <Videojuego> listaVideojuegos = page.getContent();
+
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalItems", page.getTotalElements());
+        model.addAttribute("listaVideojuegos", listaVideojuegos);
+        return "inicio";
+    }
+
+    // display list of ¡videojuegos PRUEBAAAA
+    @GetMapping("/inicio")
+    public String viewHomePage(Model model) {
+        return findPaginated(1, model);
+    }
+
+    //videojuego/detalle/id
+    @GetMapping("/detalle/{id}")
+    public String detalleVideojuego(Model model, @PathVariable("id") Long id) {
+        try {
+            Videojuego videojuego = this.servicioVideojuego.findById(id);
+            Categoria categoria = videojuego.getCategoria();
+            Estudio estudio = videojuego.getEstudio();
+
+            List<Imagen> imagenes = this.servicioImagen.findImagenByVideojuegoId(id);
+
+            model.addAttribute("videojuego",videojuego);
+            model.addAttribute("categoria", categoria);
+            model.addAttribute("estudio", estudio);
+            model.addAttribute("imagenes", imagenes);
+
+            return "views/detalle";
+        } catch (Exception e) {
+            model.addAttribute("error", e.getMessage());
+            return "error";
+        }
+    }
+
 
 }

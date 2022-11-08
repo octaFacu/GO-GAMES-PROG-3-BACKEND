@@ -18,4 +18,11 @@ public interface ServicioVideojuego extends ServicioBase<Videojuego, Long>{
 
     public Page<Videojuego> getAll(Pageable pageable);
 
+    public Page<Videojuego> findAllByActivoPageable(Pageable pageable) throws Exception;
+
+    public Page<Videojuego> findByActivoAndCategoriaPageable(Pageable pageable, Long idCategoria) throws Exception;
+
+    //Metodo prueba paginacion
+    Page<Videojuego> findPaginated(int pageNo, int pageSize, Long idCat);
+
 }

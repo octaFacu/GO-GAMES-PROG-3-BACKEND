@@ -1,0 +1,12 @@
+.pagination .page-link {
+    background: red;
+    color: white;
+}
+
+.bg-primary {
+    background-color: rgba(46, 46, 45)!important;
+}
+
+.button {
+  display: inline-block!important;
+}
