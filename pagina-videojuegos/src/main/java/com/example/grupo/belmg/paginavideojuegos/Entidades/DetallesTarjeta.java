@@ -21,23 +21,20 @@ import java.util.Date;
 public class DetallesTarjeta extends Base{
 
 
-    @NotNull(message = "Se necesita el nombre del titular.")
-    @Size(min=3,max=25, message="El nombre debe tener entre 5 y 25 caracteres.")
+    @NotEmpty(message = "Se necesita el nombre del titular.")
     private String nombre_titular;
 
-    @NotNull(message = "Se necesita el apellido del titular.")
-    @Size(min=3,max=30, message="El apellido debe tener entre 5 y 30 caracteres.")
+    @NotEmpty(message = "Se necesita el apellido del titular.")
     private String apellido_titular;
 
     @NotNull(message = "Se necesita el numero de la tarjeta.")
-    //@Size(min=12,max=19, message="Debe tener entre 5 y 30 numeros.")
     private long nro_tarjeta;
 
     @NotNull(message = "Se necesita el cvv de la tarjeta.")
     //@Size(min=3,max=3, message="Debe tener 3 digitos.")
     private int cvv;
 
-    @DateTimeFormat(pattern = "yyyy/MM/dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "Se necesita la fecha de vencimiento de la tarjeta.")
     private Date fecha_vencimiento;
 

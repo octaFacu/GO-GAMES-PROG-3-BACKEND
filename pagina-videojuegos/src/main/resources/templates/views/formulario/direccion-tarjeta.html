@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  <title>Registro de usuarios</title>
+
+</head>
+<body>
+
+<nav th:replace="components/nav-bar :: nav_bar"></nav>
+<div class="container">
+  <div class="row mt-5">
+    <div class="col-6">
+      <div class="card">
+        <div class="card-body">
+          <form th:action="@{/usuarios/direccion-tarjeta}" method="post" th:object="${tarjeta}">
+            <h1>Agregar Tarjeta</h1>
+            <div class="form-group col-md-6">
+              <label for="nro_tarjeta">numero de tarjeta:</label>
+              <input  type="tel" class="form-control" id="nro_tarjeta" th:field="*{nro_tarjeta}">
+              <div class="text-danger" th:if="${#fields.hasErrors('nro_tarjeta')}" th:errors="*{nro_tarjeta}"></div>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="cvv">cvv:</label>
+              <input  type="number" class="form-control" id="cvv" th:field="*{cvv}">
+              <div class="text-danger" th:if="${#fields.hasErrors('cvv')}" th:errors="*{cvv}"></div>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="nombre_titular">nombre del titular:</label>
+              <input  type="text" class="form-control" id="nombre_titular" th:field="*{nombre_titular}">
+              <div class="text-danger" th:if="${#fields.hasErrors('nombre_titular')}" th:errors="*{nombre_titular}"></div>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="apellido_titular">apellido del titular:</label>
+              <input  type="text" class="form-control" id="apellido_titular" th:field="*{apellido_titular}">
+              <div class="text-danger" th:if="${#fields.hasErrors('apellido_titular')}" th:errors="*{apellido_titular}"></div>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="fecha_vencimiento">fecha de vencimiento:</label>
+              <input  type="date" class="form-control" id="fecha_vencimiento" th:field="*{fecha_vencimiento}">
+              <div class="text-danger" th:if="${#fields.hasErrors('fecha_vencimiento')}" th:errors="*{fecha_vencimiento}"></div>
+            </div>
+
+            <div class="card">
+              <div class="card-body">
+                <h1>Agregar Direccion</h1>
+                <div class="form-group col-md-6">
+                  <label for="calle">calle:</label>
+                  <input  type="text" class="form-control" id="calle" th:field="${direccion.calle}">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="localidad">localidad:</label>
+                  <input  type="text" class="form-control" id="localidad" th:field="${direccion.localidad}">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="num_casa">numero de casa:</label>
+                  <input  type="text" class="form-control" id="num_casa" th:field="${direccion.num_casa}">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="pais">pais:</label>
+                  <input  type="text" class="form-control" id="pais" th:field="${direccion.pais}">
+                </div>
+              </div>
+            </div>
+
+            <div class="row m-3">
+              <div class="col-md-3">
+                <button class="btn btn-outline-secondary" type="reset" style="width:100%">Resetear
+                  Formulario
+                </button>
+              </div>
+              <div class="col-md-6">
+                <button class="btn btn-success" type="submit" style="width:100%">Guardar</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

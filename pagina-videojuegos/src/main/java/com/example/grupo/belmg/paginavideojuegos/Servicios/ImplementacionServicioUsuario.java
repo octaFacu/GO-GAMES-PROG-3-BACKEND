@@ -83,6 +83,23 @@ public class ImplementacionServicioUsuario extends ImplementacionServicioBase<Us
     }
 
 
+    public long traerIdUsuarioActual(String email)throws Exception{
+        try {
+            long id = this.repositorio.traerIdUsuarioActual(email);
+            return id;
+        }catch (Exception e){
+            throw new Exception(e.getMessage());
+        }
+    }
+    @Transactional
+    public void guardarDireccionYTarjeta(long idUsuario, long idDireccion, long idTarjeta)throws  Exception{
+        try {
+            repositorio.guardarDireccionYTarjeta(idUsuario,idDireccion,idTarjeta);
+        }catch (Exception e){
+            throw new Exception(e.getMessage());
+        }
+    }
+
     //nos carga un usuario con sus datos
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

@@ -1,9 +1,16 @@
 package com.example.grupo.belmg.paginavideojuegos.Controladores;
 
+import com.example.grupo.belmg.paginavideojuegos.Entidades.DetallesTarjeta;
+import com.example.grupo.belmg.paginavideojuegos.Entidades.Direccion;
 import com.example.grupo.belmg.paginavideojuegos.Entidades.Usuario;
+import com.example.grupo.belmg.paginavideojuegos.Servicios.ImplementacionServicioDetallesTarjeta;
+import com.example.grupo.belmg.paginavideojuegos.Servicios.ImplementacionServicioDireccion;
 import com.example.grupo.belmg.paginavideojuegos.Servicios.ImplementacionServicioUsuario;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,8 +20,14 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
+@RequestMapping("usuarios")
 public class ControladorUsuario extends ImplementacionControladorBase<Usuario, ImplementacionServicioUsuario>{
 
+    @Autowired
+    ImplementacionServicioDireccion servicioDireccion;
+
+    @Autowired
+    ImplementacionServicioDetallesTarjeta servicioTarjeta;
     @GetMapping("/search")
     public ResponseEntity<?> search(@RequestParam String filtro){
 
@@ -91,7 +104,7 @@ public class ControladorUsuario extends ImplementacionControladorBase<Usuario, I
                 return "views/admin/rgtAdmins";
             }
             service.saveAdmin(admin);
-            return "redirect:/eliminarAdmin";
+            return "redirect:/usuarios/eliminarAdmin";
         }catch (Exception e){
             return "error";
         }
@@ -114,9 +127,46 @@ public class ControladorUsuario extends ImplementacionControladorBase<Usuario, I
             Usuario usuario = this.service.findById(id);
             modelo.addAttribute("admin", usuario);
             this.service.delete(id);
-            return "redirect:/eliminarAdmin";
+            return "redirect:/usuarios/eliminarAdmin";
         }catch (Exception e){
             return "error/404";
+        }
+    }
+
+
+    @GetMapping("/direccion-tarjeta")
+    public String direccionTarjeta(Model modelo){
+        try {
+
+
+            modelo.addAttribute("direccion",new Direccion());
+            modelo.addAttribute("tarjeta",new DetallesTarjeta());
+            return "views/formulario/direccion-tarjeta";
+        }catch (Exception e){
+            return e.getMessage();
+        }
+    }
+    @PostMapping("/direccion-tarjeta")
+    public String FormulariodireccionTarjeta(Model modelo, @ModelAttribute ("direccion") Direccion direccion,
+                                             @Valid @ModelAttribute ("tarjeta") DetallesTarjeta tarjeta,BindingResult result){
+        try {
+            if (result.hasErrors()){
+                return "views/formulario/direccion-tarjeta";
+            }
+            //esto nos sirve para traer el mail del usuario autenticado en el momento para poder hacer una query y saber la id en la base de datos
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String email = authentication.getName();
+
+            long id = this.service.traerIdUsuarioActual(email);
+            System.out.println(id);
+
+            servicioDireccion.save(direccion);
+            servicioTarjeta.save(tarjeta);
+
+            service.guardarDireccionYTarjeta(id,tarjeta.getId(),direccion.getId());
+            return "views/formulario/direccion-tarjeta";
+        }catch (Exception e){
+            return e.getMessage();
         }
     }
 

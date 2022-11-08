@@ -50,21 +50,22 @@ public class SecurityConfiguration {
 
                 .authorizeRequests()
                 .antMatchers(
-                "/registro**", "/css/**", "/img/**").permitAll()
-                .antMatchers("/rgtAdmins").hasRole("SUPERADMIN")
-                .antMatchers("/eliminarAdmin").hasRole("SUPERADMIN")
+                "/usuarios/registro**", "/css/**", "/img/**").permitAll()
+                .antMatchers("/usuarios/rgtAdmins").hasRole("SUPERADMIN")
+                .antMatchers("/usuarios/eliminarAdmin").hasRole("SUPERADMIN")
                 .antMatchers("/crudVideojuego").hasAnyRole("ADMIN","SUPERADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/login")
+                .loginPage("/usuarios/login")
                 .permitAll()
+                .defaultSuccessUrl("/usuarios/inicio")
                 .and()
                 .logout()
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/login?logout")
+                .logoutRequestMatcher(new AntPathRequestMatcher("/usuarios/logout"))
+                .logoutSuccessUrl("/usuarios/login?logout")
                 .permitAll();
         return http.build();
     }
