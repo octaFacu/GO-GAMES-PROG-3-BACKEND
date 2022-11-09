@@ -147,7 +147,7 @@ public class ControladorUsuario extends ImplementacionControladorBase<Usuario, I
         }
     }
     @PostMapping("/direccion-tarjeta")
-    public String FormulariodireccionTarjeta(Model modelo, @ModelAttribute ("direccion") Direccion direccion,
+    public String FormulariodireccionTarjeta(Model modelo, @Valid @ModelAttribute ("direccion") Direccion direccion,
                                              @Valid @ModelAttribute ("tarjeta") DetallesTarjeta tarjeta,BindingResult result){
         try {
             if (result.hasErrors()){
@@ -159,12 +159,11 @@ public class ControladorUsuario extends ImplementacionControladorBase<Usuario, I
 
             long id = this.service.traerIdUsuarioActual(email);
             System.out.println(id);
-
             servicioDireccion.save(direccion);
             servicioTarjeta.save(tarjeta);
 
             service.guardarDireccionYTarjeta(id,tarjeta.getId(),direccion.getId());
-            return "views/formulario/direccion-tarjeta";
+            return "redirect:/usuarios/inicio";
         }catch (Exception e){
             return e.getMessage();
         }
