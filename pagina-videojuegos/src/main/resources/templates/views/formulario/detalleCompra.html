@@ -6,10 +6,9 @@
     <title>Compra</title>
 
 </head>
-<body>
+<body style="background: #121212"class="d-flex flex-column min-vh-100">
 
 <nav th:replace="components/nav-bar :: nav_bar"></nav>
-<h1>HOLA SOY OMELO CHINO</h1>
 
 
 
@@ -39,9 +38,9 @@
             </div>
             <div th:if="${usuario.tarjeta != null}" class="d-grid gap-2 d-md-flex justify-content-md-end">
                 <a href="/usuarios/direccion-tarjeta" class="btn btn-primary">Cambiar Tarjeta</a>
-                <form th:action="@{/compra/detalle-compra/{id}/{idUsuario}(id=${videojuego.id}, idUsuario = ${usuario.id})}" method="post">
-                    <div class="col-md-6">
-                    <button class="btn btn-success" type="submit" style="width:100%">Comprar</button>
+                <form th:action="@{/compra/videojuego/detalle-compra/{id}/{idUsuario}(id=${videojuego.id}, idUsuario = ${usuario.id})}" method="post">
+                    <div>
+                    <button class="btn btn-success" type="submit">Comprar</button>
                 </div>
                 </form>
             </div>

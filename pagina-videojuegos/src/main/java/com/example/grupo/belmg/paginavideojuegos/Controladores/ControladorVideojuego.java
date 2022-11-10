@@ -226,6 +226,27 @@ public class ControladorVideojuego extends ImplementacionControladorBase<Videoju
             return "error";
         }
     }*/
+/*
+    @PostMapping("/postingresoimg/videojuego/{id}")
+    public String finingresoimgVideojuego(@RequestParam(), BindingResult result,Model model, @PathVariable("id") long id){
+
+        try{
+
+            System.out.println("TRAZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+            //model.addAttribute("videojuego", this.servicioVideojuego.findById(id));
+            //model.addAttribute("imagenes", this.servicioImagen.findImagenByVideojuegoId(id));
+
+            imagen.setVideojuego(this.servicioVideojuego.findById(id));
+            this.servicioImagen.save(imagen);
+
+            return "views/formulario/ingresoimg";
+
+        }catch(Exception e){
+            model.addAttribute("error", e.getMessage());
+            return "error";
+        }
+    }
+*/
 
 
     //-------------FIN CRUD------------------
@@ -237,7 +258,7 @@ public class ControladorVideojuego extends ImplementacionControladorBase<Videoju
 
     //videojuego/detalle/id
     @GetMapping("/detalle/{id}")
-    public String detalleVideojuego(Model model, @PathVariable("id") Long id) {
+    public String detalleVideojuego(Model model, @PathVariable("id") long id) {
         try {
             Videojuego videojuego = this.servicioVideojuego.findById(id);
             Categoria categoria = videojuego.getCategoria();

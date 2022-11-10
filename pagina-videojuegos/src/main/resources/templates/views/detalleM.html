@@ -39,7 +39,7 @@
             <br>
             <br>
             <div th:unless="*{stock}==0">
-                <button style="margin-left: 2.5em;" type="button" class="btn btn-danger btn-lg">Comprar</button>
+                <a th:href="@{/compra/merch/detalle-compra/{id}(id=${merch.id})}" class="btn btn-danger btn-lg" type="button" style="margin-left: 2.5em;">Comprar</a>
             </div>
 
 

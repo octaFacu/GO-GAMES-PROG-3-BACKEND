@@ -1,0 +1,57 @@
+
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  <title>Compra</title>
+
+</head>
+<body style="background: #121212"class="d-flex flex-column min-vh-100">
+
+<nav th:replace="components/nav-bar :: nav_bar"></nav>
+
+<div class="vh-100 d-flex justify-content-center align-items-center">
+  <div class="card" style="width: 50rem;">
+    <div class="card-body" th:object="${merch}">
+      <h5 class="card-title">COMPRA</h5>
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">Nombre</th>
+          <th scope="col">Precio del juego</th>
+          <th scope="col">Precio Total</th>
+        </tr>
+        </thead>
+        <tbody>
+        <td th:text="${merch.nombre} "></td>
+        <td th:text="${merch.precio} + '$'"></td>
+        <td th:text="${merch.precio} * 1.65"></td>
+        </tr>
+        </tbody>
+      </table>
+      <p class="card-text">el precio total del juego es con impuestos del pais incluidos <br>
+        matodo de pago</p>
+      <div th:if="${usuario.tarjeta == null}">
+        <a href="/usuarios/direccion-tarjeta" class="btn btn-primary">ingresar tarjeta</a>
+      </div>
+      <div th:if="${usuario.tarjeta != null}" class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <a href="/usuarios/direccion-tarjeta" class="btn btn-primary">Cambiar Tarjeta</a>
+        <form th:action="@{/compra/merch/detalle-compra/{id}/{idUsuario}(id=${merch.id}, idUsuario = ${usuario.id})}" method="post">
+          <div>
+            <button class="btn btn-success" type="submit">Comprar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
+</body>
+</html>
+
+

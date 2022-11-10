@@ -29,5 +29,14 @@ public class ImplementacionServicioCompra extends ImplementacionServicioBase<Com
         }
     }
 
+    @Override
+    public List<Compra> idvideojuegosComprados(Long idUsuaio) throws Exception {
+        try {
+            List<Compra> comprasDeUsuario = repositorio.comprasUsuario(idUsuaio);
+            return comprasDeUsuario;
+        }catch (Exception e){
+            throw new Exception(e.getMessage());
+        }
+    }
 
 }
