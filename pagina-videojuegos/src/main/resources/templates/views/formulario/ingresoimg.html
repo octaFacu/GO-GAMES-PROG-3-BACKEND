@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  <title>Formulario Imagenes</title>
+</head>
+
+<body>
+
+  <nav th:replace="components/nav-bar :: nav_bar"></nav>
+
+  <div class="container">
+    <div class="row mt-5">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+
+            <form>
+
+              <div class="col-12 mb-5 mt-2">
+                <h4 class="text-center">Ingresar imagenes para el producto: <small th:text="${videojuego.nombre}"></small></h4>
+              </div>
+
+              <form class="row mb-3" th:action="@{/videojuego/postingresoimg/videojuego/{id}(id=${videojuego.id})}" method="post" th:object="${imagen}" enctype="multipart/form-data">
+                <label class="col-sm-2 col-form-label">Link de la imagen:</label>
+                <div class="col-sm-10" for="link">
+                  <input type="text" class="form-control" id="link">
+            <!--      <div class="text-danger" th:if="${#fields.hasErrors('link')}" th:errors="*{link}"></div> -->
+                </div>
+                <button type="submit" class="btn btn-primary mt-3 col-2">Ingresa imagen</button>
+              </form>
+
+
+              <div class="mt-5">
+                <h4>Imagenes del producto: <small th:text="${videojuego.nombre}"></small></h4>
+              </div>
+
+              <select class="form-select mt-3 mb-3" aria-label="Default select example">
+         <!--       <option selected>Open this select menu</option> -->
+                <option th:each=" imagenes : ${imagenes}" th:value="${imagenes.id}" th:text="${imagenes.link}">Open this select menu</option>
+              </select>
+
+         <!--     <div class="form-group col-md-3">
+                <label for="categoria">Categoria</label>
+                <select class="form-control" id="categoria" th:field="*{categoria}">
+                  <option th:each="categoria : ${categorias}" th:value="${categoria.id}" th:text="${categoria.tipo}"></option>
+                </select>
+                <div class="text-danger" th:if="${#fields.hasErrors('categoria')}" th:errors="*{categoria}"></div>
+              </div> -->
+
+              <button type="submit" class="btn btn-primary">Eliminar imagen</button>
+
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

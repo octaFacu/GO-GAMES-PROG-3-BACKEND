@@ -2,7 +2,9 @@ package com.example.grupo.belmg.paginavideojuegos.Controladores;
 
 import com.example.grupo.belmg.paginavideojuegos.Entidades.Categoria;
 import com.example.grupo.belmg.paginavideojuegos.Entidades.Estudio;
+
 import com.example.grupo.belmg.paginavideojuegos.Entidades.Imagen;
+
 import com.example.grupo.belmg.paginavideojuegos.Entidades.Videojuego;
 import com.example.grupo.belmg.paginavideojuegos.Servicios.ImplementacionServicioCategoria;
 import com.example.grupo.belmg.paginavideojuegos.Servicios.ImplementacionServicioEstudio;
@@ -50,19 +52,6 @@ public class ControladorVideojuego extends ImplementacionControladorBase<Videoju
     private ImplementacionServicioImagen servicioImagen;
 
     //----------CRUD------------
-    /*@GetMapping("/crudVideojuego")
-    public String crudVideojuego(Model model){
-
-        try{
-            List<Videojuego> videojuegos = this.servicioVideojuego.findAll();
-            model.addAttribute("videojuegos", videojuegos);
-            return "views/crudVideojuego";
-
-        }catch(Exception e){
-            model.addAttribute("error", e.getMessage());
-            return "error";
-        }
-    }*/
 
     @GetMapping("/formulario/videojuego/{id}")
     public String formularioVideojuego(Model model, @PathVariable("id") long id){
@@ -139,29 +128,95 @@ public class ControladorVideojuego extends ImplementacionControladorBase<Videoju
     }
 
     @GetMapping("/crudVideojuego")
-    public String findAll(@RequestParam Map<String, Object> params, Model model){
+    public String findAll(@RequestParam Map<String, Object> params, Model model) {
 
-        int page = params.get("page") != null ? (Integer.valueOf(params.get("page").toString()) - 1) : 0;
+        try {
 
-        PageRequest pageRequest = PageRequest.of(page,2);
+            int page = params.get("page") != null ? (Integer.valueOf(params.get("page").toString()) - 1) : 0;
 
-        Page<Videojuego> pageVideojuego = servicioVideojuego.getAll(pageRequest);
+            PageRequest pageRequest = PageRequest.of(page, 5);
 
-        int totalPage = pageVideojuego.getTotalPages();                                                     //Total de paginas que tienen los datos de la base de datos(cuantos links se muestran)
-        if(totalPage > 0){
-            List<Integer> pages = IntStream.rangeClosed(1, totalPage).boxed().collect(Collectors.toList());   //Se crea un listado de numeros desde el 1 al numero final
-            model.addAttribute("pages", pages);
+            Page<Videojuego> pageVideojuego = servicioVideojuego.getAll(pageRequest);
+
+            int totalPage = pageVideojuego.getTotalPages();                                                     //Total de paginas que tienen los datos de la base de datos(cuantos links se muestran)
+            if (totalPage > 0) {
+                List<Integer> pages = IntStream.rangeClosed(1, totalPage).boxed().collect(Collectors.toList());   //Se crea un listado de numeros desde el 1 al numero final
+                model.addAttribute("pages", pages);
+            }
+
+            model.addAttribute("videojuegos", pageVideojuego.getContent());
+            model.addAttribute("current", page + 1);                                        //Parametro para identificar la pagina actual
+            model.addAttribute("next", page + 2);
+            model.addAttribute("prev", page);
+            model.addAttribute("last", totalPage);
+
+            return "views/crudVideojuego";
+
+        } catch (Exception e) {
+            model.addAttribute("error", e.getMessage());
+            return "error";
         }
-
-        model.addAttribute("videojuegos", pageVideojuego.getContent());
-        model.addAttribute("current", page + 1);                                        //Parametro para identificar la pagina actual
-        model.addAttribute("next", page + 2);
-        model.addAttribute("prev", page);
-        model.addAttribute("last", totalPage);
-        return "views/crudVideojuego";
 
     }
 
+    @GetMapping("/ingresoimg/videojuego/{id}")
+    public String ingresoimgVideojuego(Model model, @PathVariable("id") long id){
+
+        try{
+
+            model.addAttribute("videojuego", this.servicioVideojuego.findById(id));
+            model.addAttribute("imagenes", this.servicioImagen.findImagenByVideojuegoId(id));
+
+            return "views/formulario/ingresoimg";
+
+        }catch(Exception e){
+            model.addAttribute("error", e.getMessage());
+            return "error";
+        }
+    }
+
+    /*@PostMapping("/ingresoimg/videojuego/{id}")
+    public String finingresoimgVideojuego(@ModelAttribute("imagen") Imagen imagen, Model model, @PathVariable("id") long id){
+
+        try{
+            System.out.println("TRAZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+            model.addAttribute("videojuego", this.servicioVideojuego.findById(id));
+            //model.addAttribute("imagen", new Imagen());
+            //model.addAttribute("imagenes", this.servicioImagen.findImagenByVideojuegoId(id));
+
+            imagen.setVideojuego(this.servicioVideojuego.findById(id));
+            this.servicioImagen.save(imagen);
+
+            return "views/formulario/ingresoimg";
+
+        }catch(Exception e){
+            model.addAttribute("error", e.getMessage());
+            return "error";
+        }
+    }*/
+
+    @PostMapping("/postingresoimg/videojuego/{id}")
+    public String finingresoimgVideojuego(@RequestParam(), BindingResult result,Model model, @PathVariable("id") long id){
+
+        try{
+
+            System.out.println("TRAZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+            //model.addAttribute("videojuego", this.servicioVideojuego.findById(id));
+            //model.addAttribute("imagenes", this.servicioImagen.findImagenByVideojuegoId(id));
+
+            imagen.setVideojuego(this.servicioVideojuego.findById(id));
+            this.servicioImagen.save(imagen);
+
+            return "views/formulario/ingresoimg";
+
+        }catch(Exception e){
+            model.addAttribute("error", e.getMessage());
+            return "error";
+        }
+    }
+
+
+    //-------------FIN CRUD------------------
 
 
 

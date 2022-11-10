@@ -37,15 +37,6 @@
                                 <div class="text-danger" th:if="${#fields.hasErrors('img_portada')}" th:errors="*{img_portada}"></div>
                             </div>
 
-                        <!--    <div class="form-group col-md-12">
-                                <label for="archivo" class="form-label">Imagen: </label>
-                                <input type="file" class="form-control" id="archivo" name="archivo">
-                                <div class="text-danger" th:if="${imageErrorMsg}" th:text="${imageErrorMsg}"></div>
-                            </div>
-                            <div class="col-md-12">
-                                <input type="hidden" class="form-control" id="imagen" th:field="*{imagen}" name="imagen">
-                            </div> -->
-
                             <div class="form-group col-md-3">
                                 <label for="precio">Precio:</label>
                                 <input type="number" class="form-control" id="precio" th:field="*{precio}">
@@ -66,16 +57,16 @@
                                 <div class="text-danger" th:if="${#fields.hasErrors('categoria')}" th:errors="*{categoria}"></div>
                             </div>
 
-                        <!--    <div class="form-group col-md-3">
-                                <label for="PG2">PG:</label>
-                                <input type="number" class="form-control" id="PG2" th:field="*{PG}">
-                                <div class="text-danger" th:if="${#fields.hasErrors('PG')}" th:errors="*{PG}"></div>
-                            </div> -->
-
                             <div class="form-check">
                                 <label class="form-check-label" for="PG">Es para mayores</label>
                                 <input class="form-check-input" type="checkbox" value="" id="PG" th:field="*{PG}">
                                 <div class="text-danger" th:if="${#fields.hasErrors('PG')}" th:errors="*{PG}"></div>
+                            </div>
+
+
+                            <div th:if="${videojuego.id}!=0" class="input-group mb-3 col-md-6">
+                                <label class="col-12">Ingreso de imagenes de muestra</label>
+                                <a class="btn btn-success"  th:href="@{/videojuego/ingresoimg/videojuego/{id}(id=${videojuego.id})}" type="button">Ingresar imagenes</a>
                             </div>
 
 
@@ -94,6 +85,10 @@
                             </div>
                         </div>
                     </form>
+
+
+
+
                 </div>
             </div>
         </div>
