@@ -158,127 +158,15 @@ public class ControladorVideojuego extends ImplementacionControladorBase<Videoju
         model.addAttribute("next", page + 2);
         model.addAttribute("prev", page);
         model.addAttribute("last", totalPage);
-
         return "views/crudVideojuego";
 
     }
 
 
-    //-------------FIN CRUD------------------
 
 
 
 
-    /*@GetMapping("/search")
-    public ResponseEntity<?> search(@RequestParam String filtro){
-
-        try{
-
-            return ResponseEntity.status(HttpStatus.OK).body(service.search(filtro));
-
-        }catch(Exception e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(("{\"error\": \"" + e.getMessage() + "\"}"));
-        }
-
-    }
-
-    @GetMapping("/searchPaged")
-    public ResponseEntity<?> search(@RequestParam String filtro, Pageable pageable){
-
-        try{
-
-            return ResponseEntity.status(HttpStatus.OK).body(service.search(filtro, pageable));
-
-        }catch(Exception e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(("{\"error\": \"" + e.getMessage() + "\"}"));
-        }
-
-    }
-
-    //-----------
-
-    @GetMapping("/searchActivo")
-    public ResponseEntity<?> getAllActivo(){
-
-        try{
-            return ResponseEntity.status(HttpStatus.OK).body(service.findAllByActivo());
-        }catch(Exception e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(("{\"error\": \"" + e.getMessage()+"\"}"));
-        }
-    }
-
-    @GetMapping("/searchOneActivo/{id}")
-    public ResponseEntity<?> getOneByIdAndActivo(@PathVariable Long id){
-
-        try{
-            return ResponseEntity.status(HttpStatus.OK).body(service.findByIdAndActivo(id));
-        }catch(Exception e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(("{\"error\": \"" + e.getMessage()+"\"}"));
-        }
-    }
-
-    /*@PostMapping("/deleteOneActivo/{id}")
-    public ResponseEntity<?> deleteActivoById(@PathVariable Long id){
-
-        try{
-            return ResponseEntity.status(HttpStatus.OK).body(service.deleteActivoById(id));
-        }catch(Exception e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(("{\"error\": \"" + e.getMessage()+"\"}"));
-        }
-    }*/
-
-
-    public String busqueda(Model modelo, Pageable pageable){
-        try{
-            //Page<Videojuego> videojuegos = this.service.findAllByActivoPageable(pageable);
-
-            //modelo.addAttribute("videojuegos", videojuegos);
-
-            return "views/busqueda"; //CAMBIAR A UNA VISTA DE BUSQUEDA
-        }catch(Exception e){
-            return "";
-        }
-    }
-
-    @GetMapping("/inicio/A")
-    public String inicio(@ModelAttribute Videojuego videojuego, Model model, Pageable pageable){
-        try{
-            Long idCategoria = Long.valueOf(1);
-            //Me trae los juegos de la categoria 0
-            //Page<Videojuego> videojuegos = this.service.findByActivoAndCategoriaPageable(pageable, idCategoria);
-            List<Videojuego> videojuegos = this.servicioVideojuego.findAllByActivo();
-
-
-            model.addAttribute("videojuegos", videojuegos);
-
-            return "views/inicio";
-        }catch(Exception e){
-            return "error";
-        }
-    }
-
-
-
-    //PRUEBAAAAAAAAAS
-    @GetMapping("/inicio/page/{pageNo}")
-    public String findPaginated(@PathVariable(value = "pageNo") int pageNo, Model model) {
-        int pageSize = 2;
-        Long idCat = 1L;
-        Page <Videojuego> page = servicioVideojuego.findPaginated(pageNo, pageSize, idCat);
-        List <Videojuego> listaVideojuegos = page.getContent();
-
-        model.addAttribute("currentPage", pageNo);
-        model.addAttribute("totalPages", page.getTotalPages());
-        model.addAttribute("totalItems", page.getTotalElements());
-        model.addAttribute("listaVideojuegos", listaVideojuegos);
-        return "inicio";
-    }
-
-    // display list of ¡videojuegos PRUEBAAAA
-    @GetMapping("/inicio")
-    public String viewHomePage(Model model) {
-        return findPaginated(1, model);
-    }
 
     //videojuego/detalle/id
     @GetMapping("/detalle/{id}")
@@ -302,5 +190,36 @@ public class ControladorVideojuego extends ImplementacionControladorBase<Videoju
         }
     }
 
+
+
+    @GetMapping(value = "/busqueda")
+    public String busquedaVideojuego(Model model, @RequestParam(value ="query",required = false)String q, @RequestParam Map<String, Object> params){
+        try {
+
+            int page = params.get("page") != null ? (Integer.valueOf(params.get("page").toString()) - 1) : 0;
+
+            PageRequest pageRequest = PageRequest.of(page,5);
+
+            Page<Videojuego> pageVideojuegos = this.servicioVideojuego.findByNombre(q, pageRequest);
+
+            int totalPage = pageVideojuegos.getTotalPages();                                                     //Total de paginas que tienen los datos de la base de datos(cuantos links se muestran)
+            if(totalPage > 0){
+                List<Integer> pages = IntStream.rangeClosed(1, totalPage).boxed().collect(Collectors.toList());   //Se crea un listado de numeros desde el 1 al numero final
+                model.addAttribute("pages", pages);
+            }
+
+            model.addAttribute("videojuegos", pageVideojuegos.getContent());
+            model.addAttribute("current", page + 1);                                        //Parametro para identificar la pagina actual
+            model.addAttribute("next", page + 2);
+            model.addAttribute("prev", page);
+            model.addAttribute("last", totalPage);
+            model.addAttribute("resultado",q);
+
+            return "views/busqueda";
+        } catch (Exception e) {
+            model.addAttribute("error", e.getMessage());
+            return "error";
+        }
+    }
 
 }

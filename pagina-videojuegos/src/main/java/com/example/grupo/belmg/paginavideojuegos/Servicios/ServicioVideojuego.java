@@ -3,6 +3,7 @@ package com.example.grupo.belmg.paginavideojuegos.Servicios;
 import com.example.grupo.belmg.paginavideojuegos.Entidades.Categoria;
 import com.example.grupo.belmg.paginavideojuegos.Entidades.Videojuego;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import javax.transaction.Transactional;
@@ -22,7 +23,9 @@ public interface ServicioVideojuego extends ServicioBase<Videojuego, Long>{
 
     public Page<Videojuego> findByActivoAndCategoriaPageable(Pageable pageable, Long idCategoria) throws Exception;
 
-    //Metodo prueba paginacion
-    Page<Videojuego> findPaginated(int pageNo, int pageSize, Long idCat);
+
+    public Page<Videojuego> findAllByActivoAndCategoria(Long idCategoria, Pageable pageable) throws Exception;
+
+    public Page<Videojuego> findAllByActivoAndEstudio(Long idCategoria, Pageable pageable) throws Exception;
 
 }

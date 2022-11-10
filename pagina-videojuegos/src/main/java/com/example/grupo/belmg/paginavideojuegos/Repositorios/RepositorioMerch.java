@@ -39,4 +39,7 @@ public interface RepositorioMerch extends RepositorioBase<Merch, Long>{
             nativeQuery = true
     )
     Page<Merch> searchNativo(@Param("filtro") String filtro, Pageable pageable);
+
+    @Query(value = "SELECT * FROM merchs WHERE merchs.nombre LIKE %:q% AND merchs.activo =true", nativeQuery = true, countQuery = "SELECT count(*) FROM merch")
+    Page<Merch> findByNombre(@Param("q")String q, Pageable pageable);
 }

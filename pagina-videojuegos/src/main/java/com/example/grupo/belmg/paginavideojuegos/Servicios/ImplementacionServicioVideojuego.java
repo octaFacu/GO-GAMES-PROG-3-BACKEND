@@ -106,9 +106,6 @@ public class ImplementacionServicioVideojuego extends ImplementacionServicioBase
 
     @Transactional
     public Page<Videojuego> findByActivoAndCategoriaPageable(Pageable pageable, Long idCategoria) throws Exception {
-        int pageSize = pageable.getPageSize();
-        int currentPage = pageable.getPageNumber();
-        int startItem = currentPage * pageSize;
 
         try {
             Page<Videojuego> videojuegos = this.repositorio.findByActivoAndCategoriaPageable(pageable, idCategoria);
@@ -118,12 +115,41 @@ public class ImplementacionServicioVideojuego extends ImplementacionServicioBase
         }
 
     }
-    //PRUEBAAAAAAAAS
-    @Override
-    public Page<Videojuego> findPaginated(int pageNo, int pageSize, Long idCategoria) {
-        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
-        return this.repositorio.findByActivoAndCategoriaPageable(pageable, idCategoria);
+
+
+    @Transactional
+    public Page<Videojuego> findAllByActivoAndCategoria(Long idCategoria, Pageable pagerequest) throws Exception {
+
+        try {
+
+            Page<Videojuego> videojuegos = this.repositorio.findAllByActivoAndCategoria(idCategoria, pagerequest);
+            return videojuegos;
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+
     }
 
+    @Transactional
+    public Page<Videojuego> findAllByActivoAndEstudio(Long idEstudio, Pageable pagerequest) throws Exception {
 
+        try {
+
+            Page<Videojuego> videojuegos = this.repositorio.findAllByActivoAndEstudio(idEstudio, pagerequest);
+            return videojuegos;
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+
+    }
+
+    @Transactional
+    public Page<Videojuego> findByNombre(String q, Pageable pageable) throws Exception{
+        try{
+            Page<Videojuego> entities = this.repositorio.findByNombre(q, pageable);
+            return entities;
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
 }
