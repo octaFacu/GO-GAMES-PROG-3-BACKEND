@@ -56,13 +56,48 @@
         <div th:replace="components/img-carousel :: img-carousel"></div>
 
 
-
     </div>
     <br>
+    <br>
+    <table class="table">
+        <tbody>
+        <tr th:each="comentario : ${comentarios}" style="max-height: 100%; max-width: 100%">
+            <td style="color: #d1d1d1; font-size: 19px" th:text="${comentario.usuario.nombre_usuario}"></td>
+            <td style="color: white; font-size: 22px" th:text="${comentario.comentario}"></td>
+            <td style="color: white; font-size: 35px" th:text="${comentario.puntaje}"></td>
+        </tr>
+        </tbody>
+    </table>
 
+    <br>
+    <div class="row mt-5" style="background: #383838; color: white">
+        <div class="col-12" style="background: #383838; color: white">
+            <div class="card" style="background: #383838; color: white">
+                <div class="card-body" style="background: #383838; color: white">
+                    <form style="background: #383838; color: white" class="form-row align-items-center" th:action="@{/videojuego/detalle/{id}(id=${videojuego.id})}" method="post" th:object="${comentarioNuevo}">
+                        <div class="row g-3">
+                            <div class="form-group col-md-12">
+                                <label for="comentario">Ingrese su comentario: </label>
+                                <textarea style="background: #383838; color: white" class="form-control" id="comentario" rows="5" th:field="*{comentario}"></textarea>
+                                <div class="text-danger" th:if="${#fields.hasErrors('comentario')}" th:errors="*{comentario}"></div>
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-left: 2.5em;">
+                            <label style="background: #383838; color: white" for="puntaje">Puntaje: </label>
+                                <input style="background: #383838; color: white" type="text" class="form-control" id="puntaje" th:field="*{puntaje}">
+                        </div>
+                        <div style="background: #383838; color: white" class="col-md-6">
+                            <button class="btn btn-danger" type="submit" style="width:100%">Publicar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
-
-
+    <br>
+    <hr style="background-color: white; height: 4px;">
+    <br>
 </div>
 <footer th:replace="components/footer :: footer"></footer>
 </body>

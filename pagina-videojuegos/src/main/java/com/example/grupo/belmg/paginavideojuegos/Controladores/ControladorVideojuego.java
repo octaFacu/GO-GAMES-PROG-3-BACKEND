@@ -1,31 +1,28 @@
 package com.example.grupo.belmg.paginavideojuegos.Controladores;
 
-import com.example.grupo.belmg.paginavideojuegos.Entidades.Categoria;
-import com.example.grupo.belmg.paginavideojuegos.Entidades.Estudio;
+import com.example.grupo.belmg.paginavideojuegos.Entidades.*;
 
-import com.example.grupo.belmg.paginavideojuegos.Entidades.Imagen;
-
-import com.example.grupo.belmg.paginavideojuegos.Entidades.Videojuego;
-import com.example.grupo.belmg.paginavideojuegos.Servicios.ImplementacionServicioCategoria;
-import com.example.grupo.belmg.paginavideojuegos.Servicios.ImplementacionServicioEstudio;
-import com.example.grupo.belmg.paginavideojuegos.Servicios.ImplementacionServicioImagen;
-import com.example.grupo.belmg.paginavideojuegos.Servicios.ImplementacionServicioVideojuego;
+import com.example.grupo.belmg.paginavideojuegos.Servicios.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
@@ -50,6 +47,13 @@ public class ControladorVideojuego extends ImplementacionControladorBase<Videoju
 
     @Autowired
     private ImplementacionServicioImagen servicioImagen;
+
+    @Autowired
+    private ImplementacionServicioComentarioYValoracion servicioComentarioYValoracion;
+
+    @Autowired
+    private ImplementacionServicioUsuario servicioUsuario;
+
 
     //----------CRUD------------
 
@@ -166,6 +170,7 @@ public class ControladorVideojuego extends ImplementacionControladorBase<Videoju
 
             model.addAttribute("videojuego", this.servicioVideojuego.findById(id));
             model.addAttribute("imagenes", this.servicioImagen.findImagenByVideojuegoId(id));
+            model.addAttribute("imagen", new Imagen());
 
             return "views/formulario/ingresoimg";
 
@@ -175,14 +180,41 @@ public class ControladorVideojuego extends ImplementacionControladorBase<Videoju
         }
     }
 
-    /*@PostMapping("/ingresoimg/videojuego/{id}")
-    public String finingresoimgVideojuego(@ModelAttribute("imagen") Imagen imagen, Model model, @PathVariable("id") long id){
+    @PostMapping("/ingresoimg/videojuego/{id}")
+    public ModelAndView finingresoimgVideojuego(Imagen imagen, @PathVariable("id") long id, BindingResult result){
 
-        try{
+        //try{
+            ModelAndView model = new ModelAndView();
             System.out.println("TRAZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-            model.addAttribute("videojuego", this.servicioVideojuego.findById(id));
+            //model.addAttribute("videojuego", this.servicioVideojuego.findById(id));
             //model.addAttribute("imagen", new Imagen());
             //model.addAttribute("imagenes", this.servicioImagen.findImagenByVideojuegoId(id));
+
+            //imagen.setVideojuego(this.servicioVideojuego.findById(id));
+            //this.servicioImagen.save(imagen);
+
+
+            model.addObject("imagen", imagen);
+
+            model.setViewName(result.hasErrors() ? "views/formulario/ingresoimg" : "views/formulario/ingresoimg");
+            return model;
+
+        //}catch(Exception e){
+            //model.addAttribute("error", e.getMessage());
+            //return "error";
+        //}
+    }
+
+    /*@PostMapping("/postingresoimg/videojuego/{id}")
+    public String finingresoimgVideojuego(@RequestParam(value ="link",required = true) String linkImg, BindingResult result, Model model, @PathVariable("id") long id){
+
+        try{
+
+            System.out.println("TRAZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+            model.addAttribute("videojuego", this.servicioVideojuego.findById(id));
+            //model.addAttribute("imagenes", this.servicioImagen.findImagenByVideojuegoId(id));
+            Imagen imagen = new Imagen();
+            imagen.setLink(linkImg);
 
             imagen.setVideojuego(this.servicioVideojuego.findById(id));
             this.servicioImagen.save(imagen);
@@ -194,26 +226,6 @@ public class ControladorVideojuego extends ImplementacionControladorBase<Videoju
             return "error";
         }
     }*/
-
-    @PostMapping("/postingresoimg/videojuego/{id}")
-    public String finingresoimgVideojuego(@RequestParam(), BindingResult result,Model model, @PathVariable("id") long id){
-
-        try{
-
-            System.out.println("TRAZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-            //model.addAttribute("videojuego", this.servicioVideojuego.findById(id));
-            //model.addAttribute("imagenes", this.servicioImagen.findImagenByVideojuegoId(id));
-
-            imagen.setVideojuego(this.servicioVideojuego.findById(id));
-            this.servicioImagen.save(imagen);
-
-            return "views/formulario/ingresoimg";
-
-        }catch(Exception e){
-            model.addAttribute("error", e.getMessage());
-            return "error";
-        }
-    }
 
 
     //-------------FIN CRUD------------------
@@ -233,10 +245,15 @@ public class ControladorVideojuego extends ImplementacionControladorBase<Videoju
 
             List<Imagen> imagenes = this.servicioImagen.findImagenByVideojuegoId(id);
 
+            List<Comentarios_Valoracion> comentValo = videojuego.getComentarios_valoraciones();
+
+            model.addAttribute("comentarioNuevo", new Comentarios_Valoracion());
+
             model.addAttribute("videojuego",videojuego);
             model.addAttribute("categoria", categoria);
             model.addAttribute("estudio", estudio);
             model.addAttribute("imagenes", imagenes);
+            model.addAttribute("comentarios", comentValo);
 
             return "views/detalle";
         } catch (Exception e) {
@@ -244,6 +261,56 @@ public class ControladorVideojuego extends ImplementacionControladorBase<Videoju
             return "error";
         }
     }
+
+
+
+
+    @PostMapping("/detalle/{id}")
+    public String guardarVideojuego(@Valid @ModelAttribute("comentarioNuevo") Comentarios_Valoracion comentarioNuevo, BindingResult result, Model model, @PathVariable("id") long id){
+
+        try{
+
+
+            if(result.hasErrors()){
+                return "views/detalle/{id}";
+            }
+
+                Comentarios_Valoracion comentario = this.servicioComentarioYValoracion.save(comentarioNuevo);
+
+                //COMO SACAR ID USUARIO CONECTADO ACTUALMENTE ???
+                Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+                String email = authentication.getName();
+
+                long idUser = this.servicioUsuario.traerIdUsuarioActual(email);
+                comentario.setUsuario(this.servicioUsuario.findById(idUser));
+
+                Videojuego videojuego = this.servicioVideojuego.findById(id);
+
+                if(videojuego.getComentarios_valoraciones() == null){
+                    List<Comentarios_Valoracion> comments = new ArrayList<>();
+                    comments.add(comentario);
+                    videojuego.setComentarios_valoraciones(comments);
+                }else{
+                    List<Comentarios_Valoracion> comments = videojuego.getComentarios_valoraciones();
+                    comments.add(comentario);
+                    videojuego.setComentarios_valoraciones(comments);
+                }
+                this.servicioVideojuego.update(id,videojuego);
+
+
+
+            return "redirect:/videojuego/detalle/{id}";
+
+        }catch(Exception e){
+            model.addAttribute("error", e.getMessage());
+            return "error";
+        }
+    }
+
+
+
+
+
 
 
 

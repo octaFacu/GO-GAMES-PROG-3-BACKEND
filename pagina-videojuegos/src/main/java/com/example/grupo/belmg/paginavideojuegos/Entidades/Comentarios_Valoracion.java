@@ -34,4 +34,6 @@ public class Comentarios_Valoracion extends Base{
     @JoinColumn(name = "fk_usuario")
     @JsonIgnore
     private Usuario usuario;
+
+
 }
