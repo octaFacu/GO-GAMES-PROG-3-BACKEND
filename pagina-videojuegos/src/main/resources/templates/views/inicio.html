@@ -22,8 +22,8 @@
     <div class="container">
         <div class="row mt-3">
             <div class="flex" style="align-items: left">
-                <form class="form-inline my-2 my-lg-0" th:action="@{/videojuego/busqueda}">
-                    <input class="form-control mr-sm-1" type="search" placeholder="Buscar..." aria-label="Search" name="query">
+                <form class="form-group mx-sm-3 mb-2" th:action="@{/videojuego/busqueda}">
+                    <input class="form-control mr-sm-1" type="search" style="width:80%" placeholder="Ingrese un titulo..." aria-label="Search" name="query">
                     <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Buscar</button>
                 </form>
             </div>

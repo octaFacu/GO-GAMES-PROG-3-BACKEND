@@ -286,26 +286,26 @@ public class ControladorVideojuego extends ImplementacionControladorBase<Videoju
 
 
 
-    @PostMapping("/detalle/{id}")
-    public String guardarVideojuego(@Valid @ModelAttribute("comentarioNuevo") Comentarios_Valoracion comentarioNuevo, BindingResult result, Model model, @PathVariable("id") long id){
+    @PostMapping("/detalle/{idVideojuego}")
+    public String guardarVideojuego(@Valid @ModelAttribute("comentarioNuevo") Comentarios_Valoracion comentarioNuevo, BindingResult result, Model model, @PathVariable("idVideojuego") long idVideojuego){
 
         try{
 
 
             if(result.hasErrors()){
-                return "views/detalle/{id}";
+                return "views/detalle/{idVideojuego}";
             }
 
                 Comentarios_Valoracion comentario = this.servicioComentarioYValoracion.save(comentarioNuevo);
 
-                //COMO SACAR ID USUARIO CONECTADO ACTUALMENTE ???
                 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
                 String email = authentication.getName();
+
 
                 long idUser = this.servicioUsuario.traerIdUsuarioActual(email);
                 comentario.setUsuario(this.servicioUsuario.findById(idUser));
 
-                Videojuego videojuego = this.servicioVideojuego.findById(id);
+                Videojuego videojuego = this.servicioVideojuego.findById(idVideojuego);
 
                 if(videojuego.getComentarios_valoraciones() == null){
                     List<Comentarios_Valoracion> comments = new ArrayList<>();
@@ -316,11 +316,11 @@ public class ControladorVideojuego extends ImplementacionControladorBase<Videoju
                     comments.add(comentario);
                     videojuego.setComentarios_valoraciones(comments);
                 }
-                this.servicioVideojuego.update(id,videojuego);
+                this.servicioVideojuego.update(idVideojuego,videojuego);
 
 
 
-            return "redirect:/videojuego/detalle/{id}";
+            return "redirect:/videojuego/detalle/{idVideojuego}";
 
         }catch(Exception e){
             model.addAttribute("error", e.getMessage());
