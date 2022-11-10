@@ -16,7 +16,6 @@ public class ControladorCompra extends ImplementacionControladorBase<Compra, Imp
     public ResponseEntity<?> searchCompra(@PathVariable Long id){
 
         try{
-            //System.out.println("id: " + id);
             return ResponseEntity.status(HttpStatus.OK).body(service.findCompraByUserId(id));
         }catch(Exception e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(("{\"error\": \"" + e.getMessage()+"\"}"));
