@@ -50,7 +50,7 @@ public class ImplementacionServicioUsuario extends ImplementacionServicioBase<Us
             throw new Exception(e.getMessage());
         }
     }
-
+    @Override
     @Transactional
     public Usuario saveAdmin(Usuario entity) throws Exception{
         entity.setContrasenia(BCrypt.hashpw(entity.getContrasenia(),BCrypt.gensalt()));
@@ -59,7 +59,7 @@ public class ImplementacionServicioUsuario extends ImplementacionServicioBase<Us
         entity = repositorio.save(entity);
         return entity;
     }
-
+    @Override
     public List<Usuario> buscarAdmin() throws Exception{
         try {
             List<Usuario> entity = repositorio.buscaAdmin();
@@ -82,7 +82,7 @@ public class ImplementacionServicioUsuario extends ImplementacionServicioBase<Us
         }
     }
 
-
+    @Override
     public long traerIdUsuarioActual(String email)throws Exception{
         try {
             long id = this.repositorio.traerIdUsuarioActual(email);
@@ -91,6 +91,7 @@ public class ImplementacionServicioUsuario extends ImplementacionServicioBase<Us
             throw new Exception(e.getMessage());
         }
     }
+    @Override
     @Transactional
     public void guardarDireccionYTarjeta(long idUsuario, long idDireccion, long idTarjeta)throws  Exception{
         try {

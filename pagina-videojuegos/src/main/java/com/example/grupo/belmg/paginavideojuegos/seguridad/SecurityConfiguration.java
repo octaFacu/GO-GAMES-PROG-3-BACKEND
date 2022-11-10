@@ -59,7 +59,7 @@ public class SecurityConfiguration {
                 .formLogin()
                 .loginPage("/usuarios/login")
                 .permitAll()
-                .defaultSuccessUrl("/usuarios/inicio")
+                .defaultSuccessUrl("/categoria/inicio")
                 .and()
                 .logout()
                 .invalidateHttpSession(true)
