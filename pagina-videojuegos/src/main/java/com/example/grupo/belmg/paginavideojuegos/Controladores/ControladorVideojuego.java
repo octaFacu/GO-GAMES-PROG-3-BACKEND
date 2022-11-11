@@ -14,19 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -52,6 +45,37 @@ public class ControladorVideojuego extends ImplementacionControladorBase<Videoju
     private ImplementacionServicioImagen servicioImagen;
 
     //----------CRUD------------
+
+    @GetMapping("/crudVideojuego")
+    public String findAll(@RequestParam Map<String, Object> params, Model model){
+
+        try{
+
+            int page = params.get("page") != null ? (Integer.valueOf(params.get("page").toString()) - 1) : 0;
+
+            PageRequest pageRequest = PageRequest.of(page,5);
+
+            Page<Videojuego> pageVideojuego = servicioVideojuego.getAll(pageRequest);
+
+            int totalPage = pageVideojuego.getTotalPages();                                                     //Total de paginas que tienen los datos de la base de datos(cuantos links se muestran)
+            if(totalPage > 0){
+                List<Integer> pages = IntStream.rangeClosed(1, totalPage).boxed().collect(Collectors.toList());   //Se crea un listado de numeros desde el 1 al numero final
+                model.addAttribute("pages", pages);
+            }
+
+            model.addAttribute("videojuegos", pageVideojuego.getContent());
+            model.addAttribute("current", page + 1);                                        //Parametro para identificar la pagina actual
+            model.addAttribute("next", page + 2);
+            model.addAttribute("prev", page);
+            model.addAttribute("last", totalPage);
+
+            return "views/crudVideojuego";
+
+        }catch(Exception e){
+            model.addAttribute("error", e.getMessage());
+            return "error";
+        }
+    }
 
     @GetMapping("/formulario/videojuego/{id}")
     public String formularioVideojuego(Model model, @PathVariable("id") long id){
@@ -127,48 +151,21 @@ public class ControladorVideojuego extends ImplementacionControladorBase<Videoju
         }
     }
 
-    @GetMapping("/crudVideojuego")
-    public String findAll(@RequestParam Map<String, Object> params, Model model){
 
-        try{
-
-            int page = params.get("page") != null ? (Integer.valueOf(params.get("page").toString()) - 1) : 0;
-
-            PageRequest pageRequest = PageRequest.of(page,5);
-
-            Page<Videojuego> pageVideojuego = servicioVideojuego.getAll(pageRequest);
-
-            int totalPage = pageVideojuego.getTotalPages();                                                     //Total de paginas que tienen los datos de la base de datos(cuantos links se muestran)
-            if(totalPage > 0){
-                List<Integer> pages = IntStream.rangeClosed(1, totalPage).boxed().collect(Collectors.toList());   //Se crea un listado de numeros desde el 1 al numero final
-                model.addAttribute("pages", pages);
-            }
-
-            model.addAttribute("videojuegos", pageVideojuego.getContent());
-            model.addAttribute("current", page + 1);                                        //Parametro para identificar la pagina actual
-            model.addAttribute("next", page + 2);
-            model.addAttribute("prev", page);
-            model.addAttribute("last", totalPage);
-
-            return "views/crudVideojuego";
-
-        }catch(Exception e){
-            model.addAttribute("error", e.getMessage());
-            return "error";
-        }
-
-
-
-    }
-
+    //----------------- IMAGENES VIDEOJUEGO CRUD ----------------
 
     @GetMapping("/ingresoimg/videojuego/{id}")
     public String ingresoimgVideojuego(Model model, @PathVariable("id") long id){
 
         try{
+            System.out.println("OAKSJDIODHASLKJDHAKSJDHASKLJDHAS");
+
+            int cantImagenes = this.servicioImagen.findImagenByVideojuegoId(id).size();
 
             model.addAttribute("videojuego", this.servicioVideojuego.findById(id));
             model.addAttribute("imagenes", this.servicioImagen.findImagenByVideojuegoId(id));
+            model.addAttribute("imagen", new Imagen());
+            model.addAttribute("cantImagenes", cantImagenes);
 
             return "views/formulario/ingresoimg";
 
@@ -178,19 +175,82 @@ public class ControladorVideojuego extends ImplementacionControladorBase<Videoju
         }
     }
 
-    /*@PostMapping("/ingresoimg/videojuego/{id}")
+
+    @PostMapping("/postingresoimg/videojuego/{id}")
     public String finingresoimgVideojuego(@ModelAttribute("imagen") Imagen imagen, Model model, @PathVariable("id") long id){
 
         try{
-            System.out.println("TRAZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
             model.addAttribute("videojuego", this.servicioVideojuego.findById(id));
-            //model.addAttribute("imagen", new Imagen());
-            //model.addAttribute("imagenes", this.servicioImagen.findImagenByVideojuegoId(id));
+            model.addAttribute("imagenes", this.servicioImagen.findImagenByVideojuegoId(id));
 
             imagen.setVideojuego(this.servicioVideojuego.findById(id));
             this.servicioImagen.save(imagen);
 
-            return "views/formulario/ingresoimg";
+            return "redirect:/videojuego/ingresoimg/videojuego/{id}";
+            //return "views/formulario/ingresoimg";                       //PROBAR QUE VUALVA AL MISMO VIDEOJUEGO
+
+        }catch(Exception e){
+            model.addAttribute("error", e.getMessage());
+            return "error";
+        }
+    }
+
+    @PostMapping("/inicioeliminarimg/videojuego/{idVideojuego}")
+    public String inicioEliminaimgimgVideojuego(@ModelAttribute("imagen") Imagen imagen, @PathVariable("idVideojuego") long idVideojuego, Model model){
+
+        try{
+
+            long imagenid = imagen.getId();
+
+            Imagen img = this.servicioImagen.findById(imagenid);
+            String imagenlink = img.getLink();
+            //System.out.println("ID IMAGEN: " + imagenid);
+            //System.out.println("LINK IMAGEN: " + imagenlink);
+
+            model.addAttribute("videojuego", this.servicioVideojuego.findById(idVideojuego));
+            model.addAttribute("imagenes", this.servicioImagen.findImagenByVideojuegoId(idVideojuego));
+            model.addAttribute("imagenid", imagenid);
+            model.addAttribute("imagenlink", imagenlink);
+
+            return "views/formulario/eliminarimg";
+
+        }catch(Exception e){
+            model.addAttribute("error", e.getMessage());
+            return "error";
+        }
+    }
+
+    @PostMapping("/posteliminarimg/videojuego/{idVideojuego}/{id}")
+    public String postEliminaimgVideojuego(@PathVariable("idVideojuego") long idVideojuego,@PathVariable("id") long id, Model model){
+
+        try{
+
+            this.servicioImagen.delete(id);
+
+            return "redirect:/videojuego/ingresoimg/videojuego/{idVideojuego}";
+
+        }catch(Exception e){
+            model.addAttribute("error", e.getMessage());
+            return "error";
+        }
+    }
+
+
+
+    /*@PostMapping("/inicioeliminarimg/videojuego/{idVideojuego}")
+    public String inicioEliminaimgimgVideojuego(@ModelAttribute("imagen") Imagen imagen, @PathVariable("idVideojuego") long idVideojuego, Model model){
+
+        try{
+
+            long id = imagen.getId();
+
+            model.addAttribute("videojuego", this.servicioVideojuego.findById(idVideojuego));
+            model.addAttribute("imagenes", this.servicioImagen.findImagenByVideojuegoId(idVideojuego));
+            //model.addAttribute("id", id);
+
+            this.servicioImagen.delete(id);
+
+            return "redirect:/videojuego/ingresoimg/videojuego/{idVideojuego}";
 
         }catch(Exception e){
             model.addAttribute("error", e.getMessage());
@@ -198,26 +258,7 @@ public class ControladorVideojuego extends ImplementacionControladorBase<Videoju
         }
     }*/
 
-    @PostMapping("/postingresoimg/videojuego/{id}")
-    public String finingresoimgVideojuego(@RequestParam(), BindingResult result,Model model, @PathVariable("id") long id){
-
-        try{
-
-            System.out.println("TRAZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-            //model.addAttribute("videojuego", this.servicioVideojuego.findById(id));
-            //model.addAttribute("imagenes", this.servicioImagen.findImagenByVideojuegoId(id));
-
-            imagen.setVideojuego(this.servicioVideojuego.findById(id));
-            this.servicioImagen.save(imagen);
-
-            return "views/formulario/ingresoimg";
-
-        }catch(Exception e){
-            model.addAttribute("error", e.getMessage());
-            return "error";
-        }
-    }
-
+    //----------------- FIN IMAGENES VIDEOJUEGO CRUD ----------------
 
     //-------------FIN CRUD------------------
 

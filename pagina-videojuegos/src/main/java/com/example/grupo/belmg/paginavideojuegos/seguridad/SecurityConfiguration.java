@@ -67,6 +67,7 @@ public class SecurityConfiguration {
                 .logoutRequestMatcher(new AntPathRequestMatcher("/usuarios/logout"))
                 .logoutSuccessUrl("/usuarios/login?logout")
                 .permitAll();
+        //.and().csrf().disable();
         return http.build();
     }
 
