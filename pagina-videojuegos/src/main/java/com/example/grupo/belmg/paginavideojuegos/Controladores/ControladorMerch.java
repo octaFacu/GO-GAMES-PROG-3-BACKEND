@@ -10,8 +10,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -34,7 +36,202 @@ public class ControladorMerch extends ImplementacionControladorBase<Merch, Imple
     private ImplementacionServicioImagen servicioImagen;
 
 
-    @GetMapping("/search")
+    //-------------- CRUD MERCH -------------------
+
+
+    @GetMapping("/crudMerch")
+    public String findAll(@RequestParam Map<String, Object> params, Model model){
+
+        try{
+
+            int page = params.get("page") != null ? (Integer.valueOf(params.get("page").toString()) - 1) : 0;
+
+            PageRequest pageRequest = PageRequest.of(page,5);
+
+            Page<Merch> pageMerch = servicioMerch.getAll(pageRequest);
+
+            int totalPage = pageMerch.getTotalPages();                                                     //Total de paginas que tienen los datos de la base de datos(cuantos links se muestran)
+            if(totalPage > 0){
+                List<Integer> pages = IntStream.rangeClosed(1, totalPage).boxed().collect(Collectors.toList());   //Se crea un listado de numeros desde el 1 al numero final
+                model.addAttribute("pages", pages);
+            }
+
+            model.addAttribute("merchs", pageMerch.getContent());
+            model.addAttribute("current", page + 1);                                        //Parametro para identificar la pagina actual
+            model.addAttribute("next", page + 2);
+            model.addAttribute("prev", page);
+            model.addAttribute("last", totalPage);
+
+            return "views/crudMerch";
+
+        }catch(Exception e){
+            model.addAttribute("error", e.getMessage());
+            return "error";
+        }
+    }
+
+    @GetMapping("/formulario/merch/{id}")
+    public String formularioVideojuego(Model model, @PathVariable("id") long id){
+
+        try{
+            model.addAttribute("fabricantes", this.servicioFabricante.findAll());
+
+            if(id == 0){
+                model.addAttribute("merch", new Merch());
+            }else{
+                model.addAttribute("merch", this.servicioMerch.findById(id));
+            }
+
+            return "views/formulario/merch";
+
+        }catch(Exception e){
+            model.addAttribute("error", e.getMessage());
+            return "error";
+        }
+    }
+
+    @PostMapping("/formulario/merch/{id}")
+    public String guardarVideojuego(@Valid @ModelAttribute("merch") Merch merch, BindingResult result, Model model, @PathVariable("id") long id){
+
+        try{
+
+            model.addAttribute("fabricantes", this.servicioFabricante.findAll());
+
+            if(result.hasErrors()){
+                return "views/formulario/merch";
+            }
+
+            if(id == 0){
+                this.servicioMerch.save(merch);
+            }else{
+                this.servicioMerch.update(id, merch);
+            }
+
+            return "redirect:/merch/crudMerch";
+
+        }catch(Exception e){
+            model.addAttribute("error", e.getMessage());
+            return "error";
+        }
+    }
+
+    @GetMapping("/eliminar/merch/{id}")
+    public String eliminarVideojuego(Model model, @PathVariable("id") long id){
+
+        try{
+
+            model.addAttribute("merch", this.servicioMerch.findById(id));
+            return "views/formulario/eliminarmerch";
+
+        }catch(Exception e){
+            model.addAttribute("error", e.getMessage());
+            return "error";
+        }
+    }
+
+    @PostMapping("/eliminar/merch/{id}")
+    public String desactivarVideojuego(Model model, @PathVariable("id") long id){
+
+        try{
+            this.servicioMerch.deleteActivoById(id);
+            return "redirect:/merch/crudMerch";
+
+        }catch(Exception e){
+            model.addAttribute("error", e.getMessage());
+            return "error";
+        }
+    }
+
+
+    //-------------- IMAGANES CRUD MERCH -------------------
+
+    @GetMapping("/ingresoimg/merch/{id}")
+    public String ingresoimgVideojuego(Model model, @PathVariable("id") long id){
+
+        try{
+
+            int cantImagenes = this.servicioImagen.findImagenByVideojuegoId(id).size();
+
+            model.addAttribute("merch", this.servicioMerch.findById(id));
+            model.addAttribute("imagenes", this.servicioImagen.findImagenByMerchId(id));
+            model.addAttribute("imagen", new Imagen());
+            model.addAttribute("cantImagenes", cantImagenes);
+
+            return "views/formulario/ingresoimgmerch";
+
+        }catch(Exception e){
+            model.addAttribute("error", e.getMessage());
+            return "error";
+        }
+    }
+
+    @PostMapping("/postingresoimg/merch/{id}")
+    public String finingresoimgVideojuego(@ModelAttribute("imagen") Imagen imagen, Model model, @PathVariable("id") long id) {
+
+        try {
+
+            model.addAttribute("merch", this.servicioMerch.findById(id));
+            model.addAttribute("imagenes", this.servicioImagen.findImagenByVideojuegoId(id));
+
+            imagen.setMerch(this.servicioMerch.findById(id));
+            servicioImagen.save(imagen);
+
+            return "redirect:/merch/ingresoimg/merch/{id}";
+
+        } catch (Exception e) {
+            model.addAttribute("error", e.getMessage());
+            return "error";
+        }
+    }
+
+
+    @PostMapping("/inicioeliminarimg/merch/{idMerch}")
+    public String inicioEliminaimgVideojuego(@ModelAttribute("imagen") Imagen imagen, @PathVariable("idMerch") long idMerch, Model model){
+
+        try{
+
+            long imagenid = imagen.getId();
+
+            Imagen img = this.servicioImagen.findById(imagenid);
+            String imagenlink = img.getLink();
+            //System.out.println("ID IMAGEN: " + imagenid);
+            //System.out.println("LINK IMAGEN: " + imagenlink);
+
+            model.addAttribute("merch", this.servicioMerch.findById(idMerch));
+            model.addAttribute("imagenes", this.servicioImagen.findImagenByVideojuegoId(idMerch));
+            model.addAttribute("imagenid", imagenid);
+            model.addAttribute("imagenlink", imagenlink);
+
+            return "views/formulario/eliminarimgmerch";
+
+        }catch(Exception e){
+            model.addAttribute("error", e.getMessage());
+            return "error";
+        }
+    }
+
+    @PostMapping("/posteliminarimg/merch/{idMerch}/{id}")
+    public String postEliminaimgVideojuego(@PathVariable("idMerch") long idMerch,@PathVariable("id") long id, Model model){
+
+        try{
+
+            this.servicioImagen.delete(id);
+
+            return "redirect:/merch/ingresoimg/merch/{idMerch}";
+
+        }catch(Exception e){
+            model.addAttribute("error", e.getMessage());
+            return "error";
+        }
+    }
+
+    //-------------- FIN IMAGANES CRUD MERCH -------------------
+
+
+    //-------------- FIN CRUD MERCH -------------------
+
+
+    /*@GetMapping("/search")
     public ResponseEntity<?> search(@RequestParam String filtro){
 
         try{
@@ -82,7 +279,7 @@ public class ControladorMerch extends ImplementacionControladorBase<Merch, Imple
         }
     }
 
-    /*@PostMapping("/deleteOneActivo/{id}")
+    @PostMapping("/deleteOneActivo/{id}")
     public ResponseEntity<?> deleteActivoById(@PathVariable Long id){
 
         try{

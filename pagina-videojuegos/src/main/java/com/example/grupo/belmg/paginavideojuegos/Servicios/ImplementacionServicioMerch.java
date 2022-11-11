@@ -49,6 +49,32 @@ public class ImplementacionServicioMerch extends ImplementacionServicioBase<Merc
 
     }
 
+    @Transactional
+    public Page<Merch> getAll(Pageable pageable){
+
+        return repositorio.findAll(pageable);
+
+    }
+
+
+    @Transactional
+    public boolean deleteActivoById(long id) throws Exception {
+        try{
+            Optional<Merch> opt = this.repositorio.findById(id);
+            if(!opt.isEmpty()){
+                Merch merch = opt.get();
+                merch.setActivo(!merch.isActivo());
+                this.repositorio.save(merch);
+            }else{
+                throw new Exception();
+            }
+            return true;
+
+        }catch(Exception e){
+            throw new Exception(e.getMessage());
+        }
+    }
+
 
     /*@Transactional
     public boolean deleteById(long id) throws Exception {

@@ -134,7 +134,7 @@ public class ControladorVideojuego extends ImplementacionControladorBase<Videoju
         try{
 
             model.addAttribute("videojuego", this.servicioVideojuego.findById(id));
-            return "views/formulario/eliminar";
+            return "views/formulario/eliminarvideojuego";
 
         }catch(Exception e){
             model.addAttribute("error", e.getMessage());
@@ -199,7 +199,7 @@ public class ControladorVideojuego extends ImplementacionControladorBase<Videoju
 
 
     @PostMapping("/inicioeliminarimg/videojuego/{idVideojuego}")
-    public String inicioEliminaimgimgVideojuego(@ModelAttribute("imagen") Imagen imagen, @PathVariable("idVideojuego") long idVideojuego, Model model){
+    public String inicioEliminaimgVideojuego(@ModelAttribute("imagen") Imagen imagen, @PathVariable("idVideojuego") long idVideojuego, Model model){
 
         try{
 
