@@ -1,11 +1,7 @@
 package com.example.grupo.belmg.paginavideojuegos.Controladores;
 
-import com.example.grupo.belmg.paginavideojuegos.Entidades.DetallesTarjeta;
-import com.example.grupo.belmg.paginavideojuegos.Entidades.Direccion;
-import com.example.grupo.belmg.paginavideojuegos.Entidades.Usuario;
-import com.example.grupo.belmg.paginavideojuegos.Servicios.ImplementacionServicioDetallesTarjeta;
-import com.example.grupo.belmg.paginavideojuegos.Servicios.ImplementacionServicioDireccion;
-import com.example.grupo.belmg.paginavideojuegos.Servicios.ImplementacionServicioUsuario;
+import com.example.grupo.belmg.paginavideojuegos.Entidades.*;
+import com.example.grupo.belmg.paginavideojuegos.Servicios.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -28,6 +25,13 @@ public class ControladorUsuario extends ImplementacionControladorBase<Usuario, I
 
     @Autowired
     ImplementacionServicioDetallesTarjeta servicioTarjeta;
+
+    @Autowired
+    ImplementacionServicioCompra servicioCompra;
+
+    @Autowired
+    ImplementacionServicioVideojuego servicioVideojuego;
+
     @GetMapping("/search")
     public ResponseEntity<?> search(@RequestParam String filtro){
 
@@ -168,5 +172,47 @@ public class ControladorUsuario extends ImplementacionControladorBase<Usuario, I
             return e.getMessage();
         }
     }
+    @GetMapping("/videojuego/biblioteca")
+    public String biblioteca(Model model){
+        try {
+            long idU=1;
+            List<Compra> compras = this.servicioCompra.idvideojuegosComprados(idU);
+            List<Videojuego> videojuegos = new ArrayList<>();
 
+            model.addAttribute("compra",compras);
+
+            for (int i=0; i<compras.size();i++){
+                if(compras.get(i).getVideojuego() != null){
+                    videojuegos.add(compras.get(i).getVideojuego());
+                }
+            }
+            model.addAttribute("videojuegos",videojuegos);
+
+            return "views/biblioteca";
+        }catch (Exception e){
+            return e.getMessage();
+        }
+    }
+
+    @GetMapping("/merch/biblioteca")
+    public String bibliotecaMerch(Model model){
+        try {
+            long idU=1;
+            List<Compra> compras = this.servicioCompra.idvideojuegosComprados(idU);
+            List<Merch> merch = new ArrayList<>();
+
+            model.addAttribute("compra",compras);
+
+            for (int i=0; i<compras.size();i++){
+                if(compras.get(i).getMerch() != null){
+                    merch.add(compras.get(i).getMerch());
+                }
+            }
+            model.addAttribute("merch",merch);
+
+            return "views/bibliotecaMerch";
+        }catch (Exception e){
+            return e.getMessage();
+        }
+    }
 }

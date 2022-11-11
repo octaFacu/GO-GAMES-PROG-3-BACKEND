@@ -92,4 +92,14 @@ public class ImplementacionServicioMerch extends ImplementacionServicioBase<Merc
         }
     }
 
+    @Transactional
+    public Page<Merch> findByNombre(String q, Pageable pageable) throws Exception{
+        try{
+            Page<Merch> entities = this.repositorio.findByNombre(q, pageable);
+            return entities;
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
+
 }

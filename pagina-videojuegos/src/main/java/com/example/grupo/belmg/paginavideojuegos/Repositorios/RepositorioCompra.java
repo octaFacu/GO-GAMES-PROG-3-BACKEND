@@ -14,4 +14,6 @@ public interface RepositorioCompra extends RepositorioBase<Compra, Long>{
     @Query("SELECT c FROM Compra c WHERE c.usuario.id = :idUsuario")
     List<Compra> compras(@Param("idUsuario") Long id);
 
+    @Query(value = "SELECT * FROM compras WHERE fk_usuario = ?1", nativeQuery = true)
+    List<Compra> comprasUsuario(long idUsuario);
 }

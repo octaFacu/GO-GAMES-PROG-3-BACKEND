@@ -13,4 +13,7 @@ public interface RepositorioImagen extends RepositorioBase<Imagen, Long>{
     @Query("SELECT c FROM Imagen c WHERE c.videojuego.id = :idVideojuego")
     List<Imagen> imagenes(@Param("idVideojuego") Long id);
 
+    @Query("SELECT c FROM Imagen c WHERE c.merch.id = :idMerch")
+    List<Imagen> imagenesM(@Param("idMerch") Long id);
+
 }

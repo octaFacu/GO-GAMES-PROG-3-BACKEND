@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="components.css">
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <title>Detalle Merch</title>
+</head>
+<body style="background: #121212"class="d-flex flex-column min-vh-100">
+<nav th:replace="components/nav-bar :: nav_bar"></nav>
+<div class="container">
+    <div class="row mt-5" th:object="${merch}">
+        <div class="col-4">
+            <img style="max-width: 85%;" th:src="*{img_portada}" alt="Imagen de portada del videojuego" class="img-fluid">
+        </div>
+        <div class="col text-center">
+            <div class="card bg-dark text-white d-flex">
+                <div class="card-body ">
+                    <h5 class="card-title"  style="flex: 1; font-size: 40px" th:text="*{nombre}">Card title</h5>
+                    <hr style="background-color: white; height: 3px;">
+                    <br>
+                    <p class="card-text" style="font-size: 26px">Precio: $<span th:text="*{precio}">1</span></p>
+                    <div th:if="*{stock}==0">
+                        <p class="card-text" style="font-size: 26px; color: red">Stock: <span>NO  HAY STOCK DISPONIBLE</span></p>
+                    </div>
+                    <div th:unless="*{stock}==0">
+                        <p class="card-text" style="font-size: 26px">Stock: <span th:text="*{stock}">1</span></p>
+                    </div>
+
+                </div>
+                <br>
+                <br>
+                <div class="card-body">
+
+                    <p style="font-size: 20px" class="card-text" th:text="*{descripcion}"></p>
+                </div>
+
+            </div>
+            <br>
+            <br>
+            <div th:unless="*{stock}==0">
+                <a th:href="@{/compra/merch/detalle-compra/{id}(id=${merch.id})}" class="btn btn-danger btn-lg" type="button" style="margin-left: 2.5em;">Comprar</a>
+            </div>
+
+
+        </div>
+
+        <div class="container">
+            <div class="col-8"><br>
+                <div class="div">
+                    <button style="margin-left: 2.5em;" type="button" class="btn btn-secondary btn-lg" th:text="${fabricante.nombre}" ></button>
+                </div>
+            </div>
+        </div><br>
+        <br>
+        <br>
+        <br>
+        <hr style="background-color: white; height: 4px;">
+        <br>
+
+        <div th:replace="components/img-carousel :: img-carousel"></div>
+
+
+
+    </div>
+    <br>
+
+
+
+
+</div>
+<footer th:replace="components/footer :: footer"></footer>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <title>Busqueda</title>
+</head>
+<body style="background: #121212">
+<nav th:replace="components/nav-bar :: nav_bar"></nav>
+<div class="container">
+    <div class="row mt-5" th:if="${merchs.size}">
+        <div class="col-12">
+            <h2 style="color: white; font-size: 26px">Resultados "<span th:text="${resultado}"></span>": </h2>
+        </div>
+
+
+        <br>
+        <table class="table">
+            <thead class="thead-dark" style="color: white">
+            <tr>
+                <th style="color: white; font-size: 23px" scope="col"></th>
+                <th style="color: white; font-size: 23px" scope="col">Nombre</th>
+                <th style="color: white; font-size: 23px" scope="col">Precio</th>
+                <th style="color: white; font-size: 23px" scope="col"></th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="merch : ${merchs}" style="max-height: 100%; max-width: 100%">
+                <td><img style="height: 100px" th:src="${merch.img_portada}" alt="Imagen Promocional"></td>
+                <td style="color: white; font-size: 35px" th:text="${merch.nombre}"></td>
+                <td style="color: white; font-size: 35px" th:text="${merch.precio}"></td>
+                <td><a th:href="@{/merch/detalleM/{id}(id=${merch.id})}" class="btn btn-danger">Ver Detalles</a> </td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="row mt-5" th:unless="${merchs.size}">
+        <div class="col-12">
+            <h2 style="color: red">No hay resultados de "<span th:text="${resultado}"></span>"</h2>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -27,4 +27,18 @@ public class ImplementacionServicioImagen extends ImplementacionServicioBase<Ima
             throw new Exception(e.getMessage());
         }
     }
+
+    @Override
+    @Transactional
+    public List<Imagen> findImagenByMerchId(Long id) throws Exception {
+        try{
+            //Query con los metodos
+            List<Imagen> imagenes = repositorio.imagenesM(id);
+
+            return imagenes;
+
+        }catch(Exception e){
+            throw new Exception(e.getMessage());
+        }
+    }
 }

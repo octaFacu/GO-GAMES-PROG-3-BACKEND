@@ -1,18 +1,40 @@
-<div th:fragment="img-carousel" id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-    <div class="carousel-inner">
-        <div class="div" th:each="gameimg : ${imagenes}">
+
+
+
+<!--
+<div th:fragment="img-carousel">
+    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
             <div class="carousel-item active">
-                <img  style="max-width: 80%; margin-right: auto; margin-left: auto;" class="d-block w-100" th:src="${gameimg.link}" alt="Slides">
+                <img class="d-block w-100" th:src="@{${videojuego.img_portada}}" alt="First slide">
+            </div>
+            <div th:each="img : ${imagenes}" class="carousel-item">
+                <img class="d-block w-100" th:src="@{${img.link}}" alt="@{${videojuego.nombre}}">
             </div>
 
         </div>
+
+
+        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
     </div>
-    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only"></span>
-    </a>
-    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only"></span>
-    </a>
+</div>-->
+<div class="box" th:fragment="img-carousel">
+    <div class="wrapper">
+        <nav class="lil-nav">
+
+            <div th:each="img : ${imagenes}">
+                <img class="lil-nav__img" th:src="${img.link}" alt="Promotional Image" />
+            </div>
+        </nav>
+
+    </div>
 </div>
+
+

@@ -1,15 +1,92 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+<html style="font-size: 16px;" lang="es" xmlns:th="http://www.thymeleaf.org"><head>
+    <meta charset="utf-8">
     <title>Inicio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
 </head>
-<body>
-    <nav th:replace="components/nav-bar :: nav_bar"></nav>
-    <h1>hola BB</h1>
-    <a th:href="@{/compra/detalle-compra}">prueba</a>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
-</body>
-</html>
+<body style="background: #121212">
+ <nav th:replace="components/nav-bar :: nav_bar"></nav>
+ <div class="container">
+
+         <div class="card">
+                <img th:src="${ultVideojuego.img_portada}" style=" height: 10rem;">
+
+            <div class="card-img-overlay card-inverse">
+                <div class="text-stroke text-white pb-5" style="text-decoration: underline; font-size: 1.875em"><a style="text-decoration:none; color: white" th:href="@{/videojuego/detalle/{id}(id=${ultVideojuego.id})}">Ultimo Lanzamiento!</a></div>
+            </div>
+         </div>
+    </div>
+ <br>
+<div>
+    <div class="container">
+        <div class="row mt-3">
+            <div class="flex" style="align-items: left">
+                <form class="form-group mx-sm-3 mb-2" th:action="@{/videojuego/busqueda}">
+                    <input class="form-control mr-sm-1" type="search" style="width:80%" placeholder="Ingrese un titulo..." aria-label="Search" name="query">
+                    <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Buscar</button>
+                </form>
+            </div>
+            </div>
+    </div>
+</div>
+
+ <br>
+ <br>
+    <!--<div th:each="categoria : ${categorias}">
+        <div th:text="${categoria.tipo}"></div>
+    </div>-->
+
+</section>
+ <br>
+ <div><div class="container" style="align-items: center; justify-content: center; display: flex">
+     <h2 style="color: white">- CATEGORIAS -</h2>
+     <br>
+
+ </div>
+     <div class="container" style="align-items: center; justify-content: center; display: flex">
+         <div class="col-8"><br>
+             <div class="div">
+                 <div class="btn-group" th:each="categoria : ${categorias}">
+                     <a th:href="@{/categoria/categoriaDetalle/{id}(id=${categoria.id})}" style="margin-left: 2.5em;" class="btn btn-secondary btn-lg" th:text="${categoria.tipo}"></a>
+
+                 </div>
+             </div>
+         </div>
+     </div>
+ </div>
+
+ <br>
+ <br>
+ <hr style="background-color: white; height: 4px;">
+ <br>
+ <div><div class="container" style="align-items: center; justify-content: center; display: flex">
+         <h2 style="color: white">- ESTUDIOS -</h2>
+         <br>
+    </div>
+     <div class="container" style="align-items: center; justify-content: center; display: flex">
+         <div class="col-8"><br>
+             <div class="div">
+                 <div class="btn-group" th:each="estudio : ${estudios}">
+
+                     <a th:href="@{/estudio/estudioDetalle/{id}(id=${estudio.id})}" style="margin-left: 2.5em;" class="btn btn-secondary btn-lg" th:text="${estudio.nombre}"></a>
+                 </div>
+             </div>
+         </div>
+     </div>
+ </div>
+
+ <br>
+ <br>
+ <hr style="background-color: white; height: 4px;">
+ <br>
+ <div><div class="container" style="align-items: center; justify-content: center; display: flex">
+     <a style="color: white" class="btn btn-danger btn-lg" th:href="@{/merch/merchLista}">- SECCIÓN MERCHANDISING -</a>
+     <br>
+
+ </div></div>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
+ <a th:href="@{/usuarios/direccion-tarjeta}">prueba</a>
+ </body></html>
+
