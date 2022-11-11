@@ -1,40 +1,7 @@
 
 
 
-<!--<div th:fragment="img-carousel" id="CarouselExample" class="carousel slide" data-ride="carousel">
-    <div class="carousel-inner">
-
-        <div class="carousel-item active">
-            <img th:src="${videojuego.img_portada}" class="d-block w-100" alt="...">
-        </div>
-        <div class="div" th:each="gameimg : ${imagenes}">
-
-            <div class="carousel-item">
-
-                <img  style="max-width: 80%; margin-right: auto; margin-left: auto;" class="d-block w-100" th:src="${gameimg.link}" alt="Slides">
-
-
-            </div>
-        </div>
-    </div>
-
-    <a class="carousel-control-prev" href="#CarouselExample" role="button" data-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-
-
-    </a>
-
-
-    <a class="carousel-control-next" href="#CarouselExample" role="button" data-slide="next">
-
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-
-        <span class="visually-hidden">Next</span>
-
-
-    </a>
-</div>-->
+<!--
 <div th:fragment="img-carousel">
     <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
@@ -57,7 +24,17 @@
             <span class="sr-only">Next</span>
         </a>
     </div>
-</div>
+</div>-->
+<div class="box" th:fragment="img-carousel">
+    <div class="wrapper">
+        <nav class="lil-nav">
 
+            <div th:each="img : ${imagenes}">
+                <img class="lil-nav__img" th:src="${img.link}" alt="Promotional Image" />
+            </div>
+        </nav>
+
+    </div>
+</div>
 
 
