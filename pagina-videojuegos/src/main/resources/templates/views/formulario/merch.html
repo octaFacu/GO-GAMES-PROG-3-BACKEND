@@ -35,6 +35,7 @@
                                 <label for="imagen_portada">Link imagen de portada:</label>
                                 <input type="text" class="form-control" id="imagen_portada" th:field="*{img_portada}">
                                 <div class="text-danger" th:if="${#fields.hasErrors('img_portada')}" th:errors="*{img_portada}"></div>
+                                <p class="text-danger" th:if="${URLvalid} == false">Esto no es un link, intente de nuevo</p>
                             </div>
 
                             <div class="form-group col-md-3">
