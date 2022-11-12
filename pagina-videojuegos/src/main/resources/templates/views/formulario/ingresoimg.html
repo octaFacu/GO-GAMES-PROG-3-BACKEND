@@ -23,7 +23,8 @@
             <form th:action="@{/videojuego/postingresoimg/videojuego/{id}(id=${videojuego.id})}" method="post" th:object="${imagen}" style="background: #282828; color: white">
               <label class="col-sm-2 col-form-label" for="link">Link de la imagen:</label>
               <input type="text" class="form-control col-sm-10" id="link" th:field="*{link}">
-              <!--<div class="text-danger" th:if="${#fields.hasErrors('link')}" th:errors="*{link}"></div>-->
+              <div class="text-danger" th:if="${#fields.hasErrors('link')}" th:errors="*{link}"></div>
+              <p class="text-danger" th:if="${URLvalid} == false">Esto no es un link, intente de nuevo</p>
               <button type="submit" class="btn btn-danger mt-3 col-2">Ingresa imagen</button>
             </form>
 

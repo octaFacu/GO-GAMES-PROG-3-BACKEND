@@ -3,6 +3,7 @@ package com.example.grupo.belmg.paginavideojuegos.Controladores;
 import com.example.grupo.belmg.paginavideojuegos.Entidades.*;
 
 import com.example.grupo.belmg.paginavideojuegos.Servicios.*;
+import com.example.grupo.belmg.paginavideojuegos.Utilidades.ValidadorURL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 
@@ -31,6 +31,10 @@ import java.util.stream.IntStream;
 @RequestMapping(path = "/videojuego")
 
 public class ControladorVideojuego extends ImplementacionControladorBase<Videojuego, ImplementacionServicioVideojuego>{
+
+    //@Autowired
+    private ValidadorURL validadorURL = new ValidadorURL();
+
 
     @Autowired
     private ImplementacionServicioVideojuego servicioVideojuego;
@@ -52,8 +56,6 @@ public class ControladorVideojuego extends ImplementacionControladorBase<Videoju
 
 
     //----------CRUD------------
-
-
 
     @GetMapping("/crudVideojuego")
     public String findAll(@RequestParam Map<String, Object> params, Model model){
@@ -111,11 +113,25 @@ public class ControladorVideojuego extends ImplementacionControladorBase<Videoju
 
         try{
 
+            boolean URLvalid;
+
             model.addAttribute("categorias", this.servicioCategoria.findAll());
             model.addAttribute("estudios", this.servicioEstudio.findAll());
 
             if(result.hasErrors()){
                 return "views/formulario/videojuego";
+            }
+
+            //valida links
+
+            if(validadorURL.validarURL(videojuego.getImg_portada()) == false){
+                //System.out.println("false");
+                URLvalid = false;
+                model.addAttribute("URLvalid", URLvalid);
+                return "views/formulario/videojuego";
+            }else{
+                URLvalid = true;
+                model.addAttribute("URLvalid", URLvalid);
             }
 
             if(id == 0){
@@ -187,13 +203,25 @@ public class ControladorVideojuego extends ImplementacionControladorBase<Videoju
     public String finingresoimgVideojuego(@Valid @ModelAttribute("imagen") Imagen imagen, BindingResult result, Model model, @PathVariable("id") long id) {
 
         try {
+            boolean URLvalid;
+            int cantImagenes = this.servicioImagen.findImagenByVideojuegoId(id).size();
 
-
+            model.addAttribute("cantImagenes", cantImagenes);
             model.addAttribute("videojuego", this.servicioVideojuego.findById(id));
             model.addAttribute("imagenes", this.servicioImagen.findImagenByVideojuegoId(id));
 
             if(result.hasErrors()){
                 return "views/formulario/ingresoimg";
+            }
+
+            if(validadorURL.validarURL(imagen.getLink()) == false){
+
+                URLvalid = false;
+                model.addAttribute("URLvalid", URLvalid);
+                return "views/formulario/ingresoimg";
+            }else{
+                URLvalid = true;
+                model.addAttribute("URLvalid", URLvalid);
             }
 
             imagen.setVideojuego(this.servicioVideojuego.findById(id));
@@ -247,6 +275,9 @@ public class ControladorVideojuego extends ImplementacionControladorBase<Videoju
             return "error";
         }
     }
+
+
+    //----------------- FIN IMAGENES VIDEOJUEGO CRUD ----------------
 
 
     //-------------FIN CRUD------------------

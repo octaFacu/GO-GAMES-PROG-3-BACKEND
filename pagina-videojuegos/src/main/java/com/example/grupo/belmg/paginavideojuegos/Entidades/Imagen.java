@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "imagenes")
@@ -24,5 +25,6 @@ public class Imagen extends Base{
     @JoinColumn(name = "fk_merch")
     private Merch merch;
 
+    @NotEmpty(message = "Se necesita que ingrese un link de una imagen")
     private String link;
 }

@@ -2,6 +2,7 @@ package com.example.grupo.belmg.paginavideojuegos.Controladores;
 
 import com.example.grupo.belmg.paginavideojuegos.Entidades.*;
 import com.example.grupo.belmg.paginavideojuegos.Servicios.*;
+import com.example.grupo.belmg.paginavideojuegos.Utilidades.ValidadorURL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -26,6 +27,7 @@ import java.util.stream.IntStream;
 public class ControladorMerch extends ImplementacionControladorBase<Merch, ImplementacionServicioMerch>{
 
 
+    private ValidadorURL validadorURL = new ValidadorURL();
     @Autowired
     private ImplementacionServicioMerch servicioMerch;
 
@@ -95,10 +97,23 @@ public class ControladorMerch extends ImplementacionControladorBase<Merch, Imple
 
         try{
 
+            boolean URLvalid;
             model.addAttribute("fabricantes", this.servicioFabricante.findAll());
 
             if(result.hasErrors()){
                 return "views/formulario/merch";
+            }
+
+            //valida links
+
+            if(validadorURL.validarURL(merch.getImg_portada()) == false){
+                //System.out.println("false");
+                URLvalid = false;
+                model.addAttribute("URLvalid", URLvalid);
+                return "views/formulario/merch";
+            }else{
+                URLvalid = true;
+                model.addAttribute("URLvalid", URLvalid);
             }
 
             if(id == 0){
@@ -150,7 +165,7 @@ public class ControladorMerch extends ImplementacionControladorBase<Merch, Imple
 
         try{
 
-            int cantImagenes = this.servicioImagen.findImagenByVideojuegoId(id).size();
+            int cantImagenes = this.servicioImagen.findImagenByMerchId(id).size();
 
             model.addAttribute("merch", this.servicioMerch.findById(id));
             model.addAttribute("imagenes", this.servicioImagen.findImagenByMerchId(id));
@@ -166,12 +181,29 @@ public class ControladorMerch extends ImplementacionControladorBase<Merch, Imple
     }
 
     @PostMapping("/postingresoimg/merch/{id}")
-    public String finingresoimgVideojuego(@ModelAttribute("imagen") Imagen imagen, Model model, @PathVariable("id") long id) {
+    public String finingresoimgVideojuego(@Valid @ModelAttribute("imagen") Imagen imagen,BindingResult result, Model model, @PathVariable("id") long id) {
 
         try {
+            boolean URLvalid;
+            int cantImagenes = this.servicioImagen.findImagenByMerchId(id).size();
 
+            model.addAttribute("cantImagenes", cantImagenes);
             model.addAttribute("merch", this.servicioMerch.findById(id));
-            model.addAttribute("imagenes", this.servicioImagen.findImagenByVideojuegoId(id));
+            model.addAttribute("imagenes", this.servicioImagen.findImagenByMerchId(id));
+
+            if(result.hasErrors()){
+                return "views/formulario/ingresoimgmerch";
+            }
+
+            if(validadorURL.validarURL(imagen.getLink()) == false){
+
+                URLvalid = false;
+                model.addAttribute("URLvalid", URLvalid);
+                return "views/formulario/ingresoimgmerch";
+            }else{
+                URLvalid = true;
+                model.addAttribute("URLvalid", URLvalid);
+            }
 
             imagen.setMerch(this.servicioMerch.findById(id));
             servicioImagen.save(imagen);

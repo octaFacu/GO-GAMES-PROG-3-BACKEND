@@ -4,36 +4,53 @@
   <meta charset="UTF-8">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
   <title>Biblioteca</title>
+  <style>
+           img {
+        max-width: 270px;
+        max-height: 155px;
+        min-width: 270px;
+        min-height: 155px;
+        display: block;
+        float: left;
+        object-fit: cover;
+    }
+    .box{
+        width: 1200px;
+        height: 800px;
+    }
+  </style>
+
 </head>
 
 <body style="background: #121212"class="d-flex flex-column min-vh-100">
 
 <nav th:replace="components/nav-bar :: nav_bar"></nav>
 <br>
+
 <div class="d-grid gap-2 col-6 mx-auto">
-  <a th:href="@{/usuarios/merch/biblioteca}" class="btn btn-success" type="button">Merch</a>
+  <a th:href="@{/usuarios/merch/biblioteca}" class="btn btn-danger" type="button">Merch</a>
 </div>
 <br>
 <div class="text-center text-white" th:if="${videojuegos.size() == 0}">
   <h1>todavia no a comprado ningun juego!</h1>
 </div>
-<div class="row" th:if="${videojuegos != null}">
-  <div class="col-sm-3" th:each="videojuego : ${videojuegos}">
-    <div class="card text-bg-dark mb-3" style="width: 447px">
-      <div class="row g-0">
+
+<div class="container" style="align-items: center; justify-content: center; display: flex">
+<div class="row mt-5" th:if="${videojuegos != null}">
+  <div class="col-12 col-sm-3" th:each="videojuego : ${videojuegos}">
+    <div class="card text-bg-dark mb-3" style="width: 17rem">
         <div class="col-md-5" >
-          <img th:src="${videojuego.img_portada}" class="img-fluid" alt="imagen videojuego del usuaio"  style="max-width: 445px; " >
+          <img class="card-img-top" th:src="${videojuego.img_portada}" alt="Imagen categoria">
         </div>
-        <div class="col-md-8">
           <div class="card-body">
             <h5 class="card-title" th:value="${videojuego.nombre}" th:text="${videojuego.nombre}"></h5>
             <p class="card-text" th:text="${videojuego.estudio.getNombre} + '&nbsp;&nbsp;&nbsp;' + ${videojuego.categoria.getTipo}"></p>
-          </div>
-        </div>
       </div>
     </div>
   </div>
 </div>
+</div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
