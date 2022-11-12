@@ -146,8 +146,16 @@ public class ControladorUsuario extends ImplementacionControladorBase<Usuario, I
     public String direccionTarjeta(Model modelo,HttpServletRequest request){
         try {
 
-            modelo.addAttribute("direccion",new Direccion());
-            modelo.addAttribute("tarjeta",new DetallesTarjeta());
+            Usuario usuario = this.service.findById(this.service.obtenerUsuario());
+            if(usuario.getTarjeta() == null){
+                modelo.addAttribute("direccion",new Direccion());
+                modelo.addAttribute("tarjeta",new DetallesTarjeta());
+                System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+            }else {
+                modelo.addAttribute("direccion", this.servicioDireccion.findById(usuario.getDireccion().getId()));
+                modelo.addAttribute("tarjeta", this.servicioTarjeta.findById(usuario.getTarjeta().getId()));
+                System.out.println("traza pase por modelo");
+            }
 
             String http = request.getHeader("Referer");
             modelo.addAttribute("httpRedireccion", http);
@@ -179,17 +187,20 @@ public class ControladorUsuario extends ImplementacionControladorBase<Usuario, I
 
                 return "views/formulario/direccion-tarjeta";
             }
-            //esto nos sirve para traer el mail del usuario autenticado en el momento para poder hacer una query y saber la id en la base de datos
+            
             Usuario usuario = this.service.findById(this.service.obtenerUsuario());
-            long idDireccionAnterior = usuario.getTarjeta().getId();
-            long idTarjetaAnterior = usuario.getDireccion().getId();
-
-
-            servicioTarjeta.save(tarjeta);
-            servicioDireccion.save(direccion);
-
-            service.guardarDireccionYTarjeta(this.service.obtenerUsuario(),tarjeta.getId(),direccion.getId());
-
+            System.out.println(usuario.getTarjeta().getId());
+            if(usuario.getTarjeta() == null){
+                servicioTarjeta.save(tarjeta);
+                servicioDireccion.save(direccion);
+                service.guardarDireccionYTarjeta(this.service.obtenerUsuario(),tarjeta.getId(),direccion.getId());
+                System.out.println("pase por save");
+            }else {
+                servicioTarjeta.update(usuario.getTarjeta().getId(), tarjeta);
+                servicioDireccion.update(usuario.getDireccion().getId(),direccion);
+                service.guardarDireccionYTarjeta(this.service.obtenerUsuario(),tarjeta.getId(),direccion.getId());
+                System.out.println("no pase por save");
+            }
 
             if(i==0){
                 return "redirect:"+ referer;
