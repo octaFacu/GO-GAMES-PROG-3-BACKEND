@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <title>Busqueda</title>
+    <script src="https://kit.fontawesome.com/0b3360c55c.js" crossorigin="anonymous"></script>
 </head>
-<body style="background: #121212">
+<body class="d-flex flex-column min-vh-100" style="background-image: url('https://r1.ilikewallpaper.net/iphone-8-wallpapers/download/36659/Digital-dark-color-blue-pattern-background-iphone-8-wallpaper-ilikewallpaper_com.jpg')">
 <nav th:replace="components/nav-bar :: nav_bar"></nav>
 <div class="container">
     <div class="row mt-5" th:if="${videojuegos.size}">
@@ -31,8 +32,8 @@
                     <td><img style="height: 100px" th:src="${videojuegos.img_portada}" alt="Imagen Promocional"></td>
                     <td style="color: white; font-size: 35px" th:text="${videojuegos.nombre}"></td>
                     <td style="color: white; font-size: 35px" th:text="${videojuegos.precio}"></td>
-                    <!--<td><a th:href="@{/categoria/categoriaDetalle/{id}(id=${videojuegos.fk_categoria})}" class="btn btn-secondary" th:text="${videojuegos.categoria.tipo}"></a> </td>
-                     --><td><a th:href="@{/videojuego/detalle/{id}(id=${videojuegos.id})}" class="btn btn-danger">Ver Detalles</a> </td>
+                    <td><a th:href="@{/categoria/categoriaDetalle/{id}(id=${videojuegos.categoria.id})}" class="btn btn-secondary" th:text="${videojuegos.categoria.tipo}"></a> </td>
+                     <td><a th:href="@{/videojuego/detalle/{id}(id=${videojuegos.id})}" class="btn btn-danger">Ver Detalles</a> </td>
 
                 </tr>
                 </tbody>
@@ -44,5 +45,6 @@
         </div>
     </div>
 </div>
+<footer th:replace="components/footer :: footer"></footer>
 </body>
 </html>

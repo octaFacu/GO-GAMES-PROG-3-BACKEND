@@ -7,11 +7,14 @@
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<style>
+    <script src="https://kit.fontawesome.com/0b3360c55c.js" crossorigin="anonymous"></script>
+    <style>
     img {
 
-        max-width: 100%;
-        max-height: 100%;
+        max-width: 500px;
+        max-height: 350px;
+        min-width: 500px;
+        min-height: 350px;
         display: block;
         float: left;
         object-fit: cover;
@@ -80,7 +83,7 @@ $large: 1200px;
 <div class="container">
     <div class="row mt-5" th:object="${videojuego}">
         <div class="col-4">
-            <img style="max-width: 85%;" th:src="*{img_portada}" alt="Imagen de portada del videojuego" class="img-fluid">
+            <img style="max-width: 400px; max-height: 350px; min-width: 300px; min-height:300px" th:src="*{img_portada}" alt="Imagen de portada del videojuego" class="img-fluid">
         </div>
         <div class="col text-center">
             <div class="card bg-dark text-white d-flex">
@@ -90,6 +93,7 @@ $large: 1200px;
                     <br>
                     <p class="card-text" style="font-size: 26px">Precio: $<span th:text="*{precio}">1</span></p>
                 </div>
+                <p class="card-text" style="font-size: 15px">Lanzamiento: <span th:text="${lanzamiento}"></span></p>
                 <br>
                 <br>
                 <div class="card-body">
@@ -100,8 +104,12 @@ $large: 1200px;
             </div>
             <br>
             <br>
-            <div>
+            <div th:unless="${already}">
                 <a th:href="@{/compra/videojuego/detalle-compra/{id}(id=${videojuego.id})}" class="btn btn-danger btn-lg" style="margin-left: 2.5em;">Comprar</a>
+            </div>
+            <div th:if="${already}">
+                <button type="button" class="btn btn-secondary btn-lg" disabled>Proximamente!</button>
+
             </div>
         </div>
 
@@ -123,9 +131,7 @@ $large: 1200px;
 
 
     </div>
-    <br>
-    <br>
-    <table class="table">
+    <table th:unless="${already}" class="table">
         <tbody>
         <tr th:each="comentario : ${comentarios}" style="max-height: 100%; max-width: 100%">
             <td style="color: #d1d1d1; font-size: 19px" th:text="${comentario.usuario.nombre_usuario}"></td>
@@ -136,7 +142,7 @@ $large: 1200px;
     </table>
 
     <br>
-    <div class="row mt-5" style="background: #383838; color: white">
+    <div th:unless="${already}" class="row mt-5" style="background: #383838; color: white">
         <div class="col-12" style="background: #383838; color: white">
             <div class="card" style="background: #383838; color: white">
                 <div class="card-body" style="background: #383838; color: white">
@@ -150,7 +156,7 @@ $large: 1200px;
                         </div>
                         <div class="form-group" style="margin-left: 2.5em;">
                             <label style="background: #383838; color: white" for="puntaje">Puntaje: </label>
-                                <input style="background: #383838; color: white" type="number" class="form-control" id="puntaje" th:field="*{puntaje}">
+                                <input style="background: #383838; color: white" type="number" min="1" max="10" class="form-control" id="puntaje" th:field="*{puntaje}">
                         </div>
                         <div style="background: #383838; color: white" class="col-md-6">
                             <br>
@@ -167,5 +173,6 @@ $large: 1200px;
     <br>
 </div>
 <footer th:replace="components/footer :: footer"></footer>
+
 </body>
 </html>
