@@ -16,9 +16,12 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -301,6 +304,23 @@ public class ControladorVideojuego extends ImplementacionControladorBase<Videoju
             model.addAttribute("imagenes", imagenes);
             model.addAttribute("comentarios", comentValo);
 
+
+            String fechaLanzamiento = videojuego.getFecha_lanzamiento().toString();
+            fechaLanzamiento = fechaLanzamiento.substring(0, 10);
+            //Fecha de lanzamiento
+            model.addAttribute("lanzamiento", fechaLanzamiento);
+
+
+            Date hoy = new Date();
+            boolean alreadyOut;
+            if(videojuego.getFecha_lanzamiento().after(hoy)){
+                alreadyOut = true;
+            }else{
+                alreadyOut = false;
+            }
+            model.addAttribute("already", alreadyOut);
+
+
             return "views/detalle";
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
@@ -332,6 +352,7 @@ public class ControladorVideojuego extends ImplementacionControladorBase<Videoju
 
                 Videojuego videojuego = this.servicioVideojuego.findById(idVideojuego);
 
+                //Seccion comentarios
                 if(videojuego.getComentarios_valoraciones() == null){
                     List<Comentarios_Valoracion> comments = new ArrayList<>();
                     comments.add(comentario);
@@ -342,6 +363,7 @@ public class ControladorVideojuego extends ImplementacionControladorBase<Videoju
                     videojuego.setComentarios_valoraciones(comments);
                 }
                 this.servicioVideojuego.update(idVideojuego,videojuego);
+
 
 
 

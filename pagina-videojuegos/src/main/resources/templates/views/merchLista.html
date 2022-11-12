@@ -4,10 +4,15 @@
     <meta charset="utf-8">
     <title>Inicio</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
-
+    <style>
+    .page-item.active .page-link {
+      color: #fff !important;
+      background: #f00 !important;
+    }
+</style>
+    <script src="https://kit.fontawesome.com/0b3360c55c.js" crossorigin="anonymous"></script>
 </head>
-<body style="background: #121212" text="#ffffff">
+<body class="d-flex flex-column min-vh-100" style="background: #121212; background-image: url('https://r1.ilikewallpaper.net/iphone-8-wallpapers/download/36659/Digital-dark-color-blue-pattern-background-iphone-8-wallpaper-ilikewallpaper_com.jpg')" text="#ffffff">
 <nav th:replace="components/nav-bar :: nav_bar"></nav>
 
 <br>
@@ -20,7 +25,7 @@
 <div>
     <div class="container">
         <div class="row mt-3">
-            <div class="flex" style="align-items: left">
+            <div class="flex" style="align-items: center">
                 <form class="form-inline my-2 my-lg-0" th:action="@{/merch/busquedaMerch}">
                     <input class="form-control mr-sm-1" type="search" placeholder="Buscar..." aria-label="Search" name="query">
                     <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Buscar</button>
@@ -31,30 +36,24 @@
 </div>
 <br>
 <br>
-<table class="table">
-    <thead class="thead-dark" style="color: white">
-    <tr>
-        <th style="color: white; font-size: 23px" scope="col"></th>
-        <th style="color: white; font-size: 23px" scope="col">Nombre</th>
-        <th style="color: white; font-size: 23px" scope="col">Precio</th>
-        <th style="color: white; font-size: 23px" scope="col">Stock</th>
-        <th style="color: white; font-size: 23px" scope="col"></th>
-
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="merch : ${merchs}" style="max-height: 100%; max-width: 100%">
-        <td><img style="height: 100px" th:src="${merch.img_portada}" alt="Imagen Promocional"></td>
-        <td style="color: white; font-size: 35px" th:text="${merch.nombre}"></td>
-        <td style="color: white; font-size: 35px" th:text="${merch.precio}"></td>
-        <td><div style="color: white; font-size: 25px" th:if="${merch.stock>0}">Disponible</div><div style="color: red; font-size: 25px" th:if="${merch.stock==0}">No Disponible</div></td>
-        <td><a th:href="@{/merch/detalleM/{id}(id=${merch.id})}" class="btn btn-danger">Ver Detalles</a> </td>
-
-    </tr>
-    </tbody>
-</table>
 
 
+<div class="container" style="align-items: center;">
+    <div class="row mt-5">
+        <div class="col-12 col-md-3" th:each="merch : ${merchs}">
+            <div class="card text-white bg-dark mb-3" style="width: 18rem;">
+                <img class="card-img-top" th:src="${merch.img_portada}" alt="Imagen promocion de articulo">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${merch.nombre}"></h5>
+                    <p class="card-text">Precio: $<span th:text="${merch.precio}"></span></p>
+                    <div style="color: white; font-size: 20px" th:if="${merch.stock>0}">Disponible</div><div style="color: red; font-size: 20px" th:if="${merch.stock==0}">No Disponible Actualmente</div>
+                    <a th:href="@{/merch/detalleM/{id}(id=${merch.id})}" style="margin-left: 2.5em;" class="btn btn-danger btn-lg"> Ver detalles!</a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
@@ -67,13 +66,13 @@
         <nav aria-label="Pagination">
             <ul class="pagination justify-content-center">
                 <li class="page-item" th:classappend="${prev == 0 ? 'disabled' : ''}">
-                    <a class="page-link" th:href="@{|/categoria/categoriaDetalle?page=${prev}|}">Anterior</a>
+                    <a class="bg-black text-white page-link" th:href="@{|/merch/merchLista?page=${prev}|}">Anterior</a>
                 </li>
                 <li class="page-item" th:each="page : ${pages}" th:classappend="${current == page ? 'active' : ''}">
-                    <a class="page-link" th:href="@{|/categoria/categoriaDetalle?page=${page}|}" th:text="${page}"></a>
+                    <a class="bg-black text-white page-link" th:href="@{|?page=${page}|}" th:text="${page}"></a>
                 </li>
                 <li class="page-item" th:classappend="${current == last ? 'disabled' : ''}">
-                    <a class="page-link" th:href="@{|/categoria/categoriaDetalle?page=${next}|}">Siguiente</a>
+                    <a class="bg-black text-white page-link" th:href="@{|/merch/merchLista?page=${next}|}">Siguiente</a>
                 </li>
             </ul>
         </nav>
@@ -81,7 +80,7 @@
     <div class="col-md-2"></div>
 </div>
 
-
+<footer th:replace="components/footer :: footer"></footer>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
 
