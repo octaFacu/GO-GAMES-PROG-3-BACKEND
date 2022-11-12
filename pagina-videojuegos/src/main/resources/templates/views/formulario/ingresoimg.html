@@ -16,64 +16,26 @@
         <div class="card">
           <div class="card-body">
 
-            <form>
-
               <div class="col-12 mb-5 mt-2">
                 <h4 class="text-center">Ingresar imagenes para el producto: <small th:text="${videojuego.nombre}"></small></h4>
               </div>
 
-
-
-                <form th:action="@{/videojuego/postingresoimg/videojuego/{id}(id=${videojuego.id})}" th:object="${imagen}" method="post">
-
-                    <div class="errorblock" th:if="${#fields.hasErrors('*')}">
-                        <ul>
-                            <li th:each="err : ${#fields.errors('*')}"
-                                th:text="${err}">Input is incorrect</li>
-                        </ul>
-                    </div>
-
-                </form>
-
-                <tr>
-                    <td><label th:text="#{form.user.nombre}">Nombre: </label></td>
-                    <td><input type="text" th:field="*{nombre}" /></td>
-                    <td th:if="${#fields.hasErrors('nombre')}">
-                        <span th:errors="*{nombre}" />
-                    </td>
-                </tr>
-
-
-
-
-              <!--<form class="row mb-3" >th:action="@{/videojuego/postingresoimg/videojuego/{id}(id=${videojuego.id})}">
-                <label class="col-sm-2 col-form-label">Link de la imagen:</label>
-                  <input type="search" placeholder="Buscar..." aria-label="Search" class="form-control" name="link">
-                <button th:href="@{/categoria/inicio}" type="submit" class="btn btn-primary mt-3 col-2">Ingresa imagen</button>
-              </form>
-
-              <a th:action="@{/categoria/inicio}">Ingresa imagen</a>
-                -->
-              <div class="mt-5">
-                <h4>Imagenes del producto: <small th:text="${videojuego.nombre}"></small></h4>
-              </div>
-
-              <select class="form-select mt-3 mb-3" aria-label="Default select example">
-         <!--       <option selected>Open this select menu</option> -->
-                <option th:each=" imagenes : ${imagenes}" th:value="${imagenes.id}" th:text="${imagenes.link}">Open this select menu</option>
-              </select>
-
-         <!--     <div class="form-group col-md-3">
-                <label for="categoria">Categoria</label>
-                <select class="form-control" id="categoria" th:field="*{categoria}">
-                  <option th:each="categoria : ${categorias}" th:value="${categoria.id}" th:text="${categoria.tipo}"></option>
-                </select>
-                <div class="text-danger" th:if="${#fields.hasErrors('categoria')}" th:errors="*{categoria}"></div>
-              </div> -->
-
-              <button type="submit" class="btn btn-primary">Eliminar imagen</button>
-
+            <form th:action="@{/videojuego/postingresoimg/videojuego/{id}(id=${videojuego.id})}" method="post" th:object="${imagen}">
+              <label class="col-sm-2 col-form-label" for="link">Link de la imagen:</label>
+              <input type="text" class="form-control col-sm-10" id="link" th:field="*{link}">
+              <!--<div class="text-danger" th:if="${#fields.hasErrors('link')}" th:errors="*{link}"></div>-->
+              <button type="submit" class="btn btn-primary mt-3 col-2">Ingresa imagen</button>
             </form>
+
+
+            <form th:action="@{/videojuego/inicioeliminarimg/videojuego/{idVideojuego}(idVideojuego=${videojuego.id})}" method="post" th:object="${imagen}">
+              <h4 class="mt-5" for="imagenesc">Imagenes del producto: <small th:text="${videojuego.nombre}"></small>, hay <small th:text="${cantImagenes}"></small> imagenes.</h4>
+              <select class="form-control mt-3 mb-3" aria-label="Default select example" id="imagenesc" th:field="*{id}">
+                <option th:each=" imagenesc : ${imagenes}" th:value="${imagenesc.id}" th:text="${imagenesc.link}" selected="1">Open this select menu</option>
+              </select>
+              <button class="btn btn-primary col-2" type="submit">Eliminar imagen</button>
+            </form>
+
 
           </div>
         </div>
