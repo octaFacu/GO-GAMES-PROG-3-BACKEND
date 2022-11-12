@@ -18,13 +18,13 @@ import javax.validation.constraints.NotNull;
 public class Direccion extends Base{
 
 
-    @NotNull(message = "Se requiere su calle")
+    @NotEmpty(message = "{NotEmpty.Direccion.calle}")
     private String calle;
 
-    @NotNull(message = "Se requiere su localidad")
+    @NotEmpty(message =  "{NotEmpty.Direccion.localidad}")
     private String localidad;
 
-    @NotNull(message = "Se requiere su pais")
+    @NotEmpty(message =  "{NotEmpty.Direccion.pais}")
     private String pais;
 
     private int piso;

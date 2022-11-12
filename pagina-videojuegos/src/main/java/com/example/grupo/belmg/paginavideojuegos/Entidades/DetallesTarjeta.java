@@ -7,9 +7,7 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.util.Date;
 
 @Entity
@@ -27,11 +25,13 @@ public class DetallesTarjeta extends Base{
     @NotEmpty(message = "Se necesita el apellido del titular.")
     private String apellido_titular;
 
-    @NotNull(message = "Se necesita el numero de la tarjeta.")
+    @Min(value = 10000000000000L, message = "ingrese una tarjeta valida")
+    @Max(value = 100000000000000000L, message = "ingrese una tarjeta valida")
     private long nro_tarjeta;
 
     @NotNull(message = "Se necesita el cvv de la tarjeta.")
-    //@Size(min=3,max=3, message="Debe tener 3 digitos.")
+    @Min(value = 100, message = "como minimo el cvv tiene 3 valores")
+    @Max(value = 1000, message = "como maximo el cvv tiene 3 digitos")
     private int cvv;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")

@@ -6,85 +6,100 @@
   <title>Ingreso de datos para la compra</title>
 
 </head>
-<body>
+<body style="background-image: url('https://i.pinimg.com/originals/9b/0b/c6/9b0bc63a987fbaa2beaa44ba94e105d7.gif');
+background-size: cover; background-position: center center; background-attachment: fixed;">
 
 <nav th:replace="components/nav-bar :: nav_bar"></nav>
-<div class="container">
-  <div class="row mt-5">
-    <div class="col-6">
-      <div class="card">
-        <div class="card-body">
-          <form th:action="@{/usuarios/direccion-tarjeta}" method="post" th:object="${tarjeta}">
-            <h1>Agregar Tarjeta</h1>
-            <div class="form-group col-md-6">
-              <label for="nro_tarjeta">numero de tarjeta:</label>
-              <input  type="tel" class="form-control" id="nro_tarjeta" th:field="*{nro_tarjeta}">
-              <div class="text-danger" th:if="${#fields.hasErrors('nro_tarjeta')}" th:errors="*{nro_tarjeta}"></div>
-            </div>
-            <div class="form-group col-md-6">
-              <label for="cvv">cvv:</label>
-              <input  type="number" class="form-control" id="cvv" th:field="*{cvv}">
-              <div class="text-danger" th:if="${#fields.hasErrors('cvv')}" th:errors="*{cvv}"></div>
-            </div>
-            <div class="form-group col-md-6">
-              <label for="nombre_titular">nombre del titular:</label>
-              <input  type="text" class="form-control" id="nombre_titular" th:field="*{nombre_titular}">
-              <div class="text-danger" th:if="${#fields.hasErrors('nombre_titular')}" th:errors="*{nombre_titular}"></div>
-            </div>
-            <div class="form-group col-md-6">
-              <label for="apellido_titular">apellido del titular:</label>
-              <input  type="text" class="form-control" id="apellido_titular" th:field="*{apellido_titular}">
-              <div class="text-danger" th:if="${#fields.hasErrors('apellido_titular')}" th:errors="*{apellido_titular}"></div>
-            </div>
-            <div class="form-group col-md-6">
-              <label for="fecha_vencimiento">fecha de vencimiento:</label>
-              <input  type="date" class="form-control" id="fecha_vencimiento" th:field="*{fecha_vencimiento}">
-              <div class="text-danger" th:if="${#fields.hasErrors('fecha_vencimiento')}" th:errors="*{fecha_vencimiento}"></div>
-            </div>
 
-            <div class="card">
+
+  <div class="container-fluid bg-transparent">
+    <div class="row justify-content-center pt-5 mt-5 mr-1">
+      <form th:action="@{/usuarios/direccion-tarjeta}" method="post" >
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="card text-white text-center" style="background-color: rgba(0,0,0,0.5); padding: 20px;" th:object="${tarjeta}">
               <div class="card-body">
-                <h1>Agregar Direccion</h1>
-                <div class="form-group col-md-6">
-                  <label for="calle">calle:</label>
-                  <input  type="text" class="form-control" id="calle" th:field="${direccion.calle}">
-                </div>
-                <div class="form-group col-md-6">
-                  <label for="localidad">localidad:</label>
-                  <input  type="text" class="form-control" id="localidad" th:field="${direccion.localidad}">
-                </div>
-                <div class="form-group col-md-6">
-                  <label for="num_casa">numero de casa:</label>
-                  <input  type="text" class="form-control" id="num_casa" th:field="${direccion.num_casa}">
-                </div>
-                <div class="form-group col-md-6">
-                  <label for="pais">pais:</label>
-                  <input  type="text" class="form-control" id="pais" th:field="${direccion.pais}">
-                </div>
-              </div>
-            </div>
 
-            <div class="row m-3">
-              <div class="col-md-3">
-                <button class="btn btn-outline-secondary" type="reset" style="width:100%">Resetear
-                  Formulario
-                </button>
-              </div>
-              <div class="col-md-6">
-                <button class="btn btn-success" type="submit" style="width:100%">Guardar</button>
+                <h5 class="card-title">Agregar tarjeta</h5>
+
+                <div class="form-group text-center row justify-content-center">
+                  <label for="nro_tarjeta">numero de tarjeta:</label>
+                  <input  type="number" class="form-control text-center" id="nro_tarjeta" th:field="*{nro_tarjeta}">
+                  <div class="text-danger" th:if="${#fields.hasErrors('nro_tarjeta')}" th:errors="*{nro_tarjeta}"></div>
+                </div>
+                <div class="form-group  row justify-content-center">
+                  <label for="cvv">cvv:</label>
+                  <input  type="number" class="form-control text-center" id="cvv" th:field="*{cvv}" required size="4">
+                  <div class="text-danger" th:if="${#fields.hasErrors('cvv')}" th:errors="*{cvv}"></div>
+                </div>
+                <div class="form-group  row justify-content-center">
+                  <label for="nombre_titular">nombre del titular:</label>
+                  <input  type="text" class="form-control text-center" id="nombre_titular" th:field="*{nombre_titular}">
+                  <div class="text-danger" th:if="${#fields.hasErrors('nombre_titular')}" th:errors="*{nombre_titular}"></div>
+                </div>
+                <div class="form-group row justify-content-center">
+                  <label for="apellido_titular">apellido del titular:</label>
+                  <input  type="text" class="form-control text-center" id="apellido_titular" th:field="*{apellido_titular}">
+                  <div class="text-danger" th:if="${#fields.hasErrors('apellido_titular')}" th:errors="*{apellido_titular}"></div>
+                </div>
+                <div class="form-group row justify-content-center">
+                  <label for="fecha_vencimiento">fecha de vencimiento:</label>
+                  <input  type="date" class="form-control text-center" id="fecha_vencimiento" th:field="*{fecha_vencimiento}">
+                  <div class="text-danger" th:if="${#fields.hasErrors('fecha_vencimiento')}" th:errors="*{fecha_vencimiento}"></div>
+                </div>
+
               </div>
             </div>
-          </form>
+          </div>
+
+          <div class="col-sm-6">
+            <div class="card text-white text-center" style="background-color: rgba(0,0,0,0.5); padding: 20px;" th:object="${direccion}">
+              <div class="card-body">
+                <h5 class="card-title">Agregar direccion</h5>
+                <div class="form-group  row justify-content-center">
+                  <label for="calle">calle:</label>
+                  <input  type="text" class="form-control text-center" id="calle" th:field="*{calle}">
+                  <div class="text-danger" th:if="${#fields.hasErrors('calle')}" th:errors="*{calle}"></div>
+                </div>
+
+                <div class="form-group row justify-content-center">
+                  <label for="localidad">localidad:</label>
+                  <input  type="text" class="form-control text-center" id="localidad" th:field="*{localidad}">
+                  <div class="text-danger" th:if="${#fields.hasErrors('localidad')}" th:errors="*{localidad}"></div>
+                </div>
+
+                <div class="form-group row justify-content-center">
+                  <label for="pais">pais:</label>
+                  <input  type="text" class="form-control text-center" id="pais" th:field="*{pais}">
+                  <div class="text-danger" th:if="${#fields.hasErrors('pais')}" th:errors="*{pais}"></div>
+                </div>
+
+                <div class="form-group  row justify-content-center">
+                  <label for="num_casa">numero de casa:</label>
+                  <input  type="text" class="form-control text-center" id="num_casa" th:field="*{num_casa}">
+                </div>
+                <div class="justify-content-center">
+                  <h5>o</h5>
+                </div>
+                <div class="form-group  row justify-content-center">
+                  <label for="piso">piso</label>
+                  <input  type="text" class="form-control text-center" id="piso" th:field="*{piso}">
+                </div>
+
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+        <br>
+        <div class="d-grid gap-2 col-6 mx-auto">
+          <button class="btn btn-danger" type="submit" style="width:100%">Guardar</button>
+        </div>
+    <div class="form-group col-md-6 invisible">
+      <input  type="text" name="prueba" th:value="${httpRedireccion}">
+    </div>
+      </form>
     </div>
   </div>
-</div>
-
-
-
-
-
 
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>

@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +20,8 @@ import java.util.List;
 @Controller
 @RequestMapping("usuarios")
 public class ControladorUsuario extends ImplementacionControladorBase<Usuario, ImplementacionServicioUsuario>{
-
+    static int i = 0;
+    static String guardaAnterior = null;
     @Autowired
     ImplementacionServicioDireccion servicioDireccion;
 
@@ -32,6 +34,8 @@ public class ControladorUsuario extends ImplementacionControladorBase<Usuario, I
     @Autowired
     ImplementacionServicioVideojuego servicioVideojuego;
 
+    @Autowired
+    ImplementacionServicioMerch servicioMerch;
     @GetMapping("/search")
     public ResponseEntity<?> search(@RequestParam String filtro){
 
@@ -139,35 +143,60 @@ public class ControladorUsuario extends ImplementacionControladorBase<Usuario, I
 
 
     @GetMapping("/direccion-tarjeta")
-    public String direccionTarjeta(Model modelo){
+    public String direccionTarjeta(Model modelo,HttpServletRequest request){
         try {
-
 
             modelo.addAttribute("direccion",new Direccion());
             modelo.addAttribute("tarjeta",new DetallesTarjeta());
+
+            String http = request.getHeader("Referer");
+            modelo.addAttribute("httpRedireccion", http);
+
             return "views/formulario/direccion-tarjeta";
         }catch (Exception e){
             return e.getMessage();
         }
     }
     @PostMapping("/direccion-tarjeta")
-    public String FormulariodireccionTarjeta(Model modelo, @Valid @ModelAttribute ("direccion") Direccion direccion,
-                                             @Valid @ModelAttribute ("tarjeta") DetallesTarjeta tarjeta,BindingResult result){
+    public String FormulariodireccionTarjeta(Model modelo, @Valid @ModelAttribute ("direccion") Direccion direccion,BindingResult result2,
+                                             @Valid @ModelAttribute ("tarjeta") DetallesTarjeta tarjeta,
+                                             BindingResult result, @RequestParam("prueba")String referer){
+
         try {
             if (result.hasErrors()){
+                if(i==0){
+                    guardaAnterior = referer;
+                    i++;
+                }
+                System.out.println(guardaAnterior);
+                return "views/formulario/direccion-tarjeta";
+            }
+            if (result2.hasErrors()){
+                if(i==0){
+                    guardaAnterior = referer;
+                    i++;
+                }
+
                 return "views/formulario/direccion-tarjeta";
             }
             //esto nos sirve para traer el mail del usuario autenticado en el momento para poder hacer una query y saber la id en la base de datos
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            String email = authentication.getName();
+            Usuario usuario = this.service.findById(this.service.obtenerUsuario());
+            long idDireccionAnterior = usuario.getTarjeta().getId();
+            long idTarjetaAnterior = usuario.getDireccion().getId();
 
-            long id = this.service.traerIdUsuarioActual(email);
-            System.out.println(id);
-            servicioDireccion.save(direccion);
+
             servicioTarjeta.save(tarjeta);
+            servicioDireccion.save(direccion);
 
-            service.guardarDireccionYTarjeta(id,tarjeta.getId(),direccion.getId());
-            return "redirect:/usuarios/inicio";
+            service.guardarDireccionYTarjeta(this.service.obtenerUsuario(),tarjeta.getId(),direccion.getId());
+
+
+            if(i==0){
+                return "redirect:"+ referer;
+            }else{
+                return "redirect:"+ guardaAnterior;
+            }
+
         }catch (Exception e){
             return e.getMessage();
         }
@@ -175,8 +204,10 @@ public class ControladorUsuario extends ImplementacionControladorBase<Usuario, I
     @GetMapping("/videojuego/biblioteca")
     public String biblioteca(Model model){
         try {
-            long idU=1;
-            List<Compra> compras = this.servicioCompra.idvideojuegosComprados(idU);
+
+
+            List<Compra> compras = this.servicioCompra.idvideojuegosComprados(this.service.obtenerUsuario());
+
             List<Videojuego> videojuegos = new ArrayList<>();
 
             model.addAttribute("compra",compras);
@@ -197,8 +228,8 @@ public class ControladorUsuario extends ImplementacionControladorBase<Usuario, I
     @GetMapping("/merch/biblioteca")
     public String bibliotecaMerch(Model model){
         try {
-            long idU=1;
-            List<Compra> compras = this.servicioCompra.idvideojuegosComprados(idU);
+            List<Compra> compras = this.servicioCompra.idvideojuegosComprados(this.service.obtenerUsuario());
+
             List<Merch> merch = new ArrayList<>();
 
             model.addAttribute("compra",compras);
