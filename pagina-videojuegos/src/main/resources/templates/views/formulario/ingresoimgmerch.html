@@ -6,34 +6,34 @@
     <title>Formulario Imagenes</title>
 </head>
 
-<body>
+<body style="background: #383838; color: white">
 
 <nav th:replace="components/nav-bar :: nav_bar"></nav>
 
-<div class="container">
-    <div class="row mt-5">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
+<div class="container" style="background: #383838; color: white">
+    <div class="row mt-5" style="background: #383838; color: white">
+        <div class="col-12" style="background: #383838; color: white">
+            <div class="card" style="background: #282828; color: white">
+                <div class="card-body" style="background: #282828; color: white">
 
-                    <div class="col-12 mb-5 mt-2">
+                    <div class="col-12 mb-5 mt-2" style="background: #282828; color: white">
                         <h4 class="text-center">Ingresar imagenes para el producto: <small th:text="${merch.nombre}"></small></h4>
                     </div>
 
-                    <form th:action="@{/merch/postingresoimg/merch/{id}(id=${merch.id})}" method="post" th:object="${imagen}">
+                    <form th:action="@{/merch/postingresoimg/merch/{id}(id=${merch.id})}" method="post" th:object="${imagen}" style="background: #282828; color: white">
                         <label class="col-sm-2 col-form-label" for="link">Link de la imagen:</label>
                         <input type="text" class="form-control col-sm-10" id="link" th:field="*{link}">
                         <!--<div class="text-danger" th:if="${#fields.hasErrors('link')}" th:errors="*{link}"></div>-->
-                        <button type="submit" class="btn btn-primary mt-3 col-2">Ingresa imagen</button>
+                        <button type="submit" class="btn btn-danger mt-3 col-2">Ingresa imagen</button>
                     </form>
 
 
-                    <form th:action="@{/merch/inicioeliminarimg/merch/{idMerch}(idMerch=${merch.id})}" method="post" th:object="${imagen}">
+                    <form th:action="@{/merch/inicioeliminarimg/merch/{idMerch}(idMerch=${merch.id})}" method="post" th:object="${imagen}" style="background: #282828; color: white">
                         <h4 class="mt-5" for="imagenesc">Imagenes del producto: <small th:text="${merch.nombre}"></small>, hay <small th:text="${cantImagenes}"></small> imagenes.</h4>
                         <select class="form-control mt-3 mb-3" aria-label="Default select example" id="imagenesc" th:field="*{id}">
                             <option th:each=" imagenesc : ${imagenes}" th:value="${imagenesc.id}" th:text="${imagenesc.link}" selected="1">Open this select menu</option>
                         </select>
-                        <button class="btn btn-primary col-2" type="submit">Eliminar imagen</button>
+                        <button class="btn btn-danger col-2" type="submit">Eliminar imagen</button>
                     </form>
 
 
