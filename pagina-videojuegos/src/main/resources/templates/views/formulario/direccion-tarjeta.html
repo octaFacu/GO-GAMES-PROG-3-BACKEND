@@ -14,7 +14,7 @@ background-size: cover; background-position: center center; background-attachmen
 
   <div class="container-fluid bg-transparent">
     <div class="row justify-content-center pt-5 mt-5 mr-1">
-      <form th:action="@{/usuarios/direccion-tarjeta}" method="post" >
+      <form th:action="@{/usuarios/direccion-tarjeta/{id}(id=${tarjeta.id})}" method="post" >
         <div class="row">
           <div class="col-sm-6">
             <div class="card text-white text-center" style="background-color: rgba(0,0,0,0.5); padding: 20px;" th:object="${tarjeta}">

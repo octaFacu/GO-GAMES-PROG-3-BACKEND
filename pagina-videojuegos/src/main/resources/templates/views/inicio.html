@@ -10,7 +10,7 @@
  <br>
     <div class="container" style="width: 60%; margin-right: auto; margin-left: auto;"> <!-- max-width: 1000px  -->
 
-         <div class="card">
+         <div class="card" th:if="${ultVideojuego != null}">
                 <img th:src="${ultVideojuego.img_portada}"> <!-- style="height: 25rem;" -->
 
             <div class="card-img-overlay card-inverse">

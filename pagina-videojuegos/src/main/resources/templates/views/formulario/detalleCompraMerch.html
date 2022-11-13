@@ -52,10 +52,10 @@ background-size: cover; background-position: center center; background-attachmen
       </table>
       <p class="card-text text-center">el precio total del juego es con impuestos del pais incluidos</p>
       <div th:if="${usuario.tarjeta == null}">
-        <a th:href="@{/usuarios/direccion-tarjeta}" class="btn btn-primary">ingresar tarjeta</a>
+        <a th:href="@{/usuarios/direccion-tarjeta/{id}(id = 0)}" class="btn btn-primary">ingresar tarjeta</a>
       </div>
       <div th:if="${usuario.tarjeta != null}" class="d-grid gap-3 d-flex justify-content-center">
-        <a th:href="@{/usuarios/direccion-tarjeta}" class="btn btn-primary">Cambiar Tarjeta</a>
+        <a th:href="@{/usuarios/direccion-tarjeta/(id=${usuario.tarjeta.id})}}" class="btn btn-primary">Cambiar Tarjeta</a>
         <form th:action="@{/compra/merch/detalle-compra/{id}/{idUsuario}(id=${merch.id}, idUsuario = ${usuario.id})}" method="post">
           <div>
             <button class="btn btn-danger" type="submit">Comprar</button>

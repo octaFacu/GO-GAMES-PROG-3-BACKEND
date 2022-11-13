@@ -94,8 +94,6 @@ public class ControladorCompra extends ImplementacionControladorBase<Compra, Imp
             long idUsuario = servicioUsuario.traerIdUsuarioActual(email);
             Usuario usuario = this.servicioUsuario.findById(idUsuario);
             model.addAttribute("usuario",usuario);
-
-
             Merch merch = this.servicioMerch.findById(id);
 
             model.addAttribute("merch", merch);

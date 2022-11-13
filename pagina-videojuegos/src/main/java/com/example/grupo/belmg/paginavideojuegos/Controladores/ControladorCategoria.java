@@ -55,8 +55,12 @@ public class ControladorCategoria extends ImplementacionControladorBase<Categori
 
             //Tomar la imagen de portada del ultimo videojuego cargado
             List<Videojuego> videojuegos = this.servicioVideojuego.findAll();
-            Videojuego ultVideojuego = videojuegos.get(videojuegos.size()-1);
-            model.addAttribute("ultVideojuego", ultVideojuego);
+            if(videojuegos.size() > 0){
+                Videojuego ultVideojuego = videojuegos.get(videojuegos.size()-1);
+                model.addAttribute("ultVideojuego", ultVideojuego);
+            }else {
+                model.addAttribute("ultVideojuego", null);
+            }
 
             List<Estudio> estudios = this.servicioEstudio.findAll();
             model.addAttribute("estudios", estudios);

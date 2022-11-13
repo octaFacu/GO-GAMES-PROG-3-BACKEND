@@ -142,19 +142,17 @@ public class ControladorUsuario extends ImplementacionControladorBase<Usuario, I
     }
 
 
-    @GetMapping("/direccion-tarjeta")
-    public String direccionTarjeta(Model modelo,HttpServletRequest request){
+    @GetMapping("/direccion-tarjeta/{id}")
+    public String direccionTarjeta(Model modelo,HttpServletRequest request,@PathVariable("id")long id){
         try {
 
             Usuario usuario = this.service.findById(this.service.obtenerUsuario());
-            if(usuario.getTarjeta() == null){
+            if(id == 0){
                 modelo.addAttribute("direccion",new Direccion());
                 modelo.addAttribute("tarjeta",new DetallesTarjeta());
-                System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
             }else {
-                modelo.addAttribute("direccion", this.servicioDireccion.findById(usuario.getDireccion().getId()));
-                modelo.addAttribute("tarjeta", this.servicioTarjeta.findById(usuario.getTarjeta().getId()));
-                System.out.println("traza pase por modelo");
+                modelo.addAttribute("direccion", this.servicioDireccion.findById(id));
+                modelo.addAttribute("tarjeta", this.servicioTarjeta.findById(id));
             }
 
             String http = request.getHeader("Referer");
@@ -165,11 +163,10 @@ public class ControladorUsuario extends ImplementacionControladorBase<Usuario, I
             return e.getMessage();
         }
     }
-    @PostMapping("/direccion-tarjeta")
+    @PostMapping("/direccion-tarjeta/{id}")
     public String FormulariodireccionTarjeta(Model modelo, @Valid @ModelAttribute ("direccion") Direccion direccion,BindingResult result2,
                                              @Valid @ModelAttribute ("tarjeta") DetallesTarjeta tarjeta,
-                                             BindingResult result, @RequestParam("prueba")String referer){
-
+                                             BindingResult result, @RequestParam("prueba")String referer,@PathVariable("id") long id){
         try {
             if (result.hasErrors()){
                 if(i==0){
@@ -187,19 +184,17 @@ public class ControladorUsuario extends ImplementacionControladorBase<Usuario, I
 
                 return "views/formulario/direccion-tarjeta";
             }
-            
+
             Usuario usuario = this.service.findById(this.service.obtenerUsuario());
-            System.out.println(usuario.getTarjeta().getId());
-            if(usuario.getTarjeta() == null){
+            if(id == 0){
                 servicioTarjeta.save(tarjeta);
                 servicioDireccion.save(direccion);
                 service.guardarDireccionYTarjeta(this.service.obtenerUsuario(),tarjeta.getId(),direccion.getId());
-                System.out.println("pase por save");
+
+
             }else {
                 servicioTarjeta.update(usuario.getTarjeta().getId(), tarjeta);
                 servicioDireccion.update(usuario.getDireccion().getId(),direccion);
-                service.guardarDireccionYTarjeta(this.service.obtenerUsuario(),tarjeta.getId(),direccion.getId());
-                System.out.println("no pase por save");
             }
 
             if(i==0){
