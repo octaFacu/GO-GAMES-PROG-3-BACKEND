@@ -126,7 +126,10 @@ $large: 1200px;
         <hr style="background-color: white; height: 4px;">
         <br>
 
-        <div th:replace="components/img-carousel :: img-carousel"></div>
+        <div th:unless="${imagenes.size() == 0} ">
+            <div th:replace="components/img-carousel :: img-carousel"></div>
+        </div>
+
 
 
 
