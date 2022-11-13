@@ -45,57 +45,5 @@ public class ControladorCategoria extends ImplementacionControladorBase<Categori
         }
     }
 
-    @GetMapping("/inicio")
-    public String getAllCategorias(Model model){
 
-        try {
-
-            List<Categoria> categorias = this.servicioCategoria.findAll();
-            model.addAttribute("categorias", categorias);
-
-            //Tomar la imagen de portada del ultimo videojuego cargado
-            List<Videojuego> videojuegos = this.servicioVideojuego.findAll();
-            if(videojuegos.size() > 0){
-                Videojuego ultVideojuego = videojuegos.get(videojuegos.size()-1);
-                model.addAttribute("ultVideojuego", ultVideojuego);
-            }else {
-                model.addAttribute("ultVideojuego", null);
-            }
-
-            List<Estudio> estudios = this.servicioEstudio.findAll();
-            model.addAttribute("estudios", estudios);
-
-        }catch(Exception e){
-            return"error";
-        }
-
-        return "views/inicio";
-    }
-
-    @GetMapping("/categoriaDetalle/{id}")
-    public String mostrarJuegosDeCategoria(Model model, @PathVariable("id") Long id, @RequestParam Map<String, Object> params) throws Exception {
-
-
-        int page = params.get("page") != null ? (Integer.valueOf(params.get("page").toString()) - 1) : 0;
-
-        PageRequest pageRequest = PageRequest.of(page,4);
-
-        Page<Videojuego> pageVideojuego = servicioVideojuego.findAllByActivoAndCategoria(id, pageRequest);
-
-        int totalPage = pageVideojuego.getTotalPages();                                                     //Total de paginas que tienen los datos de la base de datos(cuantos links se muestran)
-        if(totalPage > 0){
-            List<Integer> pages = IntStream.rangeClosed(1, totalPage).boxed().collect(Collectors.toList());   //Se crea un listado de numeros desde el 1 al numero final
-            model.addAttribute("pages", pages);
-        }
-
-        Categoria categoria = servicioCategoria.findById(id);
-
-        model.addAttribute("categoria", categoria);
-        model.addAttribute("videojuegos", pageVideojuego.getContent());
-        model.addAttribute("current", page + 1);                                        //Parametro para identificar la pagina actual
-        model.addAttribute("next", page + 2);
-        model.addAttribute("prev", page);
-        model.addAttribute("last", totalPage);
-        return "views/categoriaDetalle";
-    }
 }

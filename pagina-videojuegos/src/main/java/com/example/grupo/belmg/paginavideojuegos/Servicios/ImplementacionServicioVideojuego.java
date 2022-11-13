@@ -1,6 +1,7 @@
 package com.example.grupo.belmg.paginavideojuegos.Servicios;
 
 import com.example.grupo.belmg.paginavideojuegos.Entidades.Categoria;
+import com.example.grupo.belmg.paginavideojuegos.Entidades.Merch;
 import com.example.grupo.belmg.paginavideojuegos.Entidades.Videojuego;
 import com.example.grupo.belmg.paginavideojuegos.Repositorios.RepositorioVideojuego;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,6 +71,17 @@ public class ImplementacionServicioVideojuego extends ImplementacionServicioBase
             }
             return true;
 
+        }catch(Exception e){
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    @Transactional
+    public Videojuego findByIdAndActivo(Long id) throws Exception{
+
+        try{
+            Optional<Videojuego> opt = this.repositorio.findByIdAndActivo(id);
+            return opt.get();
         }catch(Exception e){
             throw new Exception(e.getMessage());
         }

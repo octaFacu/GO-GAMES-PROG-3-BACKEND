@@ -18,9 +18,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-@Controller
+@RestController
 @CrossOrigin(origins = "*")
-@RequestMapping(path = "/estudio")
+@RequestMapping(path = "estudio")
 public class ControladorEstudio extends ImplementacionControladorBase<Estudio, ImplementacionServicioEstudio>{
 
     @Autowired
@@ -31,31 +31,6 @@ public class ControladorEstudio extends ImplementacionControladorBase<Estudio, I
     private ImplementacionServicioEstudio servicioEstudio;
 
 
-    @GetMapping("/estudioDetalle/{id}")
-    public String mostrarJuegosDeEstudio(Model model, @PathVariable("id") Long id, @RequestParam Map<String, Object> params) throws Exception {
 
-
-        int page = params.get("page") != null ? (Integer.valueOf(params.get("page").toString()) - 1) : 0;
-
-        PageRequest pageRequest = PageRequest.of(page,4);
-
-        Page<Videojuego> pageVideojuego = servicioVideojuego.findAllByActivoAndEstudio(id, pageRequest);
-
-        int totalPage = pageVideojuego.getTotalPages();                                                     //Total de paginas que tienen los datos de la base de datos(cuantos links se muestran)
-        if(totalPage > 0){
-            List<Integer> pages = IntStream.rangeClosed(1, totalPage).boxed().collect(Collectors.toList());   //Se crea un listado de numeros desde el 1 al numero final
-            model.addAttribute("pages", pages);
-        }
-
-        Estudio estudio = servicioEstudio.findById(id);
-
-        model.addAttribute("estudio", estudio);
-        model.addAttribute("videojuegos", pageVideojuego.getContent());
-        model.addAttribute("current", page + 1);                                        //Parametro para identificar la pagina actual
-        model.addAttribute("next", page + 2);
-        model.addAttribute("prev", page);
-        model.addAttribute("last", totalPage);
-        return "views/estudioDetalle";
-    }
 
 }
