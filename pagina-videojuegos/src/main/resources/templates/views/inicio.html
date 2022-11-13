@@ -52,7 +52,7 @@
      <div class="row mt-5">
          <div class="col-12 col-md-3" th:each="categoria : ${categorias}">
                 <div class="card text-white bg-dark mb-3" style="width: 18rem;">
-                    <img class="card-img-top" src="https://i.pinimg.com/originals/0f/33/5d/0f335d0d493ffaf8a67bd7dfe14003be.jpg" alt="Imagen categoria">
+                    <img class="card-img-top" src="https://i.pinimg.com/originals/47/1a/4d/471a4d3424094073512bb7564cc57144.jpg" alt="Imagen categoria">
                     <div class="card-body">
                         <h5 class="card-title" th:text="${categoria.tipo}"></h5>
                         <a th:href="@{/categoria/categoriaDetalle/{id}(id=${categoria.id})}" style="margin-left: 2.5em;" class="btn btn-secondary btn-lg"> Ver juegos!</a>
@@ -78,7 +78,7 @@
      <div class="row mt-5">
          <div class="col-12 col-md-3" th:each="estudio : ${estudios}">
              <div class="card text-white bg-dark mb-3" style="width: 18rem;">
-                 <img class="card-img-top" src="https://i.pinimg.com/originals/4e/2d/40/4e2d40c3af8850c167e1c27432e2b5e3.jpg" alt="Imagen estudio">
+                 <img class="card-img-top" src="https://i.pinimg.com/originals/63/84/2f/63842f74f22014e15b04875aafbbae70.jpg" alt="Imagen estudio">
                  <div class="card-body">
                      <h5 class="card-title" th:text="${estudio.nombre}"></h5>
                      <a th:href="@{/estudio/estudioDetalle/{id}(id=${estudio.id})}" style="margin-left: 2.5em;" class="btn btn-secondary btn-lg"> Ver juegos!</a>
