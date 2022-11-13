@@ -29,7 +29,7 @@
             </form>
 
 
-            <form th:action="@{/videojuego/inicioeliminarimg/videojuego/{idVideojuego}(idVideojuego=${videojuego.id})}" method="post" th:object="${imagen}" style="background: #282828; color: white">
+            <form th:if="${cantImagenes} != 0" th:action="@{/videojuego/inicioeliminarimg/videojuego/{idVideojuego}(idVideojuego=${videojuego.id})}" method="post" th:object="${imagen}" style="background: #282828; color: white">
               <h4 class="mt-5" for="imagenesc">Imagenes del producto: <small th:text="${videojuego.nombre}"></small>, hay <small th:text="${cantImagenes}"></small> imagenes.</h4>
               <select class="form-control mt-3 mb-3" aria-label="Default select example" id="imagenesc" th:field="*{id}">
                 <option th:each=" imagenesc : ${imagenes}" th:value="${imagenesc.id}" th:text="${imagenesc.link}" selected="1">Open this select menu</option>

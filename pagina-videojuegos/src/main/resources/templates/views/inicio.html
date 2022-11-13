@@ -8,10 +8,10 @@
 <body  style="background: #121212; background-image: url('https://r1.ilikewallpaper.net/iphone-8-wallpapers/download/36659/Digital-dark-color-blue-pattern-background-iphone-8-wallpaper-ilikewallpaper_com.jpg')" class="d-flex flex-column min-vh-100">
  <nav th:replace="components/nav-bar :: nav_bar"></nav>
  <br>
- <div class="container" style="max-width: 1000px">
+    <div class="container" style="width: 60%; margin-right: auto; margin-left: auto;"> <!-- max-width: 1000px  -->
 
          <div class="card">
-                <img th:src="${ultVideojuego.img_portada}" style=" height: 25rem;">
+                <img th:src="${ultVideojuego.img_portada}"> <!-- style="height: 25rem;" -->
 
             <div class="card-img-overlay card-inverse">
                 <div class="text-stroke text-white pb-5" style="text-decoration: underline; font-size: 1.875em; color: #525151!important"><a style="text-decoration:none; color: white" th:href="@{/videojuego/detalle/{id}(id=${ultVideojuego.id})}">Ultimo Lanzamiento!</a></div>
@@ -20,12 +20,12 @@
     </div>
  <br>
 <div>
-    <div class="container" style="max-width: 1100px">
+    <div class="container">
         <div class="row mt-3">
             <div class="flex" style="align-items: center">
                 <form class="form-group mx-sm-3 mb-2" th:action="@{/videojuego/busqueda}">
-                    <input class="form-control mr-sm-1" type="search" style="width:100%; color: #525151" placeholder="Ingrese un titulo..." aria-label="Search" name="query">
-                    <button class="btn btn-outline-danger my-2 my-sm-0" style="margin-left:500px" type="submit">Buscar</button>
+                    <input class="form-control mr-sm-1 mb-3" type="search" style="width:100%; color: #525151" placeholder="Ingrese un titulo..." aria-label="Search" name="query">
+                    <button class="btn btn-outline-danger my-2 my-sm-0" style="margin-left:40%; padding-right:100px; padding-left:100px;" type="submit">Buscar</button>
                 </form>
             </div>
             </div>
