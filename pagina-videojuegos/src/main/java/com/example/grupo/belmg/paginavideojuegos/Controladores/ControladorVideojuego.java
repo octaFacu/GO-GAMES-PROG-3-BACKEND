@@ -70,7 +70,6 @@ public class ControladorVideojuego extends ImplementacionControladorBase<Videoju
 
     @GetMapping("/searchActivo")
     public ResponseEntity<?> getAllActivo(){
-
         try{
             return ResponseEntity.status(HttpStatus.OK).body(service.findAllByActivo());
         }catch(Exception e){
@@ -88,7 +87,44 @@ public class ControladorVideojuego extends ImplementacionControladorBase<Videoju
         }
     }
 
+    @GetMapping("/AllActivoPaged")
+    public ResponseEntity<?> getAllActivoPaged(Pageable pageable){
 
+        try{
+            return ResponseEntity.status(HttpStatus.OK).body(service.findAllByActivoPageable(pageable));
+        }catch(Exception e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(("{\"error\": \"" + e.getMessage()+"\"}"));
+        }
+    }
 
+    @GetMapping("/AllActivoCategoriaPaged/{categoria}")
+    public ResponseEntity<?> findActivoAndCategoriaPaged(@RequestParam Long categoria, Pageable pageable){
+
+        try{
+            return ResponseEntity.status(HttpStatus.OK).body(service.findByActivoAndCategoriaPageable(pageable, categoria));
+        }catch(Exception e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(("{\"error\": \"" + e.getMessage()+"\"}"));
+        }
+    }
+
+    @GetMapping("/AllActivoEstudioPaged/{estudio}")
+    public ResponseEntity<?> findActivoAndEstudioPaged(@RequestParam Long estudio, Pageable pageable){
+
+        try{
+            return ResponseEntity.status(HttpStatus.OK).body(service.findAllByActivoAndEstudio(estudio, pageable));
+        }catch(Exception e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(("{\"error\": \"" + e.getMessage()+"\"}"));
+        }
+    }
+
+    @GetMapping("/findNombre")
+    public ResponseEntity<?> findbyNombre(@RequestParam String nombre, Pageable pageable){
+
+        try{
+            return ResponseEntity.status(HttpStatus.OK).body(service.findByNombre(nombre, pageable));
+        }catch(Exception e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(("{\"error\": \"" + e.getMessage()+"\"}"));
+        }
+    }
 
 }
