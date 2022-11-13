@@ -7,6 +7,7 @@ import com.example.grupo.belmg.paginavideojuegos.Utilidades.ValidadorURL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -58,6 +59,7 @@ public class ControladorVideojuego extends ImplementacionControladorBase<Videoju
     //----------CRUD------------
 
     @GetMapping("/crudVideojuego")
+    //@PreAuthorize("hasAnyRole('ADMIN','SUPERADMIN')")
     public String findAll(@RequestParam Map<String, Object> params, Model model){
 
         try{
